@@ -1,0 +1,6 @@
+# The custom workspace settings
+./.idea/
+
+# The built file
+out/
+
