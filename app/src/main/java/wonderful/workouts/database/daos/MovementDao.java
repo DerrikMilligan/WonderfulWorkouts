@@ -6,16 +6,17 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Update;
 
+import io.reactivex.rxjava3.core.Completable;
 import wonderful.workouts.database.entities.Movement;
 
 @Dao
 public interface MovementDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Movement movement);
+    Completable insert(Movement movement);
 
     @Update
-    void update(Movement movement);
+    Completable update(Movement movement);
 
     @Delete
-    void delete(Movement movement);
+    Completable delete(Movement movement);
 }

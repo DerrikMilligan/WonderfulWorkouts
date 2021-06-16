@@ -6,16 +6,17 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Update;
 
+import io.reactivex.rxjava3.core.Completable;
 import wonderful.workouts.database.entities.Measurement;
 
 @Dao
 public interface MeasurementDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Measurement measurement);
+    Completable insert(Measurement measurement);
 
     @Update
-    void update(Measurement measurement);
+    Completable update(Measurement measurement);
 
     @Delete
-    void delete(Measurement measurement);
+    Completable delete(Measurement measurement);
 }
