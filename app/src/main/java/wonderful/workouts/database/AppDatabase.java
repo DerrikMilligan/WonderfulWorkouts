@@ -37,7 +37,7 @@ import wonderful.workouts.database.entities.WorkoutMovementHistory;
 )
 // The TypeConverts help us convert the Java date type to something the database can handle and back
 @TypeConverters({ Converters.class })
-abstract class AppDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
     // Here we list out all the DAO and the methods will be built by the @Database wrapper for us
     abstract public MeasurementDao getMeasurementDao();
     abstract public MovementDao getMovementDao();
@@ -48,10 +48,9 @@ abstract class AppDatabase extends RoomDatabase {
     abstract public WorkoutMovementHistoryDao getWorkoutMovementHistoryDao();
 
     // This will be the static instance of the database so we only ever have one connection. This follows the singleton pattern
-    // The volatile keyword ensure that if this is changed it'll be updated across threads
-    volatile private static AppDatabase INSTANCE = null;
+    private static AppDatabase INSTANCE = null;
 
-    public static AppDatabase getDatabase(Context context) {
+    public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             // Yeah the synchronized block ensures that when we create the database that can only ever be done once and
             // to wait until its done if we happen to have race conditions. Read more here: https://www.baeldung.com/java-synchronized
