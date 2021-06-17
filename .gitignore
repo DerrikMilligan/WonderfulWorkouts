@@ -1,6 +1,8 @@
 # The custom workspace settings
 .idea/
 
+.gradle/
+
 # The built file
 out/
 
