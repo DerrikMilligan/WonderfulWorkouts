@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "movements")
 public class Movement {
     @PrimaryKey
-    public int id;
+    public int movementId;
     public String name;
     public String url;
     public String type;

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "workout_movement_history")
 public class WorkoutMovementHistory {
     @PrimaryKey
-    public int id;
+    public int workoutMovementHistoryId;
     public int workoutHistoryId;
     public int movementId;
     public float weight;

@@ -8,7 +8,7 @@ import java.util.Date;
 @Entity(tableName = "workout_history")
 public class WorkoutHistory {
     @PrimaryKey
-    public int id;
+    public int workoutHistoryId;
     public int workoutId;
     public Date startTime;
     public Date endTime;

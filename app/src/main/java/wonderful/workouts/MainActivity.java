@@ -1,6 +1,7 @@
 package wonderful.workouts;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -10,7 +11,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import wonderful.workouts.database.entities.User;
 import wonderful.workouts.databinding.ActivityMainBinding;
+import wonderful.workouts.presenters.UserPresenter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +35,21 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        testUserPresenter();
+    }
+
+    private void testUserPresenter() {
+        new Thread(() -> {
+            UserPresenter userPresenter = UserPresenter.getInstance(this.getApplicationContext());
+            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Derrik") ? "yes" : "no"));
+
+            User derrik = userPresenter.createNewUser("Derrik", "bilbo");
+
+            Log.i("MainActivity", String.format("New user: id: '%d' username: '%s', password: '%s'", derrik.userId, derrik.username, derrik.password));
+
+            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Derrik") ? "yes" : "no"));
+        }).start();
     }
 
 }

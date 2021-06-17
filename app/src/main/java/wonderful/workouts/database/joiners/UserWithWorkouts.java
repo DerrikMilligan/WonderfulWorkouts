@@ -13,8 +13,8 @@ public class UserWithWorkouts {
     public User user;
 
     @Relation(
-        parentColumn = "id",
-        entityColumn = "userId"
+        parentColumn = "userId",
+        entityColumn = "workoutId"
     )
     public List<Workout> workouts;
 }

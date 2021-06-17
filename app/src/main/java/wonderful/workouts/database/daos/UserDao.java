@@ -31,10 +31,10 @@ public interface UserDao {
     Maybe<User> getFromUsername(String username);
 
     @Transaction
-    @Query("SELECT * FROM users WHERE id = :userId")
+    @Query("SELECT * FROM users WHERE userId = :userId")
     Maybe<List<UserWithWorkouts>> getUserWorkouts(int userId);
 
     @Transaction
-    @Query("SELECT * FROM users WHERE id = :userId")
+    @Query("SELECT * FROM users WHERE userId = :userId")
     Maybe<List<UserWithMeasurements>> getUserMeasurements(int userId);
 }

@@ -27,10 +27,10 @@ public interface WorkoutDao {
     Completable delete(Workout workout);
 
     @Transaction
-    @Query("SELECT * FROM workouts WHERE id = :workoutId")
+    @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
     Maybe<List<WorkoutWithMovements>> getWorkoutMovements(int workoutId);
 
     @Transaction
-    @Query("SELECT * FROM workouts WHERE id = :workoutId")
+    @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
     Maybe<List<WorkoutWithHistory>> getWorkoutHistory(int workoutId);
 }

@@ -16,8 +16,13 @@ public class WorkoutWithMovements {
 
     @Relation(
         parentColumn = "workoutId",
+        entity = Movement.class,
         entityColumn = "movementId",
-        associateBy = @Junction(WorkoutMovementCrossRef.class)
+        associateBy = @Junction(
+            value = WorkoutMovementCrossRef.class,
+            parentColumn = "workoutId",
+            entityColumn = "movementId"
+        )
     )
     public List<Movement> movements;
 }

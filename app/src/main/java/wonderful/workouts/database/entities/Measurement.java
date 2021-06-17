@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "user_measurements")
 public class Measurement {
     @PrimaryKey
-    public int id;
+    public int measurementId;
     public int userId;
     public String type;
     public float value;

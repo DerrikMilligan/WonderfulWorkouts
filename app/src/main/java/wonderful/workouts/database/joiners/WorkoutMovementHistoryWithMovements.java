@@ -5,15 +5,17 @@ import androidx.room.Relation;
 
 import java.util.List;
 
+import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
 public class WorkoutMovementHistoryWithMovements {
     @Embedded
-    public WorkoutMovementHistory workoutHistory;
+    public WorkoutMovementHistory workoutMovementHistory;
 
     @Relation(
-        parentColumn = "id",
-        entityColumn = "movementId"
+        parentColumn = "workoutMovementHistoryId",
+        entityColumn = "movementId",
+        entity = Movement.class
     )
-    public List<WorkoutMovementHistory> movements;
+    public List<Movement> movements;
 }

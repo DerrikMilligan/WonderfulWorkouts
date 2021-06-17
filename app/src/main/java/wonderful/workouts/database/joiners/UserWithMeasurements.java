@@ -13,8 +13,8 @@ public class UserWithMeasurements {
     public User user;
 
     @Relation(
-        parentColumn = "id",
-        entityColumn = "userId"
+        parentColumn = "userId",
+        entityColumn = "measurementId"
     )
     public List<Measurement> measurements;
 }
