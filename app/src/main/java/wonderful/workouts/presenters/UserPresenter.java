@@ -70,6 +70,8 @@ public class UserPresenter {
         newUser.username = username;
         newUser.password = password;
 
+        userDao.insert(newUser);
+
         return newUser;
     }
 }
