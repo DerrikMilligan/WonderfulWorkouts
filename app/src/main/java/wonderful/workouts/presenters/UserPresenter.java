@@ -12,7 +12,7 @@ public class UserPresenter {
     // Implement the singleton pattern
     private static UserPresenter INSTANCE = null;
 
-    // Make the constructor private so we have to use getSingleton to use the presenter
+    // Make the constructor private so we have to use getInstance to use the presenter
     private UserPresenter(AppDatabase db) {
         userDao = db.getUserDao();
     }
