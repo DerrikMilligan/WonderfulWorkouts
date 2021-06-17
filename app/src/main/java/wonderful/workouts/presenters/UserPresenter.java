@@ -7,16 +7,14 @@ import wonderful.workouts.database.daos.UserDao;
 import wonderful.workouts.database.entities.User;
 
 public class UserPresenter {
-    private AppDatabase _db = null;
-    private UserDao userDao = null;
+    private final UserDao userDao;
 
     // Implement the singleton pattern
     private static UserPresenter INSTANCE = null;
 
     // Make the constructor private so we have to use getSingleton to use the presenter
     private UserPresenter(AppDatabase db) {
-        _db = db;
-        userDao = _db.getUserDao();
+        userDao = db.getUserDao();
     }
 
     // Here's the way we get our singleton instance for use
@@ -43,7 +41,7 @@ public class UserPresenter {
      *
      * Will return true if the username already exists and false if it doesn't exist
      *
-     * @param String username
+     * @param username The username you want to search against
      *
      * @return boolean
      */
@@ -59,8 +57,8 @@ public class UserPresenter {
      *
      * Will create a new user with a given username and password
      *
-     * @param String username
-     * @param String password
+     * @param username The username for the new account
+     * @param password The password for the new account
      *
      * @return User
      */
