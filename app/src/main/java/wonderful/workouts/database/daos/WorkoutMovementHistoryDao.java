@@ -5,17 +5,16 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Update;
 
-import io.reactivex.rxjava3.core.Completable;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
 @Dao
 public interface WorkoutMovementHistoryDao {
     @Insert
-    Completable insert(WorkoutMovementHistory movementHistory);
+    void insert(WorkoutMovementHistory movementHistory);
 
     @Update
-    Completable update(WorkoutMovementHistory movementHistory);
+    void update(WorkoutMovementHistory movementHistory);
 
     @Delete
-    Completable delete(WorkoutMovementHistory movementHistory);
+    void delete(WorkoutMovementHistory movementHistory);
 }

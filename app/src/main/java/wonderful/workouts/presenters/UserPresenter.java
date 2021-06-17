@@ -2,9 +2,6 @@ package wonderful.workouts.presenters;
 
 import android.content.Context;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Maybe;
-
 import wonderful.workouts.database.AppDatabase;
 import wonderful.workouts.database.daos.UserDao;
 import wonderful.workouts.database.entities.User;
@@ -51,10 +48,7 @@ public class UserPresenter {
      * @return boolean
      */
     public boolean usernameExists(String username) {
-        Maybe<User> userLookup = userDao.getFromUsername(username);
-
-        // Get the response from the database
-        User user = userLookup.blockingGet();
+        User user = userDao.getFromUsername(username);
 
         // If the user is null then we failed to find one
         return user != null;
@@ -75,11 +69,6 @@ public class UserPresenter {
 
         newUser.username = username;
         newUser.password = password;
-
-        Completable userInsert = userDao.insert(newUser);
-
-        // Wait until the insert is complete
-        userInsert.blockingAwait();
 
         return newUser;
     }

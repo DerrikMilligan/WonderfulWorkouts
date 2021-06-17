@@ -33,14 +33,14 @@ android {
 
 dependencies {
     def room_version = "2.3.0"
-    def rxjava_version = "3.0.13"
+    // def rxjava_version = "3.0.13"
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     // In order to have co-routine like requests for Room we will utilize rxjava
-    implementation "androidx.room:room-rxjava3:$room_version"
-    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
+    // implementation "androidx.room:room-rxjava3:$room_version"
+    // implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
 
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
