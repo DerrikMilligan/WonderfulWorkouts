@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WonderfulWorkouts">
+        <activity android:name=".newEditMovement"></activity>
+        <activity android:name=".Profile" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
