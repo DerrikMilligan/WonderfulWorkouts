@@ -1,7 +1,11 @@
 # The custom workspace settings
 .idea/
 
-./.gradle/
+# The gradle build stuff
+.gradle/*
+
+# This file is supposed to be ignored... whoops
+local.properties
 
 # The built file
 out/
