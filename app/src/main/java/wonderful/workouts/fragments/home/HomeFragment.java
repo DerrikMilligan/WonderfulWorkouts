@@ -1,4 +1,4 @@
-package wonderful.workouts.ui.home;
+package wonderful.workouts.fragments.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import wonderful.workouts.R;
 import wonderful.workouts.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
