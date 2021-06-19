@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile">
+
+    <Button
+        android:id="@+id/neckBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/neck"
+        app:layout_constraintStart_toEndOf="@+id/neck"
+        app:layout_constraintTop_toTopOf="@+id/neck" />
+
+    <Button
+        android:id="@+id/calvesBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/calves"
+        app:layout_constraintStart_toEndOf="@+id/calves"
+        app:layout_constraintTop_toTopOf="@+id/calves" />
+
+    <Button
+        android:id="@+id/hipsBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/hips"
+        app:layout_constraintStart_toEndOf="@+id/hips"
+        app:layout_constraintTop_toTopOf="@+id/hips" />
+
+    <Button
+        android:id="@+id/chestBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/chest"
+        app:layout_constraintStart_toEndOf="@+id/chest"
+        app:layout_constraintTop_toTopOf="@+id/chest" />
+
+    <Button
+        android:id="@+id/thighsBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/thigh"
+        app:layout_constraintStart_toEndOf="@+id/thigh"
+        app:layout_constraintTop_toTopOf="@+id/thigh" />
+
+    <Button
+        android:id="@+id/bicepsBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/biceps"
+        app:layout_constraintStart_toEndOf="@+id/biceps"
+        app:layout_constraintTop_toTopOf="@+id/biceps" />
+
+    <Button
+        android:id="@+id/waistBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/waist"
+        app:layout_constraintStart_toEndOf="@+id/waist"
+        app:layout_constraintTop_toTopOf="@+id/waist" />
+
+    <TextView
+        android:id="@+id/bicepsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Biceps:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/weightLabel"
+        app:layout_constraintTop_toBottomOf="@+id/weightLabel" />
+
+    <TextView
+        android:id="@+id/calves"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/calvesLabel"
+        app:layout_constraintEnd_toEndOf="@+id/neck"
+        app:layout_constraintTop_toTopOf="@+id/calvesLabel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/thighsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Thighs:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/chestLabel"
+        app:layout_constraintTop_toBottomOf="@+id/chestLabel" />
+
+    <TextView
+        android:id="@+id/weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="150"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/weightLabel"
+        app:layout_constraintStart_toEndOf="@+id/weightLabel"
+        app:layout_constraintTop_toTopOf="@+id/weightLabel"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/waistLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Waist:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/thighsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/thighsLabel" />
+
+    <TextView
+        android:id="@+id/calvesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Calves:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/neckLabel"
+        app:layout_constraintTop_toBottomOf="@+id/neckLabel" />
+
+    <TextView
+        android:id="@+id/hips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="44"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/hipsLabel"
+        app:layout_constraintEnd_toEndOf="@+id/waist"
+        app:layout_constraintTop_toTopOf="@+id/hipsLabel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/neck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/neckLabel"
+        app:layout_constraintEnd_toEndOf="@+id/hips"
+        app:layout_constraintTop_toTopOf="@+id/neckLabel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/hipsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Hips:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/waistLabel"
+        app:layout_constraintTop_toBottomOf="@+id/waistLabel" />
+
+    <TextView
+        android:id="@+id/biceps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bicepsLabel"
+        app:layout_constraintEnd_toEndOf="@+id/weight"
+        app:layout_constraintTop_toTopOf="@+id/bicepsLabel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/weightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Weight:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signOutBtn" />
+
+    <TextView
+        android:id="@+id/chest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="40"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/chestLabel"
+        app:layout_constraintEnd_toEndOf="@+id/biceps"
+        app:layout_constraintTop_toTopOf="@+id/chestLabel"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/waist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="32"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/waistLabel"
+        app:layout_constraintEnd_toEndOf="@+id/thigh"
+        app:layout_constraintTop_toTopOf="@+id/waistLabel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/chestLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Chest:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/bicepsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bicepsLabel" />
+
+    <TextView
+        android:id="@+id/thigh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="25"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/thighsLabel"
+        app:layout_constraintEnd_toEndOf="@+id/chest"
+        app:layout_constraintTop_toTopOf="@+id/thighsLabel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/neckLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Neck:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/hipsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/hipsLabel" />
+
+    <Button
+        android:id="@+id/signOutBtn"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:text="Sign Out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/weightBtn"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:text="+"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/weight"
+        app:layout_constraintStart_toEndOf="@+id/weight"
+        app:layout_constraintTop_toTopOf="@+id/weight" />
+
+    <TextView
+        android:id="@+id/weightDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/weightBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/weightBtn"
+        app:layout_constraintTop_toTopOf="@+id/weightBtn" />
+
+    <TextView
+        android:id="@+id/bicepsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bicepsBtn"
+        app:layout_constraintEnd_toEndOf="@+id/weightDate"
+        app:layout_constraintTop_toTopOf="@+id/bicepsBtn" />
+
+    <TextView
+        android:id="@+id/chestDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/chestBtn"
+        app:layout_constraintEnd_toEndOf="@+id/bicepsDate"
+        app:layout_constraintTop_toTopOf="@+id/chestBtn" />
+
+    <TextView
+        android:id="@+id/thighsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/thighsBtn"
+        app:layout_constraintEnd_toEndOf="@+id/chestDate"
+        app:layout_constraintTop_toTopOf="@+id/thighsBtn" />
+
+    <TextView
+        android:id="@+id/waistDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/waistBtn"
+        app:layout_constraintEnd_toEndOf="@+id/thighsDate"
+        app:layout_constraintTop_toTopOf="@+id/waistBtn" />
+
+    <TextView
+        android:id="@+id/hipsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/hipsBtn"
+        app:layout_constraintEnd_toEndOf="@+id/waistDate"
+        app:layout_constraintTop_toTopOf="@+id/hipsBtn" />
+
+    <TextView
+        android:id="@+id/neckDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/neckBtn"
+        app:layout_constraintEnd_toEndOf="@+id/hipsDate"
+        app:layout_constraintTop_toTopOf="@+id/neckBtn" />
+
+    <TextView
+        android:id="@+id/calvesDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6/01/2021"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/calvesBtn"
+        app:layout_constraintEnd_toEndOf="@+id/neckDate"
+        app:layout_constraintTop_toTopOf="@+id/calvesBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
