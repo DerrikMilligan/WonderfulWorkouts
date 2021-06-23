@@ -1,5 +1,6 @@
 package wonderful.workouts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -36,19 +37,23 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
+
         testUserPresenter();
     }
 
     private void testUserPresenter() {
         new Thread(() -> {
             UserPresenter userPresenter = UserPresenter.getInstance(this.getApplicationContext());
-            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Derrik") ? "yes" : "no"));
 
-            User derrik = userPresenter.createNewUser("Derrik", "bilbo");
+            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Emily") ? "yes" : "no"));
+
+            User derrik = userPresenter.createNewUser("Emily", "bilbo");
 
             Log.i("MainActivity", String.format("New user: id: '%d' username: '%s', password: '%s'", derrik.userId, derrik.username, derrik.password));
 
-            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Derrik") ? "yes" : "no"));
+            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Emily") ? "yes" : "no"));
         }).start();
     }
 

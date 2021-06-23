@@ -290,12 +290,14 @@
 
     <TextView
         android:id="@+id/bicepsDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:text="6/01/2021"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/bicepsBtn"
         app:layout_constraintEnd_toEndOf="@+id/weightDate"
+        app:layout_constraintStart_toEndOf="@+id/bicepsBtn"
         app:layout_constraintTop_toTopOf="@+id/bicepsBtn" />
 
     <TextView
