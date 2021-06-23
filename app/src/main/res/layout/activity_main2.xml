@@ -61,10 +61,4 @@
             android:clickable="true"
             app:srcCompat="@android:drawable/ic_input_add" />
     </ListView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="408dp"
-        android:layout_height="76dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="654dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

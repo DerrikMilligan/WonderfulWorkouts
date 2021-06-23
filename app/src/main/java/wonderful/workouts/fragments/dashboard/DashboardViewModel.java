@@ -1,4 +1,4 @@
-package wonderful.workouts.ui.dashboard;
+package wonderful.workouts.fragments.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
