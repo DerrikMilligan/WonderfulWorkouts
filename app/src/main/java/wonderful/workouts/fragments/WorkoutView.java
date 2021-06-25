@@ -12,16 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+
 import wonderful.workouts.R;
+import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentLoginBinding;
 
 public class WorkoutView extends Fragment {
     private FragmentLoginBinding binding;
 
     public View onCreateView(
-        @NonNull LayoutInflater inflater,
-        ViewGroup container,
-        Bundle savedInstanceState
+            @NonNull LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
     ) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -37,13 +43,50 @@ public class WorkoutView extends Fragment {
         //     // Finally navigate to home!
         //     Navigation.findNavController(view).navigate(R.id.navigation_home);
         // });
-
+        updateWorkoutHistoryDisplay();
         return root;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+
+
+        @Override
+        public void onDestroyView () {
+            super.onDestroyView();
+            binding = null;
+        }
+
+    public void updateWorkoutHistoryDisplay() {
+        new Thread(() -> {
+            // List<Measurement> measurements = presenter.getCurrentMeasurements();
+            List<WorkoutHistory> workoutHistories = new ArrayList<>();
+
+
+            WorkoutHistory wh = new WorkoutHistory();
+            wh.startTime = new Date(2021, 6, 20);
+
+            WorkoutHistory wh1 = new WorkoutHistory();
+            wh1.startTime = new Date(2021, 6, 22);
+
+            WorkoutHistory wh2 = new WorkoutHistory();
+            wh2.startTime = new Date(2021, 6, 24);
+
+            workoutHistories.add(wh);
+            workoutHistories.add(wh1);
+            workoutHistories.add(wh2);
+
+
+            for (WorkoutHistory history : workoutHistories) {
+                Log.i("WorkoutView", String.format(String.valueOf(history.startTime)));
+
+                // switch (measurement.type) {
+                //     case "bicep":
+                //         Log.i("Profile", String.format("Updating biceps to: %.2f", measurement.value));
+                //         biceps.setText(String.valueOf(measurement.value) + "\"");
+                //         break;
+                //     default:
+                //        break;
+                //}
+            }
+        }).start();
     }
 }

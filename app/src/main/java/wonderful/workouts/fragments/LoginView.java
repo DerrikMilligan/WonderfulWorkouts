@@ -13,7 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import wonderful.workouts.R;
+import wonderful.workouts.database.entities.Measurement;
+import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.databinding.FragmentLoginBinding;
 
 public class LoginView extends Fragment {
@@ -41,6 +46,7 @@ public class LoginView extends Fragment {
 
         return root;
     }
+
 
     @Override
     public void onDestroyView() {
