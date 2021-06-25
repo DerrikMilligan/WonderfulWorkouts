@@ -4,7 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".newEditMovement">
+    tools:context=".NewEditMovement">
+
+    <ImageButton
+        android:id="@+id/addCategoryBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/categoryList"
+        app:layout_constraintStart_toEndOf="@+id/categoryList"
+        app:layout_constraintTop_toTopOf="@+id/categoryList"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Spinner
+        android:id="@+id/categoryList"
+        android:layout_width="157dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/category_label"
+        app:layout_constraintStart_toEndOf="@+id/equipment_label"
+        app:layout_constraintStart_toStartOf="@+id/nameInput"
+        app:layout_constraintTop_toTopOf="@+id/category_label"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/category_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/category_label"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/nameLabel"
+        app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
 
     <TextView
         android:id="@+id/nameLabel"
@@ -12,69 +42,70 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
         android:layout_marginTop="68dp"
-        android:text="Name:"
+        android:text="@string/name_label"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioButton
-        android:id="@+id/repsBtn"
+        android:id="@+id/repsRadio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Reps"
-        app:layout_constraintStart_toStartOf="@+id/timedBtn"
-        app:layout_constraintTop_toBottomOf="@+id/timedBtn" />
+        android:text="@string/reps_label"
+        app:layout_constraintStart_toStartOf="@+id/timedRadio"
+        app:layout_constraintTop_toBottomOf="@+id/timedRadio" />
 
     <Spinner
-        android:id="@+id/categoryList"
+        android:id="@+id/equipmentList"
         android:layout_width="157dp"
         android:layout_height="37dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintBottom_toBottomOf="@+id/equipment_label"
+        app:layout_constraintStart_toEndOf="@+id/equipment_label"
         app:layout_constraintStart_toStartOf="@+id/nameInput"
-        app:layout_constraintTop_toTopOf="@+id/textView5"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/equipment_label"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <RadioButton
-        android:id="@+id/timedBtn"
+    <TextView
+        android:id="@+id/equipment_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Timed"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="4dp"
+        android:text="@string/equipment_label"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/nameLabel"
+        app:layout_constraintTop_toBottomOf="@+id/category_label" />
+
+    <RadioButton
+        android:id="@+id/timedRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timed_label"
+        app:layout_constraintBottom_toBottomOf="@+id/typeLabel"
+        app:layout_constraintStart_toEndOf="@+id/typeLabel"
         app:layout_constraintStart_toStartOf="@+id/nameInput"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/typeLabel"
         app:layout_constraintVertical_bias="0.476" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/typeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Type:"
+        android:text="@string/type_label"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintEnd_toEndOf="@+id/equipment_label"
+        app:layout_constraintTop_toBottomOf="@+id/equipment_label" />
 
     <RadioButton
-        android:id="@+id/weightRepsBtn"
+        android:id="@+id/weightRepsRadio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Weight/Reps"
-        app:layout_constraintStart_toStartOf="@+id/repsBtn"
-        app:layout_constraintTop_toBottomOf="@+id/repsBtn" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Category:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/nameLabel"
-        app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
+        android:text="@string/weight_reps_label"
+        app:layout_constraintStart_toStartOf="@+id/repsRadio"
+        app:layout_constraintTop_toBottomOf="@+id/repsRadio" />
 
     <EditText
         android:id="@+id/nameInput"
@@ -91,14 +122,14 @@
         app:layout_constraintStart_toEndOf="@+id/nameLabel"
         app:layout_constraintTop_toTopOf="@+id/nameLabel" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:clickable="true"
-        app:layout_constraintStart_toEndOf="@+id/categoryList"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        tools:layout_editor_absoluteY="111dp" />
+    <ImageButton
+        android:id="@+id/addEquipmentBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/equipmentList"
+        app:layout_constraintStart_toEndOf="@+id/equipmentList"
+        app:layout_constraintTop_toTopOf="@+id/equipmentList"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

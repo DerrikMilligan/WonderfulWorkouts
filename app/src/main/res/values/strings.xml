@@ -3,4 +3,22 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="name_label">Name:</string>
+    <string name="category_label">Category:</string>
+    <string name="equipment_label">Equipment:</string>
+    <string name="type_label">Type:</string>
+    <string name="timed_label">Timed</string>
+    <string name="reps_label">Reps</string>
+    <string name="weight_reps_label">Weight/Reps</string>
+    <string name="sign_out_label">Sign Out</string>
+    <string name="weight_label">Weight:</string>
+    <string name="biceps_label">Biceps:</string>
+    <string name="chest_label">Chest:</string>
+    <string name="thighs_label">Thighs:</string>
+    <string name="waist_label">Waist:</string>
+    <string name="hips_label">Hips:</string>
+    <string name="neck_label">Neck:</string>
+    <string name="calves_label">Calves:</string>
+    <string name="movements_label">Movements:</string>
+    <string name="past_workouts_label">Past Workouts:</string>
 </resources>

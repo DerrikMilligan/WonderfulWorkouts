@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class newEditMovement extends AppCompatActivity {
+public class NewEditMovement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
