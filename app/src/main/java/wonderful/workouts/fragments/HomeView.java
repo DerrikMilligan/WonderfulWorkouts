@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import wonderful.workouts.databinding.FragmentHomeViewBinding;
 
-public class HomePage extends Fragment {
+public class HomeView extends Fragment {
     private FragmentHomeViewBinding binding;
 
     public View onCreateView(
