@@ -3,9 +3,11 @@ package wonderful.workouts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,6 +21,8 @@ import wonderful.workouts.presenters.UserPresenter;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private BottomNavigationView navView;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +31,47 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-            .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+            R.id.navigation_login,
+            R.id.navigation_home,
+            R.id.navigation_dashboard,
+            R.id.navigation_notifications
+        ).build();
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        Intent intent = new Intent(this, Profile.class);
-        startActivity(intent);
+        // This allows us to control some behaviors when the navigation has been changes
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            // This is the only way I could manage to get and hide/show the toolbar
+            ActionBar supportActionBar = this.getSupportActionBar();
+
+            // If the destination is the login page hide the toolbar and the bottom nav
+            if (destination.getId() == R.id.navigation_login) {
+                // supportActionBar.hide();
+                navView.setVisibility(View.GONE);
+            } else {
+                supportActionBar.show();
+                navView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // navController.navigate(R.id.home_page);
+
+        // Intent intent = new Intent(this, Profile.class);
+        // startActivity(intent);
 
         testUserPresenter();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp();
     }
 
     private void testUserPresenter() {
