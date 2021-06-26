@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import wonderful.workouts.databinding.FragmentHomeViewBinding;
+import wonderful.workouts.databinding.FragmentHomeBinding;
 
 public class HomeView extends Fragment {
-    private FragmentHomeViewBinding binding;
+    private FragmentHomeBinding binding;
 
     public View onCreateView(
         @NonNull LayoutInflater inflater,
@@ -19,7 +19,7 @@ public class HomeView extends Fragment {
         Bundle savedInstanceState
     ) {
 
-        binding = FragmentHomeViewBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
