@@ -19,10 +19,10 @@ import wonderful.workouts.databinding.FragmentLoginBinding;
 public class LoginView extends Fragment {
     private FragmentLoginBinding binding;
 
-            public View onCreateView(
-                @NonNull LayoutInflater inflater,
-                ViewGroup container,
-                Bundle savedInstanceState
+    public View onCreateView(
+        @NonNull LayoutInflater inflater,
+        ViewGroup container,
+        Bundle savedInstanceState
     ) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -36,7 +36,7 @@ public class LoginView extends Fragment {
             Log.i("LoginView", String.format("Login time! Username: %s Password: %s", email.getText(), password.getText()));
 
             // Finally navigate to home!
-            Navigation.findNavController(view).navigate(R.id.navigation_home);
+            Navigation.findNavController(view).navigate(R.id.navigation_home_page);
         });
 
         return root;

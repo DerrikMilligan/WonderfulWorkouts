@@ -1,6 +1,5 @@
 package wonderful.workouts;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,10 +35,8 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-            R.id.navigation_login,
-            R.id.navigation_home,
-            R.id.navigation_dashboard,
-            R.id.navigation_notifications
+            R.id.navigation_login_page,
+            R.id.navigation_home_page
         ).build();
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             ActionBar supportActionBar = this.getSupportActionBar();
 
             // If the destination is the login page hide the toolbar and the bottom nav
-            if (destination.getId() == R.id.navigation_login) {
+            if (destination.getId() == R.id.navigation_login_page) {
                 // supportActionBar.hide();
                 navView.setVisibility(View.GONE);
             } else {
