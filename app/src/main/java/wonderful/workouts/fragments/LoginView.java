@@ -19,10 +19,10 @@ import wonderful.workouts.databinding.FragmentLoginBinding;
 public class LoginView extends Fragment {
     private FragmentLoginBinding binding;
 
-    public View onCreateView(
-        @NonNull LayoutInflater inflater,
-        ViewGroup container,
-        Bundle savedInstanceState
+            public View onCreateView(
+                @NonNull LayoutInflater inflater,
+                ViewGroup container,
+                Bundle savedInstanceState
     ) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
