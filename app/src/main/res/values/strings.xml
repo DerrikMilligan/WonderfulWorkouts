@@ -21,4 +21,8 @@
     <string name="calves_label">Calves:</string>
     <string name="movements_label">Movements:</string>
     <string name="past_workouts_label">Past Workouts:</string>
+    <string name="title_login">Login</string>
+    <string name="input_password">Password</string>
+    <string name="input_email">Email</string>
+    <string name="button_login">Login</string>
 </resources>

@@ -46,8 +46,8 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Login view class?
-                Intent intent = new Intent(this, LoginView.class);
-                startActivity(intent);
+                //Intent intent = new Intent(this, LoginView.class);
+                //startActivity(intent);
             }
         });
     }
