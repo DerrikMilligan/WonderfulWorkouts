@@ -1,20 +1,26 @@
-package wonderful.workouts;
+package wonderful.workouts.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Measurement;
+import wonderful.workouts.databinding.FragmentProfileBinding;
 
-public class Profile extends AppCompatActivity {
+public class ProfileView extends Fragment {
+    private FragmentProfileBinding binding;
 
     private TextView weight = null;
     private TextView biceps = null;
@@ -25,31 +31,41 @@ public class Profile extends AppCompatActivity {
     private TextView neck = null;
     private TextView calves = null;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+    public View onCreateView(
 
-        weight = (TextView) findViewById(R.id.weight);
-        biceps = (TextView) findViewById(R.id.biceps);
-        chest = (TextView) findViewById(R.id.chest);
-        thighs = (TextView) findViewById(R.id.thighs);
-        waist = (TextView) findViewById(R.id.waist);
-        hips = (TextView) findViewById(R.id.hips);
-        neck = (TextView) findViewById(R.id.neck);
-        calves = (TextView) findViewById(R.id.calves);
+        @NonNull LayoutInflater inflater,
+        ViewGroup container,
+        Bundle savedInstanceState
+    ) {
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        weight = (TextView) root.findViewById(R.id.weight);
+        biceps = (TextView) root.findViewById(R.id.biceps);
+        chest = (TextView) root.findViewById(R.id.chest);
+        thighs = (TextView) root.findViewById(R.id.thighs);
+        waist = (TextView) root.findViewById(R.id.waist);
+        hips = (TextView) root.findViewById(R.id.hips);
+        neck = (TextView) root.findViewById(R.id.neck);
+        calves = (TextView) root.findViewById(R.id.calves);
 
         updateMeasurementDisplay();
 
-        Button signOutBtn = (Button) findViewById(R.id.signOutBtn);
+        Button signOutBtn = (Button) root.findViewById(R.id.signOutBtn);
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Login view class?
-                //Intent intent = new Intent(this, LoginView.class);
-                //startActivity(intent);
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.navigation_home);
             }
         });
+
+        return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     public void updateMeasurementDisplay() {

@@ -25,4 +25,21 @@
     <string name="input_password">Password</string>
     <string name="input_email">Email</string>
     <string name="button_login">Login</string>
+    <string name="add_movement">Add Movement</string>
+    <string name="add_new_category">Add new category</string>
+    <string name="add_new_equipment">Add new equipment</string>
+    <string-array name="categories">
+        <item>Legs</item>
+        <item>Chest</item>
+        <item>Back</item>
+        <item>Shoulders</item>
+        <item>Arms</item>
+    </string-array>
+    <string-array name="equipment">
+        <item>None</item>
+        <item>Single Dumbbell</item>
+        <item>Dumbbells</item>
+        <item>Barbell</item>
+        <item>Band</item>
+    </string-array>
 </resources>
