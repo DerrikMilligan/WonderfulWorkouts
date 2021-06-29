@@ -20,4 +20,28 @@
         android:name="wonderful.workouts.fragments.HomeView"
         android:label="Fancy Home!"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_current_workout"
+        android:name="wonderful.workouts.fragments.WorkoutView"
+        android:label="Active Workout"
+        tools:layout="@layout/fragment_current_workout" />
+
+    <fragment
+        android:id="@+id/navigation_past_workout"
+        android:name="wonderful.workouts.fragments.PastWorkoutView"
+        android:label="Past Workout"
+        tools:layout="@layout/fragment_past_workout" />
+
+    <fragment
+        android:id="@+id/navigation_movements"
+        android:name="wonderful.workouts.fragments.MovementsView"
+        android:label="Movements"
+        tools:layout="@layout/fragment_movements" />
+
+    <fragment
+        android:id="@+id/navigation_movement_history"
+        android:name="wonderful.workouts.fragments.MovementHistoryView"
+        android:label="Movement History"
+        tools:layout="@layout/fragment_movement_history" />
 </navigation>
