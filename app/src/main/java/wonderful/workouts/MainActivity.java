@@ -2,6 +2,7 @@ package wonderful.workouts;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,10 +44,40 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        binding.navView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_bar_profile:
+                    break;
+                case R.id.navigation_bar_home:
+                    navController.navigate(R.id.navigation_home_page);
+                    break;
+                case R.id.navigation_bar_movements:
+                    break;
+                case R.id.navigation_bar_history:
+                    break;
+            }
+
+            return true;
+        });
+
         // This allows us to control some behaviors when the navigation has been changes
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             // This is the only way I could manage to get and hide/show the toolbar
             ActionBar supportActionBar = this.getSupportActionBar();
+
+            // This unchecks the bottom nav stuff. It's not perfect for now I'm going to leave it off
+            // if (
+            //     destination.getId() != R.id.navigation_bar_home &&
+            //     destination.getId() != R.id.navigation_bar_dashboard &&
+            //     destination.getId() != R.id.navigation_bar_notifications
+            // ) {
+            //     Menu menu = binding.navView.getMenu();
+            //     menu.setGroupCheckable(0, true, false);
+            //     for (int i = 0; i < menu.size(); i++) {
+            //         menu.getItem(i).setChecked(false);
+            //     }
+            //     menu.setGroupCheckable(0, true, true);
+            // }
 
             // If the destination is the login page hide the toolbar and the bottom nav
             if (destination.getId() == R.id.navigation_login_page) {
