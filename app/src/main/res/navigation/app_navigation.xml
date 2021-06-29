@@ -3,16 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_login">
+    app:startDestination="@+id/navigation_login_page">
 
     <fragment
-        android:id="@+id/navigation_login"
+        android:id="@+id/navigation_login_page"
         android:name="wonderful.workouts.fragments.LoginView"
         android:label="@string/title_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_navigation_login_to_home_page"
+            app:destination="@id/navigation_home_page" />
+    </fragment>
 
     <fragment
-        android:id="@+id/home_page"
+        android:id="@+id/navigation_home_page"
         android:name="wonderful.workouts.fragments.HomeView"
         android:label="Fancy Home!"
         tools:layout="@layout/fragment_home" />
