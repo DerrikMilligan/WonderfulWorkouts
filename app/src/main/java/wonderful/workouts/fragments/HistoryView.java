@@ -5,14 +5,21 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 import wonderful.workouts.R;
+import wonderful.workouts.adapters.WorkoutAdapter;
+import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.databinding.FragmentHistoryBinding;
 
 public class HistoryView extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -28,6 +35,19 @@ public class HistoryView extends Fragment implements AdapterView.OnItemSelectedL
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        ArrayList<Workout> workouts = getWorkouts();
+
+        ListView workoutListView = (ListView) root.findViewById(R.id.workoutHistList);
+
+        // Set the ListView's adapter to our custom adapter!
+        workoutListView.setAdapter(new WorkoutAdapter(this.getContext(), workouts));
+
+        // Add an onClick listener just for and example!
+        workoutListView.setOnItemClickListener((parent, view, position, id) -> {
+            Workout clickedWorkout = (Workout) workoutListView.getItemAtPosition(position);
+            Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
+        });
+
         Spinner categoryDropDown = root.findViewById(R.id.categoryDropDown);
         ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.categories, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -39,6 +59,17 @@ public class HistoryView extends Fragment implements AdapterView.OnItemSelectedL
         equipmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         equipmentDropDown.setAdapter(equipmentAdapter);
         equipmentDropDown.setOnItemSelectedListener(this);
+
+        ArrayList<Movement> movements = getMovements();
+
+        ListView movementListView = (ListView) root.findViewById(R.id.movementHistList);
+
+        // movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+
+        // movementListView.setOnItemClickListener((parent, view, position, id) -> {
+        //     Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
+        //     Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
+        // });
 
         return root;
     }
@@ -57,5 +88,37 @@ public class HistoryView extends Fragment implements AdapterView.OnItemSelectedL
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private ArrayList<Workout> getWorkouts() {
+        ArrayList<Workout> workouts = new ArrayList<>();
+
+        Workout w = new Workout();
+        w.workoutId = 1;
+        w.name = "Leg Day";
+        workouts.add(w);
+
+        Workout w1 = new Workout();
+        w1.workoutId = 2;
+        w1.name = "Chest Day";
+        workouts.add(w1);
+
+        return workouts;
+    }
+
+    private ArrayList<Movement> getMovements() {
+        ArrayList<Movement> movements = new ArrayList<>();
+
+        Movement m = new Movement();
+        m.movementId = 1;
+        m.name = "Squats";
+        movements.add(m);
+
+        Movement m1 = new Movement();
+        m.movementId = 2;
+        m.name = "Lunges";
+        movements.add(m1);
+
+        return movements;
     }
 }

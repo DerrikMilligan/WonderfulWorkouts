@@ -55,26 +55,26 @@ public class NewEditMovementView extends Fragment implements AdapterView.OnItemS
         return root;
     }
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.timedRadio:
-                if (checked)
-                    Log.i("NewEditMovementView", String.format("Timed radio button selected"));
-                    break;
-            case R.id.repsRadio:
-                if (checked)
-                    Log.i("NewEditMovementView", String.format("Reps radio button selected"));
-                    break;
-            case R.id.weightRepsRadio:
-                if (checked)
-                    Log.i("NewEditMovementView", String.format("Weight/reps radio button selected"));
-                break;
-        }
-    }
+    // public void onRadioButtonClicked(View view) {
+    //     // Is the button now checked?
+    //     boolean checked = ((RadioButton) view).isChecked();
+    //
+    //     // Check which radio button was clicked
+    //     switch(view.getId()) {
+    //         case R.id.timedRadio:
+    //             if (checked)
+    //                 Log.i("NewEditMovementView", String.format("Timed radio button selected"));
+    //                 break;
+    //         case R.id.repsRadio:
+    //             if (checked)
+    //                 Log.i("NewEditMovementView", String.format("Reps radio button selected"));
+    //                 break;
+    //         case R.id.weightRepsRadio:
+    //             if (checked)
+    //                 Log.i("NewEditMovementView", String.format("Weight/reps radio button selected"));
+    //             break;
+    //     }
+    // }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

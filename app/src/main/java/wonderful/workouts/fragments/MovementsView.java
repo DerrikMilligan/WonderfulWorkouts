@@ -8,17 +8,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import wonderful.workouts.databinding.FragmentCurrentWorkoutBinding;
+import wonderful.workouts.databinding.FragmentMovementsBinding;
 
-public class WorkoutView extends Fragment {
-    private FragmentCurrentWorkoutBinding binding;
+public class MovementsView extends Fragment {
+    private FragmentMovementsBinding binding;
 
     public View onCreateView(
         @NonNull LayoutInflater inflater,
         ViewGroup container,
         Bundle savedInstanceState
     ) {
-        binding = FragmentCurrentWorkoutBinding.inflate(inflater, container, false);
+        binding = FragmentMovementsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         // Button btnLogin = root.findViewById(R.id.btn_login);
@@ -30,7 +30,7 @@ public class WorkoutView extends Fragment {
         //     Log.i("LoginView", String.format("Login time! Username: %s Password: %s", email.getText(), password.getText()));
         //
         //     // Finally navigate to home!
-        //     Navigation.findNavController(view).navigate(R.id.navigation_home);
+        //     Navigation.findNavController(view).navigate(R.id.navigation_home_page);
         // });
 
         return root;

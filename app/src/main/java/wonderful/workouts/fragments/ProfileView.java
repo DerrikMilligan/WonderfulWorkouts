@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +24,23 @@ public class ProfileView extends Fragment {
     private FragmentProfileBinding binding;
 
     private TextView weight = null;
+    private TextView weightDate = null;
     private TextView biceps = null;
+    private TextView bicepsDate = null;
     private TextView chest = null;
+    private TextView chestDate = null;
     private TextView thighs = null;
+    private TextView thighsDate = null;
     private TextView waist = null;
+    private TextView waistDate = null;
     private TextView hips = null;
+    private TextView hipsDate = null;
     private TextView neck = null;
+    private TextView neckDate = null;
     private TextView calves = null;
+    private TextView calvesDate = null;
+
+    LocalDate date = LocalDate.now();
 
     public View onCreateView(
 
@@ -41,13 +52,21 @@ public class ProfileView extends Fragment {
         View root = binding.getRoot();
 
         weight = (TextView) root.findViewById(R.id.weight);
+        weightDate = (TextView) root.findViewById(R.id.weightDate);
         biceps = (TextView) root.findViewById(R.id.biceps);
+        bicepsDate = (TextView) root.findViewById(R.id.bicepsDate);
         chest = (TextView) root.findViewById(R.id.chest);
+        chestDate = (TextView) root.findViewById(R.id.chestDate);
         thighs = (TextView) root.findViewById(R.id.thighs);
+        thighsDate = (TextView) root.findViewById(R.id.thighsDate);
         waist = (TextView) root.findViewById(R.id.waist);
+        waistDate = (TextView) root.findViewById(R.id.waistDate);
         hips = (TextView) root.findViewById(R.id.hips);
+        hipsDate = (TextView) root.findViewById(R.id.hipsDate);
         neck = (TextView) root.findViewById(R.id.neck);
+        neckDate = (TextView) root.findViewById(R.id.neckDate);
         calves = (TextView) root.findViewById(R.id.calves);
+        calvesDate = (TextView) root.findViewById(R.id.calvesDate);
 
         updateMeasurementDisplay();
 
@@ -55,7 +74,7 @@ public class ProfileView extends Fragment {
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_home);
+                Navigation.findNavController(view).navigate(R.id.navigation_login_page);
             }
         });
 
@@ -122,6 +141,7 @@ public class ProfileView extends Fragment {
                     case "weight":
                         Log.i("Profile", String.format("Updating weight to: %.2f", measurement.value));
                         weight.setText(String.valueOf(measurement.value) + "lbs");
+                        weightDate.setText("6/29/2021");
                         break;
 
                     case "biceps":

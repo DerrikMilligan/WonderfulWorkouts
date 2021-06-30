@@ -42,4 +42,7 @@
         <item>Barbell</item>
         <item>Band</item>
     </string-array>
+    <string name="title_profile">Profile</string>
+    <string name="title_history">History</string>
+    <string name="title_movements">Movements</string>
 </resources>
