@@ -8,18 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-
-import wonderful.workouts.R;
-import wonderful.workouts.database.entities.Movement;
-import wonderful.workouts.database.entities.WorkoutHistory;
-import wonderful.workouts.databinding.FragmentLoginBinding;
-=======
 import wonderful.workouts.databinding.FragmentCurrentWorkoutBinding;
->>>>>>> 72151375930ee5e111dc5cf1f1561b100e0c8599
 
 public class WorkoutView extends Fragment {
     private FragmentCurrentWorkoutBinding binding;
@@ -56,37 +45,37 @@ public class WorkoutView extends Fragment {
         }
 
     public void updateWorkoutHistoryDisplay() {
-        new Thread(() -> {
-            // List<Measurement> measurements = presenter.getCurrentMeasurements();
-            List<WorkoutHistory> workoutHistories = new ArrayList<>();
-
-
-            WorkoutHistory wh = new WorkoutHistory();
-            wh.startTime = new Date(2021, 6, 20);
-
-            WorkoutHistory wh1 = new WorkoutHistory();
-            wh1.startTime = new Date(2021, 6, 22);
-
-            WorkoutHistory wh2 = new WorkoutHistory();
-            wh2.startTime = new Date(2021, 6, 24);
-
-            workoutHistories.add(wh);
-            workoutHistories.add(wh1);
-            workoutHistories.add(wh2);
-
-
-            for (WorkoutHistory history : workoutHistories) {
-                Log.i("WorkoutView", String.format(String.valueOf(history.startTime)));
-
-                // switch (measurement.type) {
-                //     case "bicep":
-                //         Log.i("Profile", String.format("Updating biceps to: %.2f", measurement.value));
-                //         biceps.setText(String.valueOf(measurement.value) + "\"");
-                //         break;
-                //     default:
-                //        break;
-                //}
-            }
-        }).start();
+        // new Thread(() -> {
+        //     // List<Measurement> measurements = presenter.getCurrentMeasurements();
+        //     List<WorkoutHistory> workoutHistories = new ArrayList<>();
+        //
+        //
+        //     WorkoutHistory wh = new WorkoutHistory();
+        //     wh.startTime = new Date(2021, 6, 20);
+        //
+        //     WorkoutHistory wh1 = new WorkoutHistory();
+        //     wh1.startTime = new Date(2021, 6, 22);
+        //
+        //     WorkoutHistory wh2 = new WorkoutHistory();
+        //     wh2.startTime = new Date(2021, 6, 24);
+        //
+        //     workoutHistories.add(wh);
+        //     workoutHistories.add(wh1);
+        //     workoutHistories.add(wh2);
+        //
+        //
+        //     for (WorkoutHistory history : workoutHistories) {
+        //         Log.i("WorkoutView", String.format(String.valueOf(history.startTime)));
+        //
+        //         // switch (measurement.type) {
+        //         //     case "bicep":
+        //         //         Log.i("Profile", String.format("Updating biceps to: %.2f", measurement.value));
+        //         //         biceps.setText(String.valueOf(measurement.value) + "\"");
+        //         //         break;
+        //         //     default:
+        //         //        break;
+        //         //}
+        //     }
+        // }).start();
     }
 }
