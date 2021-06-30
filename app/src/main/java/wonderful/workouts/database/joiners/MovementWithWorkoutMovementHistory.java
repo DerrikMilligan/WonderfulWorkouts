@@ -8,14 +8,14 @@ import java.util.List;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
-public class WorkoutMovementHistoryWithMovements {
+public class MovementWithWorkoutMovementHistory {
     @Embedded
-    public WorkoutMovementHistory workoutMovementHistory;
+    public Movement movement;
 
     @Relation(
-        parentColumn = "workoutMovementHistoryId",
+        parentColumn = "movementId",
         entityColumn = "movementId",
-        entity = Movement.class
+        entity = WorkoutMovementHistory.class
     )
-    public List<Movement> movements;
+    public List<WorkoutMovementHistory> workoutMovementHistories;
 }

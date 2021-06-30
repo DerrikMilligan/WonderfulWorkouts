@@ -36,13 +36,11 @@ public class WorkoutView extends Fragment {
         return root;
     }
 
-
-
-        @Override
-        public void onDestroyView () {
-            super.onDestroyView();
-            binding = null;
-        }
+    @Override
+    public void onDestroyView () {
+        super.onDestroyView();
+        binding = null;
+    }
 
     public void updateWorkoutHistoryDisplay() {
         // new Thread(() -> {
