@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import wonderful.workouts.databinding.FragmentMovementHistoryBinding;
 
 public class MovementHistoryView extends Fragment {
     private FragmentMovementHistoryBinding binding;
-    private ListView movementHistoryListView;
+    private ExpandableListView movementHistoryListView;
     private View root;
 
     public View onCreateView(
@@ -49,7 +49,7 @@ public class MovementHistoryView extends Fragment {
         //     Navigation.findNavController(view).navigate(R.id.navigation_home_page);
         // });
 
-        movementHistoryListView = (ListView) root.findViewById(R.id.movement_history_list_view);
+        movementHistoryListView = (ExpandableListView) root.findViewById(R.id.movement_history_expandable_list_view);
 
         updateMovementHistoryDisplay();
 

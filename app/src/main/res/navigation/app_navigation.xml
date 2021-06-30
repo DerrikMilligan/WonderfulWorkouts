@@ -22,6 +22,24 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_profile_page"
+        android:name="wonderful.workouts.fragments.ProfileView"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_history_page"
+        android:name="wonderful.workouts.fragments.HistoryView"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/navigation_newEditMovement_page"
+        android:name="wonderful.workouts.fragments.NewEditMovementView"
+        android:label="fragment_new_edit_movement"
+        tools:layout="@layout/fragment_new_edit_movement" />
+
+    <fragment
         android:id="@+id/navigation_current_workout"
         android:name="wonderful.workouts.fragments.WorkoutView"
         android:label="Active Workout"

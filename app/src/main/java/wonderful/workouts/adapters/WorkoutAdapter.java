@@ -51,8 +51,10 @@ public class WorkoutAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.idView.setText(_workouts.get(position).workoutId + ": ");
-        holder.nameView.setText(_workouts.get(position).name);
+        Workout workout = _workouts.get(position);
+
+        holder.idView.setText(workout.workoutId + ": ");
+        holder.nameView.setText(workout.name);
         return convertView;
     }
 
