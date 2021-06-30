@@ -4,91 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    tools:context=".fragments.ProfileView">
 
-    <Button
-        android:id="@+id/neckBtn"
+    <ImageButton
+        android:id="@+id/addCalvesBtn"
         android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/neck"
-        app:layout_constraintStart_toEndOf="@+id/neck"
-        app:layout_constraintTop_toTopOf="@+id/neck" />
-
-    <Button
-        android:id="@+id/calvesBtn"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/calves"
-        app:layout_constraintStart_toEndOf="@+id/calves"
-        app:layout_constraintTop_toTopOf="@+id/calves" />
-
-    <Button
-        android:id="@+id/hipsBtn"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/hips"
-        app:layout_constraintStart_toEndOf="@+id/hips"
-        app:layout_constraintTop_toTopOf="@+id/hips" />
-
-    <Button
-        android:id="@+id/chestBtn"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/chest"
-        app:layout_constraintStart_toEndOf="@+id/chest"
-        app:layout_constraintTop_toTopOf="@+id/chest" />
-
-    <Button
-        android:id="@+id/thighsBtn"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/thigh"
-        app:layout_constraintStart_toEndOf="@+id/thigh"
-        app:layout_constraintTop_toTopOf="@+id/thigh" />
-
-    <Button
-        android:id="@+id/bicepsBtn"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/biceps"
+        app:layout_constraintEnd_toEndOf="@+id/addNeckBtn"
         app:layout_constraintStart_toEndOf="@+id/biceps"
-        app:layout_constraintTop_toTopOf="@+id/biceps" />
+        app:layout_constraintStart_toStartOf="@+id/addNeckBtn"
+        app:layout_constraintTop_toTopOf="@+id/calves"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
-    <Button
-        android:id="@+id/waistBtn"
+    <ImageButton
+        android:id="@+id/addNeckBtn"
         android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/neck"
+        app:layout_constraintEnd_toEndOf="@+id/addHipsBtn"
+        app:layout_constraintStart_toEndOf="@+id/biceps"
+        app:layout_constraintStart_toStartOf="@+id/addHipsBtn"
+        app:layout_constraintTop_toTopOf="@+id/neck"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/addHipsBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hips"
+        app:layout_constraintEnd_toEndOf="@+id/addWaistBtn"
+        app:layout_constraintStart_toEndOf="@+id/biceps"
+        app:layout_constraintStart_toStartOf="@+id/addWaistBtn"
+        app:layout_constraintTop_toTopOf="@+id/hips"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/addWaistBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/waist"
-        app:layout_constraintStart_toEndOf="@+id/waist"
-        app:layout_constraintTop_toTopOf="@+id/waist" />
+        app:layout_constraintEnd_toEndOf="@+id/addThighsBtn"
+        app:layout_constraintStart_toEndOf="@+id/biceps"
+        app:layout_constraintStart_toStartOf="@+id/addThighsBtn"
+        app:layout_constraintTop_toTopOf="@+id/waist"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/addChestBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/chest"
+        app:layout_constraintEnd_toEndOf="@+id/addBicepsBtn"
+        app:layout_constraintStart_toEndOf="@+id/biceps"
+        app:layout_constraintStart_toStartOf="@+id/addBicepsBtn"
+        app:layout_constraintTop_toTopOf="@+id/chest"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/addThighsBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/thighs"
+        app:layout_constraintEnd_toEndOf="@+id/addChestBtn"
+        app:layout_constraintStart_toEndOf="@+id/biceps"
+        app:layout_constraintStart_toStartOf="@+id/addChestBtn"
+        app:layout_constraintTop_toTopOf="@+id/thighs"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/addBicepsBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/biceps"
+        app:layout_constraintEnd_toEndOf="@+id/addWeightBtn"
+        app:layout_constraintStart_toEndOf="@+id/biceps"
+        app:layout_constraintStart_toStartOf="@+id/addWeightBtn"
+        app:layout_constraintTop_toTopOf="@+id/biceps"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/bicepsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Biceps:"
+        android:text="@string/biceps_label"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/weightLabel"
         app:layout_constraintTop_toBottomOf="@+id/weightLabel" />
@@ -97,7 +97,7 @@
         android:id="@+id/calves"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20"
+        android:text='20"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/calvesLabel"
         app:layout_constraintEnd_toEndOf="@+id/neck"
@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Thighs:"
+        android:text="@string/thighs_label"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/chestLabel"
         app:layout_constraintTop_toBottomOf="@+id/chestLabel" />
@@ -118,8 +118,8 @@
         android:id="@+id/weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="150"
+        android:layout_marginStart="8dp"
+        android:text="150lbs"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/weightLabel"
         app:layout_constraintStart_toEndOf="@+id/weightLabel"
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Waist:"
+        android:text="@string/waist_label"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/thighsLabel"
         app:layout_constraintTop_toBottomOf="@+id/thighsLabel" />
@@ -141,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Calves:"
+        android:text="@string/calves_label"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/neckLabel"
         app:layout_constraintTop_toBottomOf="@+id/neckLabel" />
@@ -150,7 +150,7 @@
         android:id="@+id/hips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="44"
+        android:text='44"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/hipsLabel"
         app:layout_constraintEnd_toEndOf="@+id/waist"
@@ -161,7 +161,7 @@
         android:id="@+id/neck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20"
+        android:text='20"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/neckLabel"
         app:layout_constraintEnd_toEndOf="@+id/hips"
@@ -173,7 +173,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Hips:"
+        android:text="@string/hips_label"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/waistLabel"
         app:layout_constraintTop_toBottomOf="@+id/waistLabel" />
@@ -182,7 +182,7 @@
         android:id="@+id/biceps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20"
+        android:text='20"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/bicepsLabel"
         app:layout_constraintEnd_toEndOf="@+id/weight"
@@ -194,8 +194,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="Weight:"
+        android:layout_marginTop="16dp"
+        android:text="@string/weight_label"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signOutBtn" />
@@ -204,7 +204,7 @@
         android:id="@+id/chest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="40"
+        android:text='40"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/chestLabel"
         app:layout_constraintEnd_toEndOf="@+id/biceps"
@@ -215,10 +215,10 @@
         android:id="@+id/waist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="32"
+        android:text='32"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/waistLabel"
-        app:layout_constraintEnd_toEndOf="@+id/thigh"
+        app:layout_constraintEnd_toEndOf="@+id/thighs"
         app:layout_constraintTop_toTopOf="@+id/waistLabel"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -227,16 +227,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Chest:"
+        android:text="@string/chest_label"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/bicepsLabel"
         app:layout_constraintTop_toBottomOf="@+id/bicepsLabel" />
 
     <TextView
-        android:id="@+id/thigh"
+        android:id="@+id/thighs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="25"
+        android:text='25"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/thighsLabel"
         app:layout_constraintEnd_toEndOf="@+id/chest"
@@ -248,7 +248,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Neck:"
+        android:text="@string/neck_label"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/hipsLabel"
         app:layout_constraintTop_toBottomOf="@+id/hipsLabel" />
@@ -256,49 +256,36 @@
     <Button
         android:id="@+id/signOutBtn"
         android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:text="Sign Out"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/sign_out_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/weightBtn"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:text="+"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/weight"
-        app:layout_constraintStart_toEndOf="@+id/weight"
-        app:layout_constraintTop_toTopOf="@+id/weight" />
-
     <TextView
         android:id="@+id/weightDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/weightBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addWeightBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/weightBtn"
-        app:layout_constraintTop_toTopOf="@+id/weightBtn" />
+        app:layout_constraintStart_toEndOf="@+id/addWeightBtn"
+        app:layout_constraintTop_toTopOf="@+id/addWeightBtn" />
 
     <TextView
         android:id="@+id/bicepsDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bicepsBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addBicepsBtn"
         app:layout_constraintEnd_toEndOf="@+id/weightDate"
-        app:layout_constraintStart_toEndOf="@+id/bicepsBtn"
-        app:layout_constraintTop_toTopOf="@+id/bicepsBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addBicepsBtn" />
 
     <TextView
         android:id="@+id/chestDate"
@@ -306,9 +293,9 @@
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/chestBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addChestBtn"
         app:layout_constraintEnd_toEndOf="@+id/bicepsDate"
-        app:layout_constraintTop_toTopOf="@+id/chestBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addChestBtn" />
 
     <TextView
         android:id="@+id/thighsDate"
@@ -316,9 +303,9 @@
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/thighsBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addThighsBtn"
         app:layout_constraintEnd_toEndOf="@+id/chestDate"
-        app:layout_constraintTop_toTopOf="@+id/thighsBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addThighsBtn" />
 
     <TextView
         android:id="@+id/waistDate"
@@ -326,9 +313,9 @@
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/waistBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addWaistBtn"
         app:layout_constraintEnd_toEndOf="@+id/thighsDate"
-        app:layout_constraintTop_toTopOf="@+id/waistBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addWaistBtn" />
 
     <TextView
         android:id="@+id/hipsDate"
@@ -336,9 +323,9 @@
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/hipsBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addHipsBtn"
         app:layout_constraintEnd_toEndOf="@+id/waistDate"
-        app:layout_constraintTop_toTopOf="@+id/hipsBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addHipsBtn" />
 
     <TextView
         android:id="@+id/neckDate"
@@ -346,9 +333,9 @@
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/neckBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addNeckBtn"
         app:layout_constraintEnd_toEndOf="@+id/hipsDate"
-        app:layout_constraintTop_toTopOf="@+id/neckBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addNeckBtn" />
 
     <TextView
         android:id="@+id/calvesDate"
@@ -356,8 +343,25 @@
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/calvesBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addCalvesBtn"
         app:layout_constraintEnd_toEndOf="@+id/neckDate"
-        app:layout_constraintTop_toTopOf="@+id/calvesBtn" />
+        app:layout_constraintTop_toTopOf="@+id/addCalvesBtn" />
+
+    <ImageButton
+        android:id="@+id/addWeightBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/weight"
+        app:layout_constraintStart_toEndOf="@+id/weight"
+        app:layout_constraintTop_toTopOf="@+id/weight"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="411dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

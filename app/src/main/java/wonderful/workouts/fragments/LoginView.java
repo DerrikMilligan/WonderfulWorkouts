@@ -53,4 +53,5 @@ public class LoginView extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }
