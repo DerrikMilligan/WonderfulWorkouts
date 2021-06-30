@@ -1,17 +1,14 @@
 package wonderful.workouts.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -20,16 +17,19 @@ import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentLoginBinding;
+=======
+import wonderful.workouts.databinding.FragmentCurrentWorkoutBinding;
+>>>>>>> 72151375930ee5e111dc5cf1f1561b100e0c8599
 
 public class WorkoutView extends Fragment {
-    private FragmentLoginBinding binding;
+    private FragmentCurrentWorkoutBinding binding;
 
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState
     ) {
-        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        binding = FragmentCurrentWorkoutBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         // Button btnLogin = root.findViewById(R.id.btn_login);

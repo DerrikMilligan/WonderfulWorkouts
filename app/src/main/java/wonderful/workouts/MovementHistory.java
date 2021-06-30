@@ -16,7 +16,7 @@ public class MovementHistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movement_history);
+        setContentView(R.layout.fragment_movement_history);
 
         updateMovementHistoryDisplay();
     }

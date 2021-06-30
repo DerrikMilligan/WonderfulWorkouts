@@ -3,17 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_login">
+    app:startDestination="@+id/navigation_login_page">
 
     <fragment
-        android:id="@+id/navigation_login"
+        android:id="@+id/navigation_login_page"
         android:name="wonderful.workouts.fragments.LoginView"
         android:label="@string/title_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_navigation_login_to_home_page"
+            app:destination="@id/navigation_home_page" />
+    </fragment>
 
     <fragment
-        android:id="@+id/home_page"
+        android:id="@+id/navigation_home_page"
         android:name="wonderful.workouts.fragments.HomeView"
         android:label="Fancy Home!"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_current_workout"
+        android:name="wonderful.workouts.fragments.WorkoutView"
+        android:label="Active Workout"
+        tools:layout="@layout/fragment_current_workout" />
+
+    <fragment
+        android:id="@+id/navigation_past_workout"
+        android:name="wonderful.workouts.fragments.PastWorkoutView"
+        android:label="Past Workout"
+        tools:layout="@layout/fragment_past_workout" />
+
+    <fragment
+        android:id="@+id/navigation_movements"
+        android:name="wonderful.workouts.fragments.MovementsView"
+        android:label="Movements"
+        tools:layout="@layout/fragment_movements" />
+
+    <fragment
+        android:id="@+id/navigation_movement_history"
+        android:name="wonderful.workouts.fragments.MovementHistoryView"
+        android:label="Movement History"
+        tools:layout="@layout/fragment_movement_history" />
 </navigation>
