@@ -97,7 +97,6 @@
         android:id="@+id/calves"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='20"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/calvesLabel"
         app:layout_constraintEnd_toEndOf="@+id/neck"
@@ -119,7 +118,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="150lbs"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/weightLabel"
         app:layout_constraintStart_toEndOf="@+id/weightLabel"
@@ -150,7 +148,6 @@
         android:id="@+id/hips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='44"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/hipsLabel"
         app:layout_constraintEnd_toEndOf="@+id/waist"
@@ -161,7 +158,6 @@
         android:id="@+id/neck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='20"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/neckLabel"
         app:layout_constraintEnd_toEndOf="@+id/hips"
@@ -182,7 +178,6 @@
         android:id="@+id/biceps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='20"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/bicepsLabel"
         app:layout_constraintEnd_toEndOf="@+id/weight"
@@ -194,7 +189,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/weight_label"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +199,6 @@
         android:id="@+id/chest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='40"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/chestLabel"
         app:layout_constraintEnd_toEndOf="@+id/biceps"
@@ -215,7 +209,6 @@
         android:id="@+id/waist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='32"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/waistLabel"
         app:layout_constraintEnd_toEndOf="@+id/thighs"
@@ -236,7 +229,6 @@
         android:id="@+id/thighs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='25"'
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/thighsLabel"
         app:layout_constraintEnd_toEndOf="@+id/chest"
@@ -257,7 +249,7 @@
         android:id="@+id/signOutBtn"
         android:layout_width="350dp"
         android:layout_height="55dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/sign_out_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"

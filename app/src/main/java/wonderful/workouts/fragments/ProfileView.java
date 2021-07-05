@@ -10,20 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import wonderful.workouts.MeasurementDialog;
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Measurement;
 import wonderful.workouts.databinding.FragmentProfileBinding;
 
-public class ProfileView extends Fragment {
+//Tried to pass new weight from dialog, but it says MainActivity needs to implement MeasurementDialogListener
+// implements MeasurementDialog.MeasurementDialogListener
+
+public class ProfileView extends Fragment  {
     private FragmentProfileBinding binding;
 
     private TextView weight = null;
+    private ImageButton addWeightBtn;
     private TextView weightDate = null;
     private TextView biceps = null;
     private TextView bicepsDate = null;
@@ -52,6 +58,13 @@ public class ProfileView extends Fragment {
         View root = binding.getRoot();
 
         weight = (TextView) root.findViewById(R.id.weight);
+        addWeightBtn = (ImageButton) root.findViewById(R.id.addWeightBtn);
+        addWeightBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
         weightDate = (TextView) root.findViewById(R.id.weightDate);
         biceps = (TextView) root.findViewById(R.id.biceps);
         bicepsDate = (TextView) root.findViewById(R.id.bicepsDate);
@@ -184,4 +197,14 @@ public class ProfileView extends Fragment {
             }
         }).start();
     }
+
+    public void openDialog() {
+        MeasurementDialog measurementDialog = new MeasurementDialog();
+        measurementDialog.show(getChildFragmentManager(), "measurement dialog");
+    }
+
+    // @Override
+    // public void applyText(String newWeight) {
+    //     weight.setText(newWeight);
+    // }
 }
