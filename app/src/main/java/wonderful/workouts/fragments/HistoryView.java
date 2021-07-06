@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 import wonderful.workouts.R;
+import wonderful.workouts.adapters.MovementAdapter;
 import wonderful.workouts.adapters.WorkoutAdapter;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.Workout;
@@ -46,6 +47,7 @@ public class HistoryView extends Fragment implements AdapterView.OnItemSelectedL
         workoutListView.setOnItemClickListener((parent, view, position, id) -> {
             Workout clickedWorkout = (Workout) workoutListView.getItemAtPosition(position);
             Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
+            Navigation.findNavController(view).navigate(R.id.navigation_past_workout);
         });
 
         Spinner categoryDropDown = root.findViewById(R.id.categoryDropDown);
@@ -64,12 +66,13 @@ public class HistoryView extends Fragment implements AdapterView.OnItemSelectedL
 
         ListView movementListView = (ListView) root.findViewById(R.id.movementHistList);
 
-        // movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+        movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
 
-        // movementListView.setOnItemClickListener((parent, view, position, id) -> {
-        //     Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
-        //     Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
-        // });
+        movementListView.setOnItemClickListener((parent, view, position, id) -> {
+            Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
+            Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
+            Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
+        });
 
         return root;
     }
@@ -115,8 +118,8 @@ public class HistoryView extends Fragment implements AdapterView.OnItemSelectedL
         movements.add(m);
 
         Movement m1 = new Movement();
-        m.movementId = 2;
-        m.name = "Lunges";
+        m1.movementId = 2;
+        m1.name = "Lunges";
         movements.add(m1);
 
         return movements;
