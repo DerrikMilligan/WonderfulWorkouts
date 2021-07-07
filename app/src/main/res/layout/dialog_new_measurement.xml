@@ -6,7 +6,7 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/editWeight"
+        android:id="@+id/measurement_dialog_edit_weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_weight"
