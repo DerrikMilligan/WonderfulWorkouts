@@ -16,22 +16,22 @@ import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 
 public class WorkoutHistoryAdapter extends BaseAdapter {
-    private final ArrayList<WorkoutHistory> _workouthistory;
+    private final ArrayList<WorkoutHistory> _workoutHistory;
     private final LayoutInflater layoutInflater;
 
     public WorkoutHistoryAdapter(Context context, ArrayList<WorkoutHistory> workoutHistory) {
-        _workouthistory = workoutHistory;
+        _workoutHistory = workoutHistory;
         layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return _workouthistory.size();
+        return _workoutHistory.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return _workouthistory.get(position);
+        return _workoutHistory.get(position);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class WorkoutHistoryAdapter extends BaseAdapter {
             holder = (WorkoutHistoryAdapter.ViewHolder) convertView.getTag();
         }
 
-        WorkoutHistory workoutHistory = _workouthistory.get(position);
+        WorkoutHistory workoutHistory = _workoutHistory.get(position);
         LocalDateTime workoutDate = workoutHistory.startTime;
         holder.dateView.setText(String.format("%d:%02d:%02d", workoutDate.getHour(), workoutDate.getMinute(), workoutDate.getSecond()));
 
