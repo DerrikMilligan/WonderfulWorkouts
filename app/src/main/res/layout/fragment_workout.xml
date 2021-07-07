@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HomeView">
+    tools:context=".fragments.WorkoutView">
 
     <ListView
         android:id="@+id/workout_history_view_movements_list"
@@ -19,14 +19,6 @@
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_workout_new_movement"
-            android:layout_width="56dp"
-            android:layout_height="87dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginBottom="32dp"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/ic_input_add" />
     </ListView>
 
     <TextView

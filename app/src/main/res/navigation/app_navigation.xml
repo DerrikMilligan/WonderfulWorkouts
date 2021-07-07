@@ -62,4 +62,10 @@
         android:name="wonderful.workouts.fragments.MovementHistoryView"
         android:label="Movement History"
         tools:layout="@layout/fragment_movement_history" />
+
+    <fragment
+        android:id="@+id/navigation_workout"
+        android:name="wonderful.workouts.fragments.WorkoutView"
+        android:label="Movement History"
+        tools:layout="@layout/fragment_workout" />
 </navigation>

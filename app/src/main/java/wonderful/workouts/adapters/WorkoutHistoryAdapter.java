@@ -39,7 +39,7 @@ public class WorkoutHistoryAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint({"SetTextI18n", "InflateParams"})
+    @SuppressLint({"SetTextI18n", "InflateParams", "DefaultLocale"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -52,18 +52,9 @@ public class WorkoutHistoryAdapter extends BaseAdapter {
             holder = (WorkoutHistoryAdapter.ViewHolder) convertView.getTag();
         }
 
-        holder.dateView.setText(LocalDateTime.now().toString());
-
-//        WorkoutHistory workoutHistory = _workouthistory.get(position);
-//
-//        TextView workoutDate = workoutHistory.startTime;
-//
-//        long workoutSeconds = workoutHistory.getSeconds();
-//
-//        workoutDate.setText(String.format("%d:%02d:%02d", workoutSeconds / 3600, (workoutSeconds % 3600) / 60, (workoutSeconds % 60)));
-
-        //holder.dateView.setText(workoutHistory.startTime);
-        //holder.dateView.setText(_workouthistory.get(position).startTime);
+        WorkoutHistory workoutHistory = _workouthistory.get(position);
+        LocalDateTime workoutDate = workoutHistory.startTime;
+        holder.dateView.setText(String.format("%d:%02d:%02d", workoutDate.getHour(), workoutDate.getMinute(), workoutDate.getSecond()));
 
         return convertView;
     }
