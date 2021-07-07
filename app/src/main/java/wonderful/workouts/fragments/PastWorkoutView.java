@@ -145,8 +145,8 @@ public class PastWorkoutView extends Fragment {
 
         WorkoutMovementHistory rep1_1 = new WorkoutMovementHistory();
         rep1_1.workoutMovementHistoryId = 1;
-        rep1_1.reps = 11;
-        rep1_1.weight = 123;
+        rep1_1.reps = 113;
+        rep1_1.weight = 1;
         rep1_1.movementId = 1;
         rep1_1.workoutHistoryId = 1;
 

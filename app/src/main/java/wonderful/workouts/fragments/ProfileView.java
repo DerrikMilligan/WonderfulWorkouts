@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import wonderful.workouts.MeasurementDialog;
+import wonderful.workouts.dialogs.MeasurementDialog;
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Measurement;
 import wonderful.workouts.databinding.FragmentProfileBinding;
@@ -29,7 +31,6 @@ public class ProfileView extends Fragment  {
     private FragmentProfileBinding binding;
 
     private TextView weight = null;
-    private ImageButton addWeightBtn;
     private TextView weightDate = null;
     private TextView biceps = null;
     private TextView bicepsDate = null;
@@ -46,25 +47,21 @@ public class ProfileView extends Fragment  {
     private TextView calves = null;
     private TextView calvesDate = null;
 
+    private View root = null;
+
+    private Map<ImageButton, TextView> buttonMap = null;
+
     LocalDate date = LocalDate.now();
 
     public View onCreateView(
-
         @NonNull LayoutInflater inflater,
         ViewGroup container,
         Bundle savedInstanceState
     ) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
         weight = (TextView) root.findViewById(R.id.weight);
-        addWeightBtn = (ImageButton) root.findViewById(R.id.addWeightBtn);
-        addWeightBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
-        });
         weightDate = (TextView) root.findViewById(R.id.weightDate);
         biceps = (TextView) root.findViewById(R.id.biceps);
         bicepsDate = (TextView) root.findViewById(R.id.bicepsDate);
@@ -81,14 +78,25 @@ public class ProfileView extends Fragment  {
         calves = (TextView) root.findViewById(R.id.calves);
         calvesDate = (TextView) root.findViewById(R.id.calvesDate);
 
+        setupHashMap();
+
+        for (Map.Entry<ImageButton, TextView> item : buttonMap.entrySet()) {
+            ImageButton button = item.getKey();
+            TextView text = item.getValue();
+
+            if (button == null || text == null) {
+                Log.i("ProfileView", "Skipping button!");
+                continue;
+            }
+
+            button.setOnClickListener(v -> openDialog(text));
+        }
+
         updateMeasurementDisplay();
 
         Button signOutBtn = (Button) root.findViewById(R.id.signOutBtn);
-        signOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_login_page);
-            }
+        signOutBtn.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.navigation_login_page);
         });
 
         return root;
@@ -98,6 +106,19 @@ public class ProfileView extends Fragment  {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void setupHashMap() {
+        buttonMap = new HashMap<>();
+
+        buttonMap.put(root.findViewById(R.id.addWeightBtn), weight);
+        buttonMap.put(root.findViewById(R.id.addBicepsBtn), biceps);
+        buttonMap.put(root.findViewById(R.id.addChestBtn), chest);
+        buttonMap.put(root.findViewById(R.id.addThighsBtn), thighs);
+        buttonMap.put(root.findViewById(R.id.addWaistBtn), waist);
+        buttonMap.put(root.findViewById(R.id.addHipsBtn), hips);
+        buttonMap.put(root.findViewById(R.id.addNeckBtn), neck);
+        buttonMap.put(root.findViewById(R.id.addCalvesBtn), calves);
     }
 
     public void updateMeasurementDisplay() {
@@ -198,9 +219,11 @@ public class ProfileView extends Fragment  {
         }).start();
     }
 
-    public void openDialog() {
-        MeasurementDialog measurementDialog = new MeasurementDialog();
-        measurementDialog.show(getChildFragmentManager(), "measurement dialog");
+    public void openDialog(TextView textView) {
+        if (textView != null) {
+            MeasurementDialog measurementDialog = new MeasurementDialog(textView::setText);
+            measurementDialog.show(getChildFragmentManager(), "measurement_dialog");
+        }
     }
 
     // @Override
