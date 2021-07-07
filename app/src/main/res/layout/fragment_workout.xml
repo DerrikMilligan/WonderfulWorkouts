@@ -6,58 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".fragments.WorkoutView">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="244dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="16dp"
+    <ListView
+        android:id="@+id/workout_history_view_movements_list"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="28dp"
+        android:dividerHeight="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="121dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:text="Workout Name:"
+        app:layout_constraintEnd_toStartOf="@+id/workout_view_workout_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/workout_view_workout_name"
+        android:layout_width="226dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/startWorkout"
-        android:layout_width="180dp"
-        android:text="Start Workout"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="74dp" />
-
-    <Button
-        android:id="@+id/deleteWorkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="74dp" />
-
     <ListView
-        android:layout_width="303dp"
-        android:layout_height="188dp"
+        android:id="@+id/workout_view_past_entries"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/workout_history_view_movements_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="179dp" />
-
-    <ListView
-        android:layout_width="306dp"
-        android:layout_height="217dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="413dp">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/ic_input_add" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/ic_input_add" />
-    </ListView>
+        app:layout_constraintTop_toBottomOf="@+id/workout_view_workout_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import wonderful.workouts.R;
-import wonderful.workouts.adapters.WorkoutWithHistoryAdapter;
+import wonderful.workouts.adapters.MovementHistoryAdapter;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
@@ -69,7 +69,7 @@ public class MovementHistoryView extends Fragment {
         workoutHistories.add(dummyData);
 
         // Set the ListView's adapter to our custom adapter!
-        movementHistoryListView.setAdapter(new WorkoutWithHistoryAdapter(this.getContext(), workoutHistories));
+        movementHistoryListView.setAdapter(new MovementHistoryAdapter(this.getContext(), workoutHistories));
 
         new Thread(() -> {
             // Dummy data for now!
@@ -127,8 +127,8 @@ public class MovementHistoryView extends Fragment {
 
         WorkoutMovementHistory rep1_1 = new WorkoutMovementHistory();
         rep1_1.workoutMovementHistoryId = 1;
-        rep1_1.reps = 10;
-        rep1_1.weight = 215;
+        rep1_1.reps = 104;
+        rep1_1.weight = 1;
         rep1_1.movementId = 1;
         rep1_1.workoutHistoryId = 1;
 

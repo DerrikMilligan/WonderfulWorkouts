@@ -2,9 +2,13 @@ package wonderful.workouts.presenters;
 
 import android.content.Context;
 
+import java.util.List;
+
 import wonderful.workouts.database.AppDatabase;
 import wonderful.workouts.database.daos.UserDao;
 import wonderful.workouts.database.entities.User;
+import wonderful.workouts.database.entities.Workout;
+import wonderful.workouts.database.joiners.UserWithWorkouts;
 
 public class UserPresenter {
     private final UserDao userDao;
@@ -35,6 +39,26 @@ public class UserPresenter {
     }
 
     // Public methods to get information from the database
+
+    /**
+     * getUserWorkouts
+     *
+     * Returns a list of workouts for a given user
+     *
+     * @param user The user we're getting the workout for
+     *
+     * @return List<Workout>
+     */
+    public List<Workout> getUserWorkouts(User user) {
+        List<UserWithWorkouts> workouts = userDao.getUserWorkouts(user.userId);
+
+        if (workouts.size() > 0) {
+            return workouts.get(0).workouts;
+        }
+
+        return null;
+    }
+
 
     /**
      * usernameExists
