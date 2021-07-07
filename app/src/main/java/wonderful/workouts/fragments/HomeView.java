@@ -1,3 +1,4 @@
+
 package wonderful.workouts.fragments;
 
 import android.os.Bundle;
@@ -93,3 +94,4 @@ public class HomeView extends Fragment {
     }
 
 }
+
