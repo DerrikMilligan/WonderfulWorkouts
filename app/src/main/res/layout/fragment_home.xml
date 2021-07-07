@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/list_home_recent_workouts"
+        android:id="@+id/workout_view_movements_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
