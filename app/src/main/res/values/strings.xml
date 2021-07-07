@@ -19,6 +19,7 @@
     <string name="hips_label">Hips:</string>
     <string name="neck_label">Neck:</string>
     <string name="calves_label">Calves:</string>
+    <string name="enter_weight">Enter weight</string>
     <string name="movements_label">Movements:</string>
     <string name="past_workouts_label">Past Workouts:</string>
     <string name="title_login">Login</string>

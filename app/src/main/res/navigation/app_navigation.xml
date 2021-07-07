@@ -24,19 +24,19 @@
     <fragment
         android:id="@+id/navigation_profile_page"
         android:name="wonderful.workouts.fragments.ProfileView"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/navigation_history_page"
         android:name="wonderful.workouts.fragments.HistoryView"
-        android:label="fragment_history"
+        android:label="History"
         tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/navigation_newEditMovement_page"
         android:name="wonderful.workouts.fragments.NewEditMovementView"
-        android:label="fragment_new_edit_movement"
+        android:label="New/Edit Movement"
         tools:layout="@layout/fragment_new_edit_movement" />
 
     <fragment
