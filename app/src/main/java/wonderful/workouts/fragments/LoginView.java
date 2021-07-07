@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,13 @@ import java.util.List;
 
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Measurement;
+import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.User;
 import wonderful.workouts.database.entities.Workout;
+import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentLoginBinding;
+import wonderful.workouts.presenters.UserPresenter;
+import wonderful.workouts.presenters.WorkoutPresenter;
 
 public class LoginView extends Fragment {
     private FragmentLoginBinding binding;
@@ -43,6 +49,24 @@ public class LoginView extends Fragment {
             // Finally navigate to home!
             Navigation.findNavController(view).navigate(R.id.navigation_home_page);
         });
+
+        // new Thread(() -> {
+        //     WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(root.getContext());
+        //
+        //     EditText email = root.findViewById(R.id.input_login_username);
+        //     EditText password = root.findViewById(R.id.input_login_password);
+        //
+        //     String sEmail = email.getText().toString();
+        //     String sPassword = password.getText().toString();
+        //
+        //     float reps = Float.parseFloat(sEmail);
+        //     float weight = Float.parseFloat(sPassword);
+        //
+        //     WorkoutHistory workoutHistory = new WorkoutHistory();
+        //     Movement movement = new Movement();
+        //
+        //     workoutPresenter.addSetToWorkout(workoutHistory, movement, reps, weight);
+        // }).start();
 
         return root;
     }
