@@ -4,40 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".fragments.HistoryView">
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView2"
-        android:layout_width="411dp"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movementHistList" />
 
     <TextView
         android:id="@+id/movementsHistLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/movements_label"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/movementHistList"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/equipmentLabel"
         app:layout_constraintTop_toBottomOf="@+id/equipmentLabel" />
 
     <Spinner
         android:id="@+id/equipmentDropDown"
-        android:layout_width="254dp"
+        android:layout_width="200dp"
         android:layout_height="27dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/equipmentLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/equipmentLabel"
+        app:layout_constraintStart_toStartOf="@+id/categoryDropDown"
         app:layout_constraintTop_toTopOf="@+id/equipmentLabel" />
 
     <TextView
@@ -48,27 +35,26 @@
         android:text="@string/equipment_label"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/movementsHistLabel"
-        app:layout_constraintEnd_toEndOf="@+id/categoryLabel"
+        app:layout_constraintStart_toStartOf="@+id/categoryLabel"
         app:layout_constraintTop_toBottomOf="@+id/categoryLabel" />
 
     <TextView
         android:id="@+id/categoryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:text="@string/category_label"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/equipmentLabel"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/workoutsHistLabel"
         app:layout_constraintTop_toBottomOf="@+id/workoutHistList" />
 
     <TextView
         android:id="@+id/workoutsHistLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:text="@string/past_workouts_label"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/workoutHistList"
@@ -77,9 +63,9 @@
 
     <Spinner
         android:id="@+id/categoryDropDown"
-        android:layout_width="254dp"
+        android:layout_width="200dp"
         android:layout_height="27dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="50dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/categoryLabel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +77,7 @@
     <ListView
         android:id="@+id/workoutHistList"
         android:layout_width="379dp"
-        android:layout_height="190dp"
+        android:layout_height="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -104,12 +90,12 @@
     <ListView
         android:id="@+id/movementHistList"
         android:layout_width="379dp"
-        android:layout_height="190dp"
+        android:layout_height="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
+        android:layout_marginBottom="107dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
