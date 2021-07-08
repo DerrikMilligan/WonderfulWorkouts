@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/navigation_newEditMovement_page"
+        android:id="@+id/navigation_new_edit_movement_page"
         android:name="wonderful.workouts.fragments.NewEditMovementView"
         android:label="New/Edit Movement"
         tools:layout="@layout/fragment_new_edit_movement" />

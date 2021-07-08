@@ -53,11 +53,11 @@ public class HomeView extends Fragment {
             // Navigate to home!
             // Navigation.findNavController(view).navigate(R.id.navigation_current_workout);
             // Navigation.findNavController(view).navigate(R.id.navigation_past_workout);
-            // Navigation.findNavController(view).navigate(R.id.navigation_movements);
+            Navigation.findNavController(view).navigate(R.id.navigation_movements);
             // Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
             // Navigation.findNavController(view).navigate(R.id.navigation_profile_page);
-            // Navigation.findNavController(view).navigate(R.id.navigation_newEditMovement_page);
-            Navigation.findNavController(view).navigate(R.id.navigation_history_page);
+            // Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
+            // Navigation.findNavController(view).navigate(R.id.navigation_history_page);
             // Navigation.findNavController(view).navigate(R.id.navigation_workout);
         });
 
