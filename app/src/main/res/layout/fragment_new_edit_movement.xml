@@ -4,18 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".fragments.NewEditMovementView">
 
-    <ImageButton
-        android:id="@+id/addCategoryBtn"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:contentDescription="@string/add_new_category"
-        app:layout_constraintBottom_toBottomOf="@+id/categoryList"
-        app:layout_constraintStart_toEndOf="@+id/categoryList"
-        app:layout_constraintTop_toTopOf="@+id/categoryList"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/category_label"
@@ -38,7 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/equipment_label"
         android:layout_width="wrap_content"
@@ -50,7 +40,6 @@
         app:layout_constraintEnd_toEndOf="@+id/nameLabel"
         app:layout_constraintTop_toBottomOf="@+id/category_label" />
 
-
     <TextView
         android:id="@+id/typeLabel"
         android:layout_width="wrap_content"
@@ -60,18 +49,6 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/equipment_label"
         app:layout_constraintTop_toBottomOf="@+id/equipment_label" />
-
-
-    <ImageButton
-        android:id="@+id/addEquipmentBtn"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:contentDescription="@string/add_new_equipment"
-        app:layout_constraintBottom_toBottomOf="@+id/equipmentList"
-        app:layout_constraintStart_toEndOf="@+id/equipmentList"
-        app:layout_constraintTop_toTopOf="@+id/equipmentList"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
     <Button
         android:id="@+id/addMovementBtn"
@@ -119,28 +96,33 @@
             app:layout_constraintTop_toBottomOf="@+id/repsRadio" />
     </RadioGroup>
 
-    <Spinner
-        android:id="@+id/equipmentList"
-        android:layout_width="157dp"
-        android:layout_height="37dp"
-        app:layout_constraintBottom_toBottomOf="@+id/equipment_label"
-        app:layout_constraintStart_toEndOf="@+id/equipment_label"
-        app:layout_constraintStart_toStartOf="@+id/categoryList"
-        app:layout_constraintTop_toTopOf="@+id/equipment_label"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Spinner
+    <AutoCompleteTextView
         android:id="@+id/categoryList"
-        android:layout_width="157dp"
-        android:layout_height="37dp"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_category"
+        android:completionHint="Select a category"
+        android:completionThreshold="1"
         app:layout_constraintBottom_toBottomOf="@+id/category_label"
         app:layout_constraintStart_toEndOf="@+id/equipment_label"
         app:layout_constraintStart_toStartOf="@+id/nameInput"
-        app:layout_constraintTop_toTopOf="@+id/category_label"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/category_label" />
+
+    <AutoCompleteTextView
+        android:id="@+id/equipmentList"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_equipment"
+        android:completionHint="Select equipment"
+        android:completionThreshold="1"
+        app:layout_constraintBottom_toBottomOf="@+id/equipment_label"
+        app:layout_constraintStart_toEndOf="@+id/equipment_label"
+        app:layout_constraintStart_toStartOf="@+id/categoryList"
+        app:layout_constraintTop_toTopOf="@+id/equipment_label" />
 
     <EditText
         android:id="@+id/nameInput"
+        android:hint="@string/enter_movement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -150,6 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.714"
         app:layout_constraintStart_toEndOf="@+id/nameLabel"
-        app:layout_constraintTop_toTopOf="@+id/nameLabel" />
+        app:layout_constraintTop_toTopOf="@+id/nameLabel"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,3 @@
-
 package wonderful.workouts.fragments;
 
 import android.os.Bundle;

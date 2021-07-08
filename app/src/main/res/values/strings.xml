@@ -29,7 +29,11 @@
     <string name="add_movement">Add Movement</string>
     <string name="add_new_category">Add new category</string>
     <string name="add_new_equipment">Add new equipment</string>
+    <string name="enter_category">Enter category</string>
+    <string name="enter_equipment">Enter equipment</string>
+    <string name="enter_movement">Enter movement</string>
     <string-array name="categories">
+        <item>All</item>
         <item>Legs</item>
         <item>Chest</item>
         <item>Back</item>
@@ -37,6 +41,7 @@
         <item>Arms</item>
     </string-array>
     <string-array name="equipment">
+        <item>All</item>
         <item>None</item>
         <item>Single Dumbbell</item>
         <item>Dumbbells</item>
