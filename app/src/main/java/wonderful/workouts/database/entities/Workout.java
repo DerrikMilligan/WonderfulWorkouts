@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "workouts")
 public class Workout {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int workoutId;
     public String name;
     public int userId;

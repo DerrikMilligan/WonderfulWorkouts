@@ -5,20 +5,32 @@ import android.content.Context;
 import java.util.List;
 
 import wonderful.workouts.database.AppDatabase;
+import wonderful.workouts.database.daos.MovementDao;
 import wonderful.workouts.database.daos.UserDao;
+import wonderful.workouts.database.daos.WorkoutDao;
+import wonderful.workouts.database.daos.WorkoutMovementCrossRefDao;
+import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.User;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.joiners.UserWithWorkouts;
 
 public class UserPresenter {
-    private final UserDao userDao;
+    private final UserDao                    userDao;
+    private final MovementDao                movementDao;
+    private final WorkoutDao                 workoutDao;
+    private final WorkoutMovementCrossRefDao workoutMovementCrossRefDao;
+
+    private static User currentUser = null;
 
     // Implement the singleton pattern
     private static UserPresenter INSTANCE = null;
 
     // Make the constructor private so we have to use getInstance to use the presenter
     private UserPresenter(AppDatabase db) {
-        userDao = db.getUserDao();
+        userDao                    = db.getUserDao();
+        movementDao                = db.getMovementDao();
+        workoutDao                 = db.getWorkoutDao();
+        workoutMovementCrossRefDao = db.getWorkoutMovementCrossRefDao();
     }
 
     // Here's the way we get our singleton instance for use
@@ -41,6 +53,48 @@ public class UserPresenter {
     // Public methods to get information from the database
 
     /**
+     * setCurrentUser
+     *
+     * Set's a user in the singleton to track who's logged in
+     *
+     * @param user The user we're storing that's logged into the application
+     */
+    public void setCurrentUser(User user) { currentUser = user; }
+
+    /**
+     * getCurrentUser
+     *
+     * Gets the logged in user
+     *
+     * @return User
+     */
+    public User getCurrentUser() { return currentUser; }
+
+    /**
+     * getUser
+     *
+     * Gets a user from their info
+     *
+     * @param username
+     * @param password
+     *
+     * @return User
+     */
+    public User getUser(String username, String password) { return userDao.getUser(username, password); }
+
+    /**
+     * getUser
+     *
+     * Gets a user from their id
+     *
+     * @param userId
+     *
+     * @return User
+     */
+    public User getUser(int userId) { return userDao.getUser(userId); }
+
+
+    /**
      * getUserWorkouts
      *
      * Returns a list of workouts for a given user
@@ -50,15 +104,14 @@ public class UserPresenter {
      * @return List<Workout>
      */
     public List<Workout> getUserWorkouts(User user) {
-        List<UserWithWorkouts> workouts = userDao.getUserWorkouts(user.userId);
+        UserWithWorkouts userWorkouts = userDao.getUserWorkouts(user.userId);
 
-        if (workouts.size() > 0) {
-            return workouts.get(0).workouts;
+        if (userWorkouts != null) {
+            return userWorkouts.workouts;
         }
 
         return null;
     }
-
 
     /**
      * usernameExists
@@ -77,23 +130,119 @@ public class UserPresenter {
     }
 
     /**
+     * validatePassword
+     *
+     * Will return true if the username already exists and false if it doesn't exist
+     *
+     * @param username The username you want to search against
+     *
+     * @return boolean
+     */
+    public boolean passwordIsValid(String username, String password) {
+        User user = userDao.getUser(username, password);
+
+        // If the user is null then we failed to find one
+        return user != null;
+    }
+
+    /**
      * createNewUser
      *
      * Will create a new user with a given username and password
      *
      * @param username The username for the new account
      * @param password The password for the new account
+     * @param generateDefaults Whether or not to generate default workouts
      *
      * @return User
      */
-    public User createNewUser(String username, String password) {
+    public User createNewUser(String username, String password, boolean generateDefaults) {
         User newUser = new User();
 
         newUser.username = username;
         newUser.password = password;
+        newUser.userId = (int) userDao.insert(newUser);
 
-        userDao.insert(newUser);
+        if (generateDefaults) {
+            this.createDefaultWorkouts(newUser);
+        }
 
         return newUser;
     }
+
+    /**
+     * createDefaultWorkouts
+     *
+     * Creates all the default workouts and movements for a user
+     *
+     * @param user The user we're creating the workouts for
+     *
+     * @return boolean whether or not it succeeded
+     */
+    public boolean createDefaultWorkouts(User user) {
+        // Chest/Tricep day
+        Movement bench            = movementDao.lookupOrCreateMovement("Benchpress",        Movement.RepsAndWeight);
+        Movement pushups          = movementDao.lookupOrCreateMovement("Pushups",           Movement.Reps);
+        Movement flys             = movementDao.lookupOrCreateMovement("Flys",              Movement.RepsAndWeight);
+        Movement tricepExtensions = movementDao.lookupOrCreateMovement("Tricep Extensions", Movement.RepsAndWeight);
+        Movement dips             = movementDao.lookupOrCreateMovement("Dips",              Movement.RepsAndWeight);
+
+        // create workout and add movements
+        Workout chestAndTriceps = workoutDao.lookupOrCreateWorkout(user.userId, "Chest & Triceps");
+        workoutMovementCrossRefDao.addMovementToWorkout(chestAndTriceps, bench);
+        workoutMovementCrossRefDao.addMovementToWorkout(chestAndTriceps, pushups);
+        workoutMovementCrossRefDao.addMovementToWorkout(chestAndTriceps, flys);
+        workoutMovementCrossRefDao.addMovementToWorkout(chestAndTriceps, tricepExtensions);
+        workoutMovementCrossRefDao.addMovementToWorkout(chestAndTriceps, dips);
+
+        // Back/Bicep day
+        Movement deadLift     = movementDao.lookupOrCreateMovement("Deadlift",      Movement.RepsAndWeight);
+        Movement latPulldowns = movementDao.lookupOrCreateMovement("Lat Pulldowns", Movement.RepsAndWeight);
+        Movement rows         = movementDao.lookupOrCreateMovement("Rows",          Movement.RepsAndWeight);
+        Movement pullups      = movementDao.lookupOrCreateMovement("Pullups",       Movement.Reps);
+        Movement bicepCurls   = movementDao.lookupOrCreateMovement("Bicep Curls",   Movement.RepsAndWeight);
+        Movement curlBar      = movementDao.lookupOrCreateMovement("Curl Bar",      Movement.RepsAndWeight);
+
+        // create workout and add movements
+        Workout backAndBiceps = workoutDao.lookupOrCreateWorkout(user.userId, "Back & Biceps");
+        workoutMovementCrossRefDao.addMovementToWorkout(backAndBiceps, deadLift);
+        workoutMovementCrossRefDao.addMovementToWorkout(backAndBiceps, latPulldowns);
+        workoutMovementCrossRefDao.addMovementToWorkout(backAndBiceps, rows);
+        workoutMovementCrossRefDao.addMovementToWorkout(backAndBiceps, pullups);
+        workoutMovementCrossRefDao.addMovementToWorkout(backAndBiceps, bicepCurls);
+        workoutMovementCrossRefDao.addMovementToWorkout(backAndBiceps, curlBar);
+
+        // Leg Day
+        Movement squat          = movementDao.lookupOrCreateMovement("Squats",          Movement.RepsAndWeight);
+        Movement legPress       = movementDao.lookupOrCreateMovement("Leg Press",       Movement.RepsAndWeight);
+        Movement calfRaises     = movementDao.lookupOrCreateMovement("Calf Raises",     Movement.RepsAndWeight);
+        Movement hamstringCurls = movementDao.lookupOrCreateMovement("Hamstring Curls", Movement.RepsAndWeight);
+        Movement legCurls       = movementDao.lookupOrCreateMovement("Leg Curls",       Movement.RepsAndWeight);
+
+        // create workout and add movements
+        Workout legs = workoutDao.lookupOrCreateWorkout(user.userId, "Leg Day");
+        workoutMovementCrossRefDao.addMovementToWorkout(legs, squat);
+        workoutMovementCrossRefDao.addMovementToWorkout(legs, legPress);
+        workoutMovementCrossRefDao.addMovementToWorkout(legs, calfRaises);
+        workoutMovementCrossRefDao.addMovementToWorkout(legs, hamstringCurls);
+        workoutMovementCrossRefDao.addMovementToWorkout(legs, legCurls);
+
+        // Abs
+        Movement crunches      = movementDao.lookupOrCreateMovement("Crunches",       Movement.Reps);
+        Movement situps        = movementDao.lookupOrCreateMovement("Situps",         Movement.Reps);
+        Movement russianTwists = movementDao.lookupOrCreateMovement("Russian Twists", Movement.Reps);
+        Movement planks        = movementDao.lookupOrCreateMovement("Planks",         Movement.Timed);
+        Movement legLifts      = movementDao.lookupOrCreateMovement("Leg Lifts",      Movement.Reps);
+
+        // create workout and add movements
+        Workout abs = workoutDao.lookupOrCreateWorkout(user.userId, "Ab Day");
+        workoutMovementCrossRefDao.addMovementToWorkout(abs, crunches);
+        workoutMovementCrossRefDao.addMovementToWorkout(abs, situps);
+        workoutMovementCrossRefDao.addMovementToWorkout(abs, russianTwists);
+        workoutMovementCrossRefDao.addMovementToWorkout(abs, planks);
+        workoutMovementCrossRefDao.addMovementToWorkout(abs, legLifts);
+
+        return true;
+    }
+
 }

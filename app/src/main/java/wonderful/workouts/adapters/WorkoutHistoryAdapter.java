@@ -9,17 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 
 public class WorkoutHistoryAdapter extends BaseAdapter {
-    private final ArrayList<WorkoutHistory> _workoutHistory;
+    private final List<WorkoutHistory> _workoutHistory;
     private final LayoutInflater layoutInflater;
 
-    public WorkoutHistoryAdapter(Context context, ArrayList<WorkoutHistory> workoutHistory) {
+    public WorkoutHistoryAdapter(Context context, List<WorkoutHistory> workoutHistory) {
         _workoutHistory = workoutHistory;
         layoutInflater = LayoutInflater.from(context);
     }
