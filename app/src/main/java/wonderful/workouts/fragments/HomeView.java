@@ -14,13 +14,19 @@ import androidx.navigation.Navigation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import wonderful.workouts.R;
 import wonderful.workouts.adapters.WorkoutAdapter;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.databinding.FragmentHomeBinding;
+import wonderful.workouts.presenters.UserPresenter;
+import wonderful.workouts.presenters.WorkoutPresenter;
 
 public class HomeView extends Fragment {
+    private ListView workoutListView;
+
+    private View root;
     private FragmentHomeBinding binding;
 
     public View onCreateView(
@@ -29,21 +35,11 @@ public class HomeView extends Fragment {
         Bundle savedInstanceState
     ) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
-        // Dummy data for now!
-        ArrayList<Workout> workouts = getWorkouts();
+        workoutListView = (ListView) root.findViewById(R.id.workout_view_movements_list);
 
-        ListView workoutListView = (ListView) root.findViewById(R.id.workout_view_movements_list);
-
-        // Set the ListView's adapter to our custom adapter!
-        workoutListView.setAdapter(new WorkoutAdapter(this.getContext(), workouts));
-
-        // Add an onClick listener just for and example!
-        workoutListView.setOnItemClickListener((parent, view, position, id) -> {
-            Workout clickedWorkout = (Workout) workoutListView.getItemAtPosition(position);
-            Log.i("HomeView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
-        });
+        updateWorkoutView();
 
         // Add an event to the Floating Action Button
         FloatingActionButton btnTesting = root.findViewById(R.id.fab_home_new_workout);
@@ -70,28 +66,30 @@ public class HomeView extends Fragment {
         binding = null;
     }
 
-    // Yeah this is all just dummy data for now. And we may not end up using workouts to
-    // display this all, but for now it's great!
-    private ArrayList<Workout> getWorkouts() {
-        ArrayList<Workout> workouts = new ArrayList<>();
+    public void updateWorkoutView() {
+        new Thread(() -> {
+            // Get the presenter.
+            UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+            WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
 
-        Workout w = new Workout();
-        w.workoutId = 1;
-        w.name = "Leg Day";
-        workouts.add(w);
+            List<Workout> workouts = workoutPresenter.getWorkoutsForUser(userPresenter.getCurrentUser());
 
-        Workout w1 = new Workout();
-        w1.workoutId = 2;
-        w1.name = "Chest Day";
-        workouts.add(w1);
+            for (Workout w : workouts) {
+                Log.i("HomeView", String.format("Workout: %s", w.name));
+            }
 
-        Workout w2 = new Workout();
-        w2.workoutId = 22;
-        w2.name = "Neck Day";
-        workouts.add(w2);
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                // Set the ListView's adapter to our custom adapter!
+                workoutListView.setAdapter(new WorkoutAdapter(this.getContext(), workouts));
 
-        return workouts;
+                // Add an onClick listener just for and example!
+                workoutListView.setOnItemClickListener((parent, view, position, id) -> {
+                    Workout clickedWorkout = (Workout) workoutListView.getItemAtPosition(position);
+                    Log.i("HomeView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
+                });
+            });
+        }).start();
     }
-
 }
 

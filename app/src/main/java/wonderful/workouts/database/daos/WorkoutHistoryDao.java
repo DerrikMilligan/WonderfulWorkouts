@@ -10,7 +10,7 @@ import wonderful.workouts.database.entities.WorkoutHistory;
 @Dao
 public interface WorkoutHistoryDao {
     @Insert
-    void insert(WorkoutHistory history);
+    long insert(WorkoutHistory history);
 
     @Update
     void update(WorkoutHistory history);

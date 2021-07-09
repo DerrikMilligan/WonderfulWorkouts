@@ -17,7 +17,7 @@ import wonderful.workouts.database.joiners.UserWithWorkouts;
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(User user);
+    long insert(User user);
 
     @Update
     void update(User user);
@@ -28,11 +28,17 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1;")
     User getFromUsername(String username);
 
-    @Transaction
-    @Query("SELECT * FROM users WHERE userId = :userId")
-    List<UserWithWorkouts> getUserWorkouts(int userId);
+    @Query("SELECT * FROM users WHERE username = :username AND password = :password LIMIT 1;")
+    User getUser(String username, String password);
+
+    @Query("SELECT * FROM users WHERE userId = :userId LIMIT 1;")
+    User getUser(int userId);
 
     @Transaction
     @Query("SELECT * FROM users WHERE userId = :userId")
-    List<UserWithMeasurements> getUserMeasurements(int userId);
+    UserWithWorkouts getUserWorkouts(int userId);
+
+    @Transaction
+    @Query("SELECT * FROM users WHERE userId = :userId")
+    UserWithMeasurements getUserMeasurements(int userId);
 }

@@ -29,6 +29,7 @@ public class NewEditMovementView extends Fragment {
     public String[] categoryList = new String[] {"Legs", "Shoulders", "Chest", "Arms", "Cardio", "Back", "Abs"};
     public String[] equipmentList = new String[] {"None", "Single Dumbbell", "Dumbbells", "Barbell", "Band"};
     public String type;
+    // public String selectedId;
 
     public View onCreateView(
         @NonNull LayoutInflater inflater,
@@ -47,41 +48,34 @@ public class NewEditMovementView extends Fragment {
         ArrayAdapter<String> equipmentAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, equipmentList);
         equipment.setAdapter(equipmentAdapter);
 
+        RadioGroup typeGroup = root.findViewById(R.id.typeGroup);
+        final String[] selectedId = new String[1];
+        typeGroup.setOnCheckedChangeListener((typeGroup1, checkedId) -> {
+            switch (checkedId) {
+                case R.id.timedRadio:
+                    selectedId[0] = "timed";
+                    break;
+                case R.id.repsRadio:
+                    selectedId[0] = "reps";
+                    break;
+                case R.id.weightRepsRadio:
+                    selectedId[0] = "weight/reps";
+                    break;
+            }
+        });
 
         Button addMovementBtn = root.findViewById(R.id.addMovementBtn);
         addMovementBtn.setOnClickListener(view -> {
 
             EditText nameInput = root.findViewById(R.id.nameInput);
-            RadioGroup typeGroup = root.findViewById(R.id.typeGroup);
             int count = typeGroup.getChildCount();
 
 
-            Log.i("NewEditMovementView", String.format("Create movement - Name: %s , Category: %s, Equipment: %s, Type: %s", nameInput.getText(), category.getText(), equipment.getText(), count));
+            Log.i("NewEditMovementView", String.format("Create movement - Name: %s , Category: %s, Equipment: %s, Type: %s", nameInput.getText(), category.getText(), equipment.getText(), selectedId[0]));
         });
 
         return root;
     }
-
-    // public void onRadioButtonClicked(View view) {
-    //     // Is the button now checked?
-    //     boolean checked = ((RadioButton) view).isChecked();
-    //
-    //     // Check which radio button was clicked
-    //     switch(view.getId()) {
-    //         case R.id.timedRadio:
-    //             if (checked)
-    //                 Log.i("NewEditMovementView", String.format("Timed radio button selected"));
-    //                 break;
-    //         case R.id.repsRadio:
-    //             if (checked)
-    //                 Log.i("NewEditMovementView", String.format("Reps radio button selected"));
-    //                 break;
-    //         case R.id.weightRepsRadio:
-    //             if (checked)
-    //                 Log.i("NewEditMovementView", String.format("Weight/reps radio button selected"));
-    //             break;
-    //     }
-    // }
 
 
     @Override

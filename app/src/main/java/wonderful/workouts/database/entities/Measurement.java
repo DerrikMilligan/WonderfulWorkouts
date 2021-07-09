@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "user_measurements")
 public class Measurement {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int measurementId;
     public int userId;
     public String type;
