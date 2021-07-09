@@ -1,13 +1,18 @@
 package wonderful.workouts.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,16 +26,17 @@ import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentCurrentWorkoutBinding;
+import wonderful.workouts.databinding.FragmentWorkoutBinding;
 
 public class WorkoutView extends Fragment {
-    private FragmentCurrentWorkoutBinding binding;
+    private FragmentWorkoutBinding binding;
 
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState
     ) {
-        binding = FragmentCurrentWorkoutBinding.inflate(inflater, container, false);
+        binding = FragmentWorkoutBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         //Get dummy data for now
@@ -47,6 +53,20 @@ public class WorkoutView extends Fragment {
 
         // Set the ListView's adapter to our custom adapter!
         movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+
+         //Add an event to the Floating Action Button
+        FloatingActionButton btnTesting = root.findViewById(R.id.workout_new_movement);
+        btnTesting.setOnClickListener(view -> {
+            Log.i("Workout View", "Test button pressed!");
+
+            Navigation.findNavController(view).navigate(R.id.navigation_newEditMovement_page);
+        });
+
+        Button startWorkoutBtn = root.findViewById(R.id.workout_start_workout_button);
+        startWorkoutBtn.setOnClickListener(view ->{
+            Log.i("WorkoutView", String.format("Starting a workout"));
+            Navigation.findNavController(view).navigate(R.id.navigation_current_workout);
+        });
 
         // Button btnLogin = root.findViewById(R.id.btn_login);
         // btnLogin.setOnClickListener(view -> {
