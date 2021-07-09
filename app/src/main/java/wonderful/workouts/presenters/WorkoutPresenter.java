@@ -3,6 +3,7 @@ package wonderful.workouts.presenters;
 import android.content.Context;
 
 import java.time.Duration;
+import java.util.List;
 
 import wonderful.workouts.database.AppDatabase;
 import wonderful.workouts.database.daos.MovementDao;
@@ -10,6 +11,8 @@ import wonderful.workouts.database.daos.WorkoutDao;
 import wonderful.workouts.database.daos.WorkoutHistoryDao;
 import wonderful.workouts.database.daos.WorkoutMovementHistoryDao;
 import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.User;
+import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
@@ -48,6 +51,10 @@ public class WorkoutPresenter {
     }
 
     // Public methods
+
+    public List<Workout> getWorkoutsForUser(User user) {
+        return workoutDao.getWorkoutsForUser(user.userId);
+    }
 
     /**
      * addSetToWorkout

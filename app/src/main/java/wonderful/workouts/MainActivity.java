@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import wonderful.workouts.database.AppDatabase;
 import wonderful.workouts.database.entities.User;
 import wonderful.workouts.databinding.ActivityMainBinding;
 import wonderful.workouts.presenters.UserPresenter;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        // When we navigate using the bottom nav
         binding.navView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.navigation_bar_profile:
@@ -89,12 +91,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // navController.navigate(R.id.home_page);
+        // Get the instance so we create the database and get the connection ready
+        AppDatabase.getInstance(this.getApplicationContext());
 
-        // Intent intent = new Intent(this, Profile.class);
-        // startActivity(intent);
+        // Helper to clear all tables in development!
+        // new Thread(() -> {
+        //     AppDatabase.getInstance(this.getApplicationContext()).clearAllTables();
+        // }).start();
 
-        testUserPresenter();
     }
 
     @Override
@@ -102,18 +106,5 @@ public class MainActivity extends AppCompatActivity {
         return navController.navigateUp();
     }
 
-    private void testUserPresenter() {
-        new Thread(() -> {
-            UserPresenter userPresenter = UserPresenter.getInstance(this.getApplicationContext());
-
-            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Emily") ? "yes" : "no"));
-
-            User derrik = userPresenter.createNewUser("Emily", "bilbo");
-
-            Log.i("MainActivity", String.format("New user: id: '%d' username: '%s', password: '%s'", derrik.userId, derrik.username, derrik.password));
-
-            Log.i("MainActivity", String.format("Does the user 'derrik' exist? %s", userPresenter.usernameExists("Emily") ? "yes" : "no"));
-        }).start();
-    }
 
 }

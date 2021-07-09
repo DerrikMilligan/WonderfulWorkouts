@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
@@ -18,10 +17,10 @@ import wonderful.workouts.database.joiners.WorkoutHistoryWithWorkoutMovementHist
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class PastWorkoutAdapter extends BaseExpandableListAdapter {
-    private final ArrayList<WorkoutWithHistory> _workouts;
+    private final List<WorkoutWithHistory> _workouts;
     private final LayoutInflater layoutInflater;
 
-    public PastWorkoutAdapter(Context context, ArrayList<WorkoutWithHistory> workouts) {
+    public PastWorkoutAdapter(Context context, List<WorkoutWithHistory> workouts) {
         _workouts = workouts;
         layoutInflater = LayoutInflater.from(context);
     }

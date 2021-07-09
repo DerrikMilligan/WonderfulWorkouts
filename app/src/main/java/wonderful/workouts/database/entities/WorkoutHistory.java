@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity(tableName = "workout_history")
 public class WorkoutHistory {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int workoutHistoryId;
     public int workoutId;
     public LocalDateTime startTime;

@@ -23,7 +23,7 @@ import wonderful.workouts.database.entities.WorkoutMovementCrossRef;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
 @Database(
-    version = 1,
+    version = 5,
     // Here we list out all the entities we'll be using
     entities = {
         Measurement.class,
@@ -33,7 +33,8 @@ import wonderful.workouts.database.entities.WorkoutMovementHistory;
         WorkoutHistory.class,
         WorkoutMovementCrossRef.class,
         WorkoutMovementHistory.class,
-    }
+    },
+    exportSchema = false
 )
 // The TypeConverts help us convert the Java date type to something the database can handle and back
 @TypeConverters({ Converters.class })
@@ -56,7 +57,10 @@ public abstract class AppDatabase extends RoomDatabase {
             // to wait until its done if we happen to have race conditions. Read more here: https://www.baeldung.com/java-synchronized
             synchronized (AppDatabase.class) {
                 // Create our database and set the static INSTANCE of it so we can return it on subsequent calls
-                INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "main_database").build();
+                INSTANCE = Room
+                    .databaseBuilder(context.getApplicationContext(), AppDatabase.class, "main_database")
+                    .fallbackToDestructiveMigration()
+                    .build();
 
             }
         }
@@ -64,4 +68,5 @@ public abstract class AppDatabase extends RoomDatabase {
         // Return the instance
         return INSTANCE;
     }
+
 }

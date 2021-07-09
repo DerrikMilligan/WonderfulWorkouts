@@ -11,7 +11,7 @@ import wonderful.workouts.database.entities.Measurement;
 @Dao
 public interface MeasurementDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Measurement measurement);
+    long insert(Measurement measurement);
 
     @Update
     void update(Measurement measurement);
