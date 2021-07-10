@@ -8,16 +8,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Movement;
 
 public class MovementAdapter  extends BaseAdapter {
-    private final ArrayList<Movement> _movements;
+    private final List<Movement> _movements;
     private final LayoutInflater layoutInflater;
 
-    public MovementAdapter(Context context, ArrayList<Movement> movements) {
+    public MovementAdapter(Context context, List<Movement> movements) {
         _movements = movements;
         layoutInflater = LayoutInflater.from(context);
     }

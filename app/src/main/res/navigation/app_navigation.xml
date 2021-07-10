@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/navigation_newEditMovement_page"
+        android:id="@+id/navigation_new_edit_movement_page"
         android:name="wonderful.workouts.fragments.NewEditMovementView"
         android:label="New/Edit Movement"
         tools:layout="@layout/fragment_new_edit_movement" />
@@ -62,4 +62,10 @@
         android:name="wonderful.workouts.fragments.MovementHistoryView"
         android:label="Movement History"
         tools:layout="@layout/fragment_movement_history" />
+
+    <fragment
+        android:id="@+id/navigation_workout"
+        android:name="wonderful.workouts.fragments.WorkoutView"
+        android:label="Movement History"
+        tools:layout="@layout/fragment_workout" />
 </navigation>
