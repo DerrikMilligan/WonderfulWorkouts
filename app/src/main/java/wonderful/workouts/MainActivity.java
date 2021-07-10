@@ -38,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
             R.id.navigation_login_page,
-            R.id.navigation_home_page
+            R.id.navigation_home_page,
+            R.id.navigation_profile_page,
+            R.id.navigation_movements,
+            R.id.navigation_history_page
         ).build();
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
@@ -49,13 +52,16 @@ public class MainActivity extends AppCompatActivity {
         binding.navView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.navigation_bar_profile:
+                    navController.navigate(R.id.navigation_profile_page);
                     break;
                 case R.id.navigation_bar_home:
                     navController.navigate(R.id.navigation_home_page);
                     break;
                 case R.id.navigation_bar_movements:
+                    navController.navigate(R.id.navigation_movements);
                     break;
                 case R.id.navigation_bar_history:
+                    navController.navigate(R.id.navigation_history_page);
                     break;
             }
 

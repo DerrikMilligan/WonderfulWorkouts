@@ -25,10 +25,10 @@ import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
 import wonderful.workouts.database.joiners.WorkoutHistoryWithWorkoutMovementHistories;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
-import wonderful.workouts.databinding.FragmentPastWorkoutBinding;
+import wonderful.workouts.databinding.FragmentWorkoutHistoryBinding;
 
-public class PastWorkoutView extends Fragment {
-    private FragmentPastWorkoutBinding binding;
+public class WorkoutHistoryView extends Fragment {
+    private FragmentWorkoutHistoryBinding binding;
     private ExpandableListView pastWorkoutListView;
     private View root;
 
@@ -37,7 +37,7 @@ public class PastWorkoutView extends Fragment {
         ViewGroup container,
         Bundle savedInstanceState
     ) {
-        binding = FragmentPastWorkoutBinding.inflate(inflater, container, false);
+        binding = FragmentWorkoutHistoryBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
         // Button btnLogin = root.findViewById(R.id.btn_login);

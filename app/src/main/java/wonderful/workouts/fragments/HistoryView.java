@@ -51,7 +51,7 @@ public class HistoryView extends Fragment {
         workoutListView.setOnItemClickListener((parent, view, position, id) -> {
             Workout clickedWorkout = (Workout) workoutListView.getItemAtPosition(position);
             Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
-            Navigation.findNavController(view).navigate(R.id.navigation_past_workout);
+            Navigation.findNavController(view).navigate(R.id.navigation_workout_history);
         });
 
         // Select movement ListView

@@ -66,12 +66,11 @@ public class NewEditMovementView extends Fragment {
 
         Button addMovementBtn = root.findViewById(R.id.addMovementBtn);
         addMovementBtn.setOnClickListener(view -> {
-
             EditText nameInput = root.findViewById(R.id.nameInput);
             int count = typeGroup.getChildCount();
-
-
             Log.i("NewEditMovementView", String.format("Create movement - Name: %s , Category: %s, Equipment: %s, Type: %s", nameInput.getText(), category.getText(), equipment.getText(), selectedId[0]));
+
+            Navigation.findNavController(root).popBackStack();
         });
 
         return root;

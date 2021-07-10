@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/navigation_home_page"
         android:name="wonderful.workouts.fragments.HomeView"
-        android:label="Fancy Home!"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
@@ -34,24 +34,6 @@
         tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/navigation_new_edit_movement_page"
-        android:name="wonderful.workouts.fragments.NewEditMovementView"
-        android:label="New/Edit Movement"
-        tools:layout="@layout/fragment_new_edit_movement" />
-
-    <fragment
-        android:id="@+id/navigation_current_workout"
-        android:name="wonderful.workouts.fragments.WorkoutView"
-        android:label="Active Workout"
-        tools:layout="@layout/fragment_current_workout" />
-
-    <fragment
-        android:id="@+id/navigation_past_workout"
-        android:name="wonderful.workouts.fragments.PastWorkoutView"
-        android:label="Past Workout"
-        tools:layout="@layout/fragment_past_workout" />
-
-    <fragment
         android:id="@+id/navigation_movements"
         android:name="wonderful.workouts.fragments.MovementsView"
         android:label="Movements"
@@ -64,8 +46,26 @@
         tools:layout="@layout/fragment_movement_history" />
 
     <fragment
+        android:id="@+id/navigation_new_edit_movement_page"
+        android:name="wonderful.workouts.fragments.NewEditMovementView"
+        android:label="New/Edit Movement"
+        tools:layout="@layout/fragment_new_edit_movement" />
+
+    <fragment
         android:id="@+id/navigation_workout"
         android:name="wonderful.workouts.fragments.WorkoutView"
-        android:label="Movement History"
+        android:label="Workout"
         tools:layout="@layout/fragment_workout" />
+
+    <fragment
+        android:id="@+id/navigation_workout_active"
+        android:name="wonderful.workouts.fragments.WorkoutView"
+        android:label="Active Workout"
+        tools:layout="@layout/fragment_workout_active" />
+
+    <fragment
+        android:id="@+id/navigation_workout_history"
+        android:name="wonderful.workouts.fragments.WorkoutHistoryView"
+        android:label="Past Workout"
+        tools:layout="@layout/fragment_workout_history" />
 </navigation>

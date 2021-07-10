@@ -16,9 +16,11 @@ import org.jetbrains.annotations.NotNull;
 import wonderful.workouts.R;
 
 public class MeasurementDialog extends AppCompatDialogFragment {
+    String _title;
     MeasurementCallback _callbacks;
 
-    public MeasurementDialog(MeasurementCallback callbacks) {
+    public MeasurementDialog(String title, MeasurementCallback callbacks) {
+        _title = title;
         _callbacks = callbacks;
     }
 
@@ -31,8 +33,10 @@ public class MeasurementDialog extends AppCompatDialogFragment {
 
         TextView weightInput = view.findViewById(R.id.measurement_dialog_edit_weight);
 
+        weightInput.setHint(String.format("Enter %s", _title));
+
         builder.setView(view)
-            .setTitle("Update Weight")
+            .setTitle(String.format("Update %s value", _title))
             .setNegativeButton("cancel", (dialog, which) -> {})
             .setPositiveButton("ok", (dialog, which) -> _callbacks.onComplete(weightInput.getText().toString()));
 

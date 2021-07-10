@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,20 +15,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import wonderful.workouts.dialogs.DialogHelper;
 import wonderful.workouts.dialogs.MeasurementDialog;
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Measurement;
 import wonderful.workouts.databinding.FragmentProfileBinding;
+import wonderful.workouts.presenters.UserPresenter;
 
 //Tried to pass new weight from dialog, but it says MainActivity needs to implement MeasurementDialogListener
 // implements MeasurementDialog.MeasurementDialogListener
 
-public class ProfileView extends Fragment  {
+public class ProfileView extends Fragment {
+    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("L/d/u");
+
     private FragmentProfileBinding binding;
 
     private TextView weight = null;
@@ -96,6 +102,8 @@ public class ProfileView extends Fragment  {
 
         Button signOutBtn = (Button) root.findViewById(R.id.signOutBtn);
         signOutBtn.setOnClickListener(view -> {
+            new Thread(() -> UserPresenter.getInstance(requireContext()).setCurrentUser(null)).start();
+
             Navigation.findNavController(view).navigate(R.id.navigation_login_page);
         });
 
@@ -121,107 +129,150 @@ public class ProfileView extends Fragment  {
         buttonMap.put(root.findViewById(R.id.addCalvesBtn), calves);
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateMeasurementDisplay() {
         new Thread(() -> {
-            // List<Measurement> measurements = presenter.getCurrentMeasurements();
-            List<Measurement> measurements = new ArrayList<>();
+            UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
 
-            Measurement userWeight = new Measurement();
-            userWeight.type = "weight";
-            userWeight.value = 160.8f;
+            List<Measurement> measurements = userPresenter.getMeasurements(userPresenter.getCurrentUser());
 
-            Measurement userBiceps = new Measurement();
-            userBiceps.type = "biceps";
-            userBiceps.value = 15.5f;
+            requireActivity().runOnUiThread(() -> {
+                for (Measurement measurement : measurements) {
+                    Log.i("Profile", String.format("Measurement: %s Value: %.2f", measurement.type, measurement.value));
 
-            Measurement userChest = new Measurement();
-            userChest.type = "chest";
-            userChest.value = 30.5f;
+                    switch (measurement.type) {
+                        case "weight":
+                            Log.i("Profile", String.format("Updating weight to: %.2f", measurement.value));
+                            weight.setText(measurement.value + "lbs");
+                            if (measurement.lastUpdated != null) {
+                                weightDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                weightDate.setText("");
+                            }
+                            break;
 
-            Measurement userThighs = new Measurement();
-            userThighs.type = "thighs";
-            userThighs.value = 25.5f;
+                        case "biceps":
+                            Log.i("Profile", String.format("Updating biceps to: %.2f", measurement.value));
+                            biceps.setText(measurement.value + "\"");
+                            if (measurement.lastUpdated != null) {
+                                bicepsDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                bicepsDate.setText("");
+                            }
 
-            Measurement userWaist = new Measurement();
-            userWaist.type = "waist";
-            userWaist.value = 28.5f;
+                            break;
 
-            Measurement userHips = new Measurement();
-            userHips.type = "hips";
-            userHips.value = 32.5f;
+                        case "chest":
+                            Log.i("Profile", String.format("Updating chest to: %.2f", measurement.value));
+                            chest.setText(measurement.value + "\"");
+                            if (measurement.lastUpdated != null) {
+                                chestDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                chestDate.setText("");
+                            }
 
-            Measurement userNeck = new Measurement();
-            userNeck.type = "neck";
-            userNeck.value = 15.5f;
+                            break;
 
-            Measurement userCalves = new Measurement();
-            userCalves.type = "calves";
-            userCalves.value = 15.5f;
+                        case "thighs":
+                            Log.i("Profile", String.format("Updating thighs to: %.2f", measurement.value));
+                            thighs.setText(measurement.value + "\"");
+                            if (measurement.lastUpdated != null) {
+                                thighsDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                thighsDate.setText("");
+                            }
 
-            measurements.add(userWeight);
-            measurements.add(userBiceps);
-            measurements.add(userChest);
-            measurements.add(userThighs);
-            measurements.add(userWaist);
-            measurements.add(userHips);
-            measurements.add(userNeck);
-            measurements.add(userCalves);
+                            break;
 
+                        case "waist":
+                            Log.i("Profile", String.format("Updating waist to: %.2f", measurement.value));
+                            waist.setText(measurement.value + "\"");
+                            if (measurement.lastUpdated != null) {
+                                waistDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                waistDate.setText("");
+                            }
 
-            for (Measurement measurement : measurements) {
-                Log.i("Profile", String.format("Measurement: %s Value: %.2f", measurement.type, measurement.value));
+                            break;
 
-                switch (measurement.type) {
-                    case "weight":
-                        Log.i("Profile", String.format("Updating weight to: %.2f", measurement.value));
-                        weight.setText(String.valueOf(measurement.value) + "lbs");
-                        weightDate.setText("6/29/2021");
-                        break;
+                        case "hips":
+                            Log.i("Profile", String.format("Updating hips to: %.2f", measurement.value));
+                            hips.setText(measurement.value + "\"");
+                            if (measurement.lastUpdated != null) {
+                                hipsDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                hipsDate.setText("");
+                            }
 
-                    case "biceps":
-                        Log.i("Profile", String.format("Updating biceps to: %.2f", measurement.value));
-                        biceps.setText(String.valueOf(measurement.value) + "\"");
-                        break;
+                            break;
 
-                    case "chest":
-                        Log.i("Profile", String.format("Updating chest to: %.2f", measurement.value));
-                        chest.setText(String.valueOf(measurement.value) + "\"");
-                        break;
+                        case "neck":
+                            Log.i("Profile", String.format("Updating neck to: %.2f", measurement.value));
+                            neck.setText(measurement.value + "\"");
+                            if (measurement.lastUpdated != null) {
+                                neckDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                neckDate.setText("");
+                            }
 
-                    case "thighs":
-                        Log.i("Profile", String.format("Updating thighs to: %.2f", measurement.value));
-                        thighs.setText(String.valueOf(measurement.value) + "\"");
-                        break;
+                            break;
 
-                    case "waist":
-                        Log.i("Profile", String.format("Updating waist to: %.2f", measurement.value));
-                        waist.setText(String.valueOf(measurement.value) + "\"");
-                        break;
+                        case "calves":
+                            Log.i("Profile", String.format("Updating calves to: %.2f", measurement.value));
+                            calves.setText(measurement.value + "\"");
+                            if (measurement.lastUpdated != null) {
+                                calvesDate.setText(measurement.lastUpdated.format(dateFormat));
+                            } else {
+                                calvesDate.setText("");
+                            }
 
-                    case "hips":
-                        Log.i("Profile", String.format("Updating hips to: %.2f", measurement.value));
-                        hips.setText(String.valueOf(measurement.value) + "\"");
-                        break;
-
-                    case "neck":
-                        Log.i("Profile", String.format("Updating neck to: %.2f", measurement.value));
-                        neck.setText(String.valueOf(measurement.value) + "\"");
-                        break;
-
-                    case "calves":
-                        Log.i("Profile", String.format("Updating calves to: %.2f", measurement.value));
-                        calves.setText(String.valueOf(measurement.value) + "\"");
-                        break;
-                    default:
-                        break;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
+            });
         }).start();
+    }
+
+    // Takes a text view and gets the measurement type for updating in the database
+    private String getViewMeasurementType(TextView view) {
+        int viewId = view.getId();
+
+        if (viewId == weight.getId()) { return Measurement.weight; }
+        if (viewId == biceps.getId()) { return Measurement.biceps; }
+        if (viewId == chest .getId()) { return Measurement.chest;  }
+        if (viewId == thighs.getId()) { return Measurement.thighs; }
+        if (viewId == waist .getId()) { return Measurement.waist;  }
+        if (viewId == hips  .getId()) { return Measurement.hips;   }
+        if (viewId == neck  .getId()) { return Measurement.neck;   }
+        if (viewId == calves.getId()) { return Measurement.calves; }
+
+        return null;
     }
 
     public void openDialog(TextView textView) {
         if (textView != null) {
-            MeasurementDialog measurementDialog = new MeasurementDialog(textView::setText);
+            MeasurementDialog measurementDialog = new MeasurementDialog(getViewMeasurementType(textView), (value) -> {
+                new Thread(() -> {
+                    UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+
+                    try {
+                        float floatValue = Float.parseFloat(value);
+                        userPresenter.updateMeasurement(userPresenter.getCurrentUser(), getViewMeasurementType(textView), floatValue);
+                        updateMeasurementDisplay();
+
+                    } catch (NumberFormatException exception) {
+                        DialogHelper.displayAlertFromFragmentThread(
+                            requireActivity(),
+                            "Whoops!",
+                            "Looks like you didn't input a valid number! Try again.",
+                            (dialog, which) -> {}
+                        );
+                    }
+
+                }).start();
+            });
             measurementDialog.show(getChildFragmentManager(), "measurement_dialog");
         }
     }

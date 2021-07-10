@@ -57,6 +57,18 @@ public class LoginView extends Fragment {
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
+        if (username.length() == 0 || password.length() == 0) {
+            DialogHelper.displayAlertFromFragmentThread(
+                requireActivity(),
+                "Whoops!",
+                "You have to actually input a username or password!",
+                (dialog, which) -> {}
+            );
+
+            return;
+        }
+
+
         // Check to see if the username exists
         if (userPresenter.usernameExists(username)) {
             // If the username exists and we have a valid password

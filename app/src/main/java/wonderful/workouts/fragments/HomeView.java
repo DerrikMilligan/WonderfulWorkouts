@@ -13,7 +13,6 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import wonderful.workouts.R;
@@ -48,8 +47,8 @@ public class HomeView extends Fragment {
 
             // Navigate to home!
             // Navigation.findNavController(view).navigate(R.id.navigation_current_workout);
-            // Navigation.findNavController(view).navigate(R.id.navigation_past_workout);
-            Navigation.findNavController(view).navigate(R.id.navigation_movements);
+            Navigation.findNavController(view).navigate(R.id.navigation_workout_history);
+            // Navigation.findNavController(view).navigate(R.id.navigation_movements);
             // Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
             // Navigation.findNavController(view).navigate(R.id.navigation_profile_page);
             // Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
@@ -73,10 +72,6 @@ public class HomeView extends Fragment {
             WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
 
             List<Workout> workouts = workoutPresenter.getWorkoutsForUser(userPresenter.getCurrentUser());
-
-            for (Workout w : workouts) {
-                Log.i("HomeView", String.format("Workout: %s", w.name));
-            }
 
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {

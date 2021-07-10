@@ -1,14 +1,18 @@
 package wonderful.workouts.presenters;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import wonderful.workouts.database.AppDatabase;
+import wonderful.workouts.database.daos.MeasurementDao;
 import wonderful.workouts.database.daos.MovementDao;
 import wonderful.workouts.database.daos.UserDao;
 import wonderful.workouts.database.daos.WorkoutDao;
 import wonderful.workouts.database.daos.WorkoutMovementCrossRefDao;
+import wonderful.workouts.database.entities.Measurement;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.User;
 import wonderful.workouts.database.entities.Workout;
@@ -16,6 +20,7 @@ import wonderful.workouts.database.joiners.UserWithWorkouts;
 
 public class UserPresenter {
     private final UserDao                    userDao;
+    private final MeasurementDao             measurementDao;
     private final MovementDao                movementDao;
     private final WorkoutDao                 workoutDao;
     private final WorkoutMovementCrossRefDao workoutMovementCrossRefDao;
@@ -30,6 +35,7 @@ public class UserPresenter {
         userDao                    = db.getUserDao();
         movementDao                = db.getMovementDao();
         workoutDao                 = db.getWorkoutDao();
+        measurementDao             = db.getMeasurementDao();
         workoutMovementCrossRefDao = db.getWorkoutMovementCrossRefDao();
     }
 
@@ -165,9 +171,107 @@ public class UserPresenter {
 
         if (generateDefaults) {
             this.createDefaultWorkouts(newUser);
+            this.createUserMeasurements(newUser);
         }
 
         return newUser;
+    }
+
+    /**
+     * getMeasurements
+     *
+     * Get's all the current measurements for a given user
+     *
+     * @param user The user we're updating the measurement for
+     *
+     * @return List<Measurement>
+     */
+    public List<Measurement> getMeasurements(User user) {
+        return measurementDao.getUserMeasurements(user.userId);
+    }
+
+    /**
+     * updateMeasurement
+     *
+     * Updates a measurements for a user
+     *
+     * @param user The user we're updating the measurement for
+     * @param measurementName Make sure to use the static tpyes on Measurment
+     * @param value The new measurment value
+     *
+     * @return Measurement
+     */
+    public Measurement updateMeasurement(User user, String measurementName, float value) {
+        Measurement measurement = measurementDao.lookupMeasurement(user.userId, measurementName);
+
+        if (measurement == null) {
+            Log.e("UserPresenter", "We have a big problem chief!");
+            return null;
+        }
+
+        measurement.value = value;
+        measurement.lastUpdated = LocalDateTime.now();
+
+        measurementDao.update(measurement);
+
+        return measurement;
+    }
+
+    /**
+     * createUserMeasurements
+     *
+     * Creates all the initial measurements for a user
+     *
+     * @param user The user we're creating the initial measurements for
+     */
+    public void createUserMeasurements(User user) {
+        Measurement weight = new Measurement();
+        weight.type   = Measurement.weight;
+        weight.userId = user.userId;
+        weight.value  = 0.0f;
+        measurementDao.insert(weight);
+
+        Measurement biceps = new Measurement();
+        biceps.type   = Measurement.biceps;
+        biceps.userId = user.userId;
+        biceps.value  = 0.0f;
+        measurementDao.insert(biceps);
+
+        Measurement chest = new Measurement();
+        chest.type    = Measurement.chest;
+        chest.userId  = user.userId;
+        chest.value   = 0.0f;
+        measurementDao.insert(chest);
+
+        Measurement thighs = new Measurement();
+        thighs.type   = Measurement.thighs;
+        thighs.userId = user.userId;
+        thighs.value  = 0.0f;
+        measurementDao.insert(thighs);
+
+        Measurement waist = new Measurement();
+        waist.type    = Measurement.waist;
+        waist.userId  = user.userId;
+        waist.value   = 0.0f;
+        measurementDao.insert(waist);
+
+        Measurement hips = new Measurement();
+        hips.type     = Measurement.hips;
+        hips.userId   = user.userId;
+        hips.value    = 0.0f;
+        measurementDao.insert(hips);
+
+        Measurement neck = new Measurement();
+        neck.type     = Measurement.neck;
+        neck.userId   = user.userId;
+        neck.value    = 0.0f;
+        measurementDao.insert(neck);
+
+        Measurement calves = new Measurement();
+        calves.type   = Measurement.calves;
+        calves.userId = user.userId;
+        calves.value  = 0.0f;
+        measurementDao.insert(calves);
     }
 
     /**
@@ -176,10 +280,8 @@ public class UserPresenter {
      * Creates all the default workouts and movements for a user
      *
      * @param user The user we're creating the workouts for
-     *
-     * @return boolean whether or not it succeeded
      */
-    public boolean createDefaultWorkouts(User user) {
+    public void createDefaultWorkouts(User user) {
         // Chest/Tricep day
         Movement bench            = movementDao.lookupOrCreateMovement("Benchpress",        Movement.RepsAndWeight);
         Movement pushups          = movementDao.lookupOrCreateMovement("Pushups",           Movement.Reps);
@@ -241,8 +343,6 @@ public class UserPresenter {
         workoutMovementCrossRefDao.addMovementToWorkout(abs, russianTwists);
         workoutMovementCrossRefDao.addMovementToWorkout(abs, planks);
         workoutMovementCrossRefDao.addMovementToWorkout(abs, legLifts);
-
-        return true;
     }
 
 }

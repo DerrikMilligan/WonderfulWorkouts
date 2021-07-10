@@ -53,18 +53,18 @@ public class WorkoutView extends Fragment {
         // Set the ListView's adapter to our custom adapter!
         movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
 
-         //Add an event to the Floating Action Button
+        //Add an event to the Floating Action Button
         FloatingActionButton btnTesting = root.findViewById(R.id.workout_new_movement);
         btnTesting.setOnClickListener(view -> {
             Log.i("Workout View", "Test button pressed!");
 
-            Navigation.findNavController(view).navigate(R.id.navigation_newEditMovement_page);
+            Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
         });
 
         Button startWorkoutBtn = root.findViewById(R.id.workout_start_workout_button);
         startWorkoutBtn.setOnClickListener(view ->{
             Log.i("WorkoutView", String.format("Starting a workout"));
-            Navigation.findNavController(view).navigate(R.id.navigation_current_workout);
+            Navigation.findNavController(view).navigate(R.id.navigation_workout_active);
         });
 
         // Button btnLogin = root.findViewById(R.id.btn_login);
@@ -86,6 +86,7 @@ public class WorkoutView extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     private ArrayList<WorkoutHistory> getWorkoutHistory() {
         ArrayList<WorkoutHistory> workoutHistories = new ArrayList<>();
 

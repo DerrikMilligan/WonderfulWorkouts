@@ -23,7 +23,7 @@ import wonderful.workouts.database.entities.WorkoutMovementCrossRef;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
 @Database(
-    version = 5,
+    version = 7,
     // Here we list out all the entities we'll be using
     entities = {
         Measurement.class,
