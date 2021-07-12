@@ -1,11 +1,15 @@
 package wonderful.workouts.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import wonderful.workouts.database.daos.MeasurementDao;
 import wonderful.workouts.database.daos.MovementDao;
@@ -23,7 +27,7 @@ import wonderful.workouts.database.entities.WorkoutMovementCrossRef;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
 @Database(
-    version = 7,
+    version = 9,
     // Here we list out all the entities we'll be using
     entities = {
         Measurement.class,
@@ -60,6 +64,12 @@ public abstract class AppDatabase extends RoomDatabase {
                 INSTANCE = Room
                     .databaseBuilder(context.getApplicationContext(), AppDatabase.class, "main_database")
                     .fallbackToDestructiveMigration()
+                    .setQueryCallback((sqlQuery, bindArgs) -> {
+                        Log.i("AppDatabase", String.format("Query: %s", sqlQuery));
+                        for (Object arg : bindArgs) {
+                            Log.i("AppDatabase", String.format("  Arg: %s", arg.toString()));
+                        }
+                    }, Executors.newSingleThreadExecutor())
                     .build();
 
             }
