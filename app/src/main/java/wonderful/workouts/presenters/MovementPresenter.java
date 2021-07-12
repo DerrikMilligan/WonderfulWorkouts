@@ -2,18 +2,29 @@ package wonderful.workouts.presenters;
 
 import android.content.Context;
 
+import java.util.List;
+
 import wonderful.workouts.database.AppDatabase;
 import wonderful.workouts.database.daos.MovementDao;
+import wonderful.workouts.database.daos.WorkoutDao;
+import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.User;
+import wonderful.workouts.database.entities.Workout;
+import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class MovementPresenter {
     private final MovementDao movementDao;
+    private final WorkoutDao workoutDao;
 
     // Implement the singleton pattern
     private static MovementPresenter INSTANCE = null;
 
+    private static Movement currentMovement = null;
+
     // Make the constructor private so we have to use getInstance to use the presenter
     private MovementPresenter(AppDatabase db) {
         movementDao = db.getMovementDao();
+        workoutDao = db.getWorkoutDao();
     }
 
     // Here's the way we get our singleton instance for use
@@ -32,4 +43,38 @@ public class MovementPresenter {
 
         return INSTANCE;
     }
+
+    // ------------------------------------------------------------------------
+    // Public methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * setCurrentMovement
+     *
+     * Set's a current movement in the singleton to track which movement is being viewed
+     *
+     * @param movement The workout we're storing
+     */
+    public void setCurrentMovement(Movement movement) { currentMovement = movement; }
+
+    /**
+     * getCurrentMovement
+     *
+     * Gets the current movement
+     *
+     * @return Movement
+     */
+    public Movement getCurrentMovement() { return currentMovement; }
+
+    /**
+     * getCurrentMovement
+     *
+     * Gets all the movements for a user and their workouts
+     *
+     * @return List<Movement>
+     */
+    public List<Movement> getUserMovements(User user) {
+        return movementDao.getUserMovements(user.userId);
+    }
+
 }

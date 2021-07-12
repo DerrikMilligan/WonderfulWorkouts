@@ -11,6 +11,8 @@ import java.util.List;
 
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.Workout;
+import wonderful.workouts.database.entities.WorkoutHistory;
+import wonderful.workouts.database.joiners.WorkoutWithHistories;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 import wonderful.workouts.database.joiners.WorkoutWithMovements;
 
@@ -30,11 +32,19 @@ public interface WorkoutDao {
 
     @Transaction
     @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
-    List<WorkoutWithMovements> getWorkoutMovements(int workoutId);
+    WorkoutWithMovements getWorkoutMovements(int workoutId);
 
     @Transaction
     @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
     List<WorkoutWithHistory> getWorkoutHistory(int workoutId);
+
+    @Transaction
+    @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
+    WorkoutWithHistories getWorkoutHistories(int workoutId);
+
+    @Transaction
+    @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
+    Workout lookupWorkout(int workoutId);
 
     // Get's a workout whose name matches a string for a given user
     @Transaction

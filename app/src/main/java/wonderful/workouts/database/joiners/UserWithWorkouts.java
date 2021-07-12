@@ -14,7 +14,8 @@ public class UserWithWorkouts {
 
     @Relation(
         parentColumn = "userId",
-        entityColumn = "workoutId"
+        entityColumn = "workoutId",
+        entity = Workout.class
     )
     public List<Workout> workouts;
 }

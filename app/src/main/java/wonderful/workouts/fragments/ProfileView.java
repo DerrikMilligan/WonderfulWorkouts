@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.dialogs.DialogHelper;
 import wonderful.workouts.dialogs.MeasurementDialog;
 import wonderful.workouts.R;
@@ -32,8 +33,6 @@ import wonderful.workouts.presenters.UserPresenter;
 // implements MeasurementDialog.MeasurementDialogListener
 
 public class ProfileView extends Fragment {
-    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("L/d/u");
-
     private FragmentProfileBinding binding;
 
     private TextView weight = null;
@@ -145,7 +144,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating weight to: %.2f", measurement.value));
                             weight.setText(measurement.value + "lbs");
                             if (measurement.lastUpdated != null) {
-                                weightDate.setText(measurement.lastUpdated.format(dateFormat));
+                                weightDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 weightDate.setText("");
                             }
@@ -155,7 +154,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating biceps to: %.2f", measurement.value));
                             biceps.setText(measurement.value + "\"");
                             if (measurement.lastUpdated != null) {
-                                bicepsDate.setText(measurement.lastUpdated.format(dateFormat));
+                                bicepsDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 bicepsDate.setText("");
                             }
@@ -166,7 +165,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating chest to: %.2f", measurement.value));
                             chest.setText(measurement.value + "\"");
                             if (measurement.lastUpdated != null) {
-                                chestDate.setText(measurement.lastUpdated.format(dateFormat));
+                                chestDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 chestDate.setText("");
                             }
@@ -177,7 +176,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating thighs to: %.2f", measurement.value));
                             thighs.setText(measurement.value + "\"");
                             if (measurement.lastUpdated != null) {
-                                thighsDate.setText(measurement.lastUpdated.format(dateFormat));
+                                thighsDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 thighsDate.setText("");
                             }
@@ -188,7 +187,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating waist to: %.2f", measurement.value));
                             waist.setText(measurement.value + "\"");
                             if (measurement.lastUpdated != null) {
-                                waistDate.setText(measurement.lastUpdated.format(dateFormat));
+                                waistDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 waistDate.setText("");
                             }
@@ -199,7 +198,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating hips to: %.2f", measurement.value));
                             hips.setText(measurement.value + "\"");
                             if (measurement.lastUpdated != null) {
-                                hipsDate.setText(measurement.lastUpdated.format(dateFormat));
+                                hipsDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 hipsDate.setText("");
                             }
@@ -210,7 +209,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating neck to: %.2f", measurement.value));
                             neck.setText(measurement.value + "\"");
                             if (measurement.lastUpdated != null) {
-                                neckDate.setText(measurement.lastUpdated.format(dateFormat));
+                                neckDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 neckDate.setText("");
                             }
@@ -221,7 +220,7 @@ public class ProfileView extends Fragment {
                             Log.i("Profile", String.format("Updating calves to: %.2f", measurement.value));
                             calves.setText(measurement.value + "\"");
                             if (measurement.lastUpdated != null) {
-                                calvesDate.setText(measurement.lastUpdated.format(dateFormat));
+                                calvesDate.setText(measurement.lastUpdated.format(WorkoutHistory.dateFormat));
                             } else {
                                 calvesDate.setText("");
                             }
