@@ -28,8 +28,6 @@ import wonderful.workouts.database.entities.Measurement;
 import wonderful.workouts.databinding.FragmentProfileBinding;
 import wonderful.workouts.presenters.UserPresenter;
 
-//Tried to pass new weight from dialog, but it says MainActivity needs to implement MeasurementDialogListener
-// implements MeasurementDialog.MeasurementDialogListener
 
 public class ProfileView extends Fragment {
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("L/d/u");

@@ -25,7 +25,7 @@ public interface MovementDao {
     Movement lookupMovement(String movementName);
 
     @Transaction
-    public default Movement lookupOrCreateMovement(String movementName, String movementType) {
+    public default Movement lookupOrCreateMovement(String movementName, String movementType, String movementCategory, String movementEquipment) {
         Movement lookup = lookupMovement(movementName);
         if (lookup != null) {
             return lookup;
@@ -34,6 +34,8 @@ public interface MovementDao {
         Movement newMovement = new Movement();
         newMovement.name = movementName;
         newMovement.type = movementType;
+        newMovement.category = movementCategory;
+        newMovement.equipment = movementEquipment;
         newMovement.movementId = (int) insert(newMovement);
 
         return newMovement;
