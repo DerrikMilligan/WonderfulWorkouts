@@ -33,10 +33,9 @@ import wonderful.workouts.presenters.WorkoutPresenter;
 public class WorkoutView extends Fragment {
     private ListView pastWorkoutListView;
     private ListView movementsListView;
-
+    private View root;
     private FragmentWorkoutBinding binding;
-    private ListView pastWorkoutListView;
-    private ListView movementsListView;
+
 
     public View onCreateView(
             @NonNull LayoutInflater inflater,
@@ -77,11 +76,11 @@ public class WorkoutView extends Fragment {
             Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
         });
 
-        Button startWorkoutBtn = root.findViewById(R.id.workout_start_workout_button);
-        startWorkoutBtn.setOnClickListener(view ->{
-            Log.i("WorkoutView", String.format("Starting a workout"));
-            Navigation.findNavController(view).navigate(R.id.navigation_workout_history);
-        });
+//        Button startWorkoutBtn = root.findViewById(R.id.workout_start_workout_button);
+//        startWorkoutBtn.setOnClickListener(view ->{
+//            Log.i("WorkoutView", String.format("Starting a workout"));
+//            Navigation.findNavController(view).navigate(R.id.navigation_workout_history);
+//        });
 
         // Button btnLogin = root.findViewById(R.id.btn_login);
         // btnLogin.setOnClickListener(view -> {
@@ -104,7 +103,7 @@ public class WorkoutView extends Fragment {
     }
 
 
-    private ArrayList<WorkoutHistory> getWorkoutHistory() {
+    private void getWorkoutHistory() {
         new Thread(() -> {
             // Get the presenter.
             UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
@@ -118,7 +117,7 @@ public class WorkoutView extends Fragment {
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
                 // Set the ListView's adapter to our custom adapter!
-                pastWorkoutListView.setAdapter(new WorkoutAdapter(this.getContext(), workoutHistories));
+                pastWorkoutListView.setAdapter(new WorkoutHistoryAdapter(this.getContext(), workoutHistories));
 
                 // Add an onClick listener just for an example!
                 pastWorkoutListView.setOnItemClickListener((parent, view, position, id) -> {
@@ -198,7 +197,7 @@ public class WorkoutView extends Fragment {
 
     }
 
-    private ArrayList<Movement> getMovements() {
+    private void getMovements() {
         new Thread(() -> {
             // Get the presenter.
             UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
@@ -211,7 +210,7 @@ public class WorkoutView extends Fragment {
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
                 // Set the ListView's adapter to our custom adapter!
-                movementsListView.setAdapter(new WorkoutAdapter(this.getContext(), movements));
+                movementsListView.setAdapter(new MovementAdapter(this.getContext(), movements));
 
                 // Add an onClick listener just for an example!
                 //movementsListView.setOnItemClickListener((parent, view, position, id) -> {
@@ -232,7 +231,7 @@ public class WorkoutView extends Fragment {
                     //Navigation.findNavController(root).navigate(R.id.navigation_workout);
 
                     //Log.i("HomeView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
-                });
+                //});
             });
         }).start();
 

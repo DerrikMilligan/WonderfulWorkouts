@@ -68,7 +68,7 @@ public class PastWorkoutView extends Fragment {
     @SuppressLint("DefaultLocale")
     public void updatePastWorkoutDisplay() {
         WorkoutWithHistory dummyData = getDummyData();
-        ArrayList<WorkoutWithHistory> workoutHistories = new ArrayList<>();
+        WorkoutWithHistory workoutHistories = new ArrayList<>();
 
         workoutHistories.add(dummyData);
 

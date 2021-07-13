@@ -96,7 +96,7 @@ public class WorkoutHistoryView extends Fragment {
 //                        history,
 //                        this::activeWorkoutAdapterCallback
 //                );
-                pastWorkoutListView.setAdapter(new WorkoutAdapter(this.getContext(), allHistory));
+                pastWorkoutListView.setAdapter(new PastWorkoutAdapter(this.getContext(), allHistory));
 
                 // Set the ListView's adapter to our custom adapter!
                 //pastWorkoutListView.setAdapter(pastWorkoutAdapter);
