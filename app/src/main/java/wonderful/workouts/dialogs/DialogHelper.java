@@ -2,8 +2,9 @@ package wonderful.workouts.dialogs;
 
 import android.app.AlertDialog;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+
+import wonderful.workouts.callbacks.DialogHelperCallback;
 
 public class DialogHelper {
     public static void displayAlertFromFragmentThread(

@@ -2,8 +2,8 @@ package wonderful.workouts.presenters;
 
 import android.content.Context;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import wonderful.workouts.database.AppDatabase;
@@ -16,6 +16,8 @@ import wonderful.workouts.database.entities.User;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
+import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
+import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistories;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 import wonderful.workouts.database.joiners.WorkoutWithMovements;
@@ -82,7 +84,7 @@ public class WorkoutPresenter {
      *
      * @return WorkoutMovementHistory
      */
-    private WorkoutMovementHistory addSetToActiveWorkout(int workoutHistoryId, int movementId, float reps, float weight, float duration) {
+    public WorkoutMovementHistory addSetToActiveWorkout(int workoutHistoryId, int movementId, float reps, float weight, float duration) {
         WorkoutHistory         wh  = workoutHistoryDao.lookupWorkoutHistory(workoutHistoryId);
         Movement               m   = movementDao.lookupMovement(movementId);
         WorkoutMovementHistory set = new WorkoutMovementHistory();
@@ -143,6 +145,19 @@ public class WorkoutPresenter {
      * @return WorkoutHistory
      */
     public WorkoutHistory getActiveWorkout() { return activeWorkout; }
+
+    /**
+     * getWorkout
+     *
+     * Returns a workout from an id
+     *
+     * @param workoutId The id of the workout to get
+     *
+     * @return Workout
+     */
+    public Workout getWorkout(int workoutId) {
+        return workoutDao.lookupWorkout(workoutId);
+    }
 
     /**
      * getWorkoutsForUser
@@ -283,56 +298,6 @@ public class WorkoutPresenter {
     }
 
     /**
-     * addSetToWorkout
-     *
-     * Creates a new set for a given workout history and movement.
-     * This overload is for reps and weight.
-     *
-     * @param workoutHistory The current workout
-     * @param movement The movement we're adding a set for
-     * @param weight the weight
-     * @param reps the number of reps
-     *
-     * @return WorkoutMovementHistory
-     */
-    public WorkoutMovementHistory addSetToWorkout(WorkoutHistory workoutHistory, Movement movement, float weight, float reps) {
-        WorkoutMovementHistory newSet = new WorkoutMovementHistory();
-
-        newSet.workoutHistoryId = workoutHistory.workoutHistoryId;
-        newSet.movementId = movement.movementId;
-        newSet.weight = weight;
-        newSet.reps = reps;
-
-        workoutMovementHistoryDao.insert(newSet);
-
-        return newSet;
-    }
-
-    /**
-     * addSetToWorkout
-     *
-     * Creates a new set for a given workout history and movement.
-     * This overload is for sets only.
-     *
-     * @param workoutHistory The current workout
-     * @param movement The movement we're adding a set for
-     * @param duration how long the set went for
-     *
-     * @return WorkoutMovementHistory
-     */
-    public WorkoutMovementHistory addSetToWorkout(WorkoutHistory workoutHistory, Movement movement, Duration duration) {
-        WorkoutMovementHistory newSet = new WorkoutMovementHistory();
-
-        newSet.workoutHistoryId = workoutHistory.workoutHistoryId;
-        newSet.movementId = movement.movementId;
-        newSet.duration = duration.getSeconds();
-
-        workoutMovementHistoryDao.insert(newSet);
-
-        return newSet;
-    }
-
-    /**
      * getWorkoutMovements
      *
      * Gets all the movements for a given workout
@@ -367,16 +332,57 @@ public class WorkoutPresenter {
     }
 
     /**
-     * getWorkoutMovements
+     * getWorkoutHistory
      *
-     * Gets all the workout history for an active workout
+     * Gets the movements and sets for a single workout history
      *
-     * @param workout The active workout to get the history for
+     * @param workoutHistory The workout history to get all movements and sets for
      *
-     * @return List<WorkoutWithHistory>
+     * @return WorkoutHistoryWithMovements
      */
-    public List<WorkoutWithHistory> getWorkoutHistory(Workout workout) {
-        return workoutDao.getWorkoutHistory(workout.workoutId);
+    public WorkoutHistoryWithMovements getWorkoutHistory(WorkoutHistory workoutHistory) {
+        WorkoutHistoryWithMovements history = new WorkoutHistoryWithMovements();
+
+        history.workoutHistory = workoutHistory;
+        history.movementHistory = new ArrayList<>();
+
+        List<Movement> movements = movementDao.getWorkoutMovements(workoutHistory.workoutId);
+
+        for (Movement m : movements) {
+            MovementWithWorkoutMovementHistory movementWithHistory = new MovementWithWorkoutMovementHistory();
+
+            movementWithHistory.movement = m;
+            movementWithHistory.workoutMovementHistories = workoutMovementHistoryDao.lookupMovementHistoriesWithMovementId(m.movementId);
+
+            history.movementHistory.add(movementWithHistory);
+        }
+
+        return history;
+    }
+
+    /**
+     * getAllPastWorkoutHistories
+     *
+     * Gets the movements and sets for all workout histories for a given workout.
+     *
+     * @param workout The workout history to get all movements and sets for
+     *
+     * @return WorkoutWithHistory
+     */
+    public WorkoutWithHistory getAllPastWorkoutHistories(Workout workout) {
+        WorkoutWithHistory history = new WorkoutWithHistory();
+        history.workout = workout;
+
+        history.pastWorkouts = new ArrayList<>();
+
+        // Get all the histories and we'll convert them into histories with movements
+        List<WorkoutHistory> histories = workoutHistoryDao.lookupWorkoutHistories(workout.workoutId);
+
+        for (WorkoutHistory h : histories) {
+            history.pastWorkouts.add(getWorkoutHistory(h));
+        }
+
+        return history;
     }
 
 }

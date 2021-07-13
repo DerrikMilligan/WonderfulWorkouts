@@ -14,7 +14,7 @@ import java.util.List;
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
-import wonderful.workouts.database.joiners.WorkoutHistoryWithWorkoutMovementHistories;
+import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class MovementHistoryAdapter extends BaseExpandableListAdapter {
@@ -39,7 +39,7 @@ public class MovementHistoryAdapter extends BaseExpandableListAdapter {
         WorkoutWithHistory currentHistory = _workouts.get(groupPosition);
 
         // Count all the sets from the workouts
-        for (WorkoutHistoryWithWorkoutMovementHistories histories : currentHistory.pastWorkouts) {
+        for (WorkoutHistoryWithMovements histories : currentHistory.pastWorkouts) {
             for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
                 for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
                     setCount++;
@@ -62,7 +62,7 @@ public class MovementHistoryAdapter extends BaseExpandableListAdapter {
         WorkoutWithHistory currentHistory = _workouts.get(groupPosition);
 
         // Count all the sets from the workouts
-        for (WorkoutHistoryWithWorkoutMovementHistories histories : currentHistory.pastWorkouts) {
+        for (WorkoutHistoryWithMovements histories : currentHistory.pastWorkouts) {
             for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
                 for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
                     if (setIndex == childPosition) {
@@ -103,8 +103,8 @@ public class MovementHistoryAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.expandable_movement_history_group, null);
             holder = new GroupViewHolder();
-            holder.nameView = (TextView) convertView.findViewById(R.id.movement_history_group_text_workout_name);
-            holder.dateView = (TextView) convertView.findViewById(R.id.movement_history_group_text_workout_date);
+            holder.nameView = (TextView) convertView.findViewById(R.id.workout_history_group_text_workout_name);
+            holder.dateView = (TextView) convertView.findViewById(R.id.workout_history_group_text_workout_date);
             convertView.setTag(holder);
         } else {
             holder = (GroupViewHolder) convertView.getTag();

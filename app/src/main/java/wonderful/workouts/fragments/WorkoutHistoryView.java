@@ -23,7 +23,7 @@ import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
-import wonderful.workouts.database.joiners.WorkoutHistoryWithWorkoutMovementHistories;
+import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 import wonderful.workouts.databinding.FragmentWorkoutHistoryBinding;
 
@@ -121,9 +121,9 @@ public class WorkoutHistoryView extends Fragment {
         movementHistories.workout.name = "Chest day";
         movementHistories.workout.userId = 1;
 
-        List<WorkoutHistoryWithWorkoutMovementHistories> pastWorkouts = new ArrayList<>();
+        List<WorkoutHistoryWithMovements> pastWorkouts = new ArrayList<>();
 
-        WorkoutHistoryWithWorkoutMovementHistories workout1 = new WorkoutHistoryWithWorkoutMovementHistories();
+        WorkoutHistoryWithMovements workout1 = new WorkoutHistoryWithMovements();
 
         workout1.workoutHistory = new WorkoutHistory();
         workout1.workoutHistory.workoutHistoryId = 1;
