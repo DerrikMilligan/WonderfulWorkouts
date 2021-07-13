@@ -17,5 +17,5 @@ public class WorkoutWithHistory {
         entityColumn = "workoutHistoryId",
         entity = WorkoutHistory.class
     )
-    public List<WorkoutHistoryWithWorkoutMovementHistories> pastWorkouts;
+    public List<WorkoutHistoryWithMovements> pastWorkouts;
 }

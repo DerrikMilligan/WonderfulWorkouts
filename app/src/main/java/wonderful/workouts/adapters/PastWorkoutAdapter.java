@@ -13,7 +13,7 @@ import java.util.List;
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
-import wonderful.workouts.database.joiners.WorkoutHistoryWithWorkoutMovementHistories;
+import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class PastWorkoutAdapter extends BaseExpandableListAdapter {
@@ -31,7 +31,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
 
         // Count all the sets from the workouts
         for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithWorkoutMovementHistories histories : workout.pastWorkouts) {
+            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
                 for (MovementWithWorkoutMovementHistory ignored : histories.movementHistory) {
                     movementCount++;
                 }
@@ -48,7 +48,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
 
         // Count all the sets from the workouts
         for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithWorkoutMovementHistories histories : workout.pastWorkouts) {
+            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
                 for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
                     if (movementCount == groupPosition) {
                         for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
@@ -72,7 +72,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
 
         // Count all the sets from the workouts
         for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithWorkoutMovementHistories histories : workout.pastWorkouts) {
+            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
                 for (MovementWithWorkoutMovementHistory movement : histories.movementHistory) {
                     if (movementCount == groupPosition) {
                         return movement;
@@ -93,7 +93,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
 
         // Count all the sets from the workouts
         for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithWorkoutMovementHistories histories : workout.pastWorkouts) {
+            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
                 for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
                     if (movementCount == groupPosition) {
                         for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
@@ -140,8 +140,8 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.expandable_movement_history_group, null);
             holder = new GroupViewHolder();
-            holder.nameView = (TextView) convertView.findViewById(R.id.movement_history_group_text_workout_name);
-            holder.dateView = (TextView) convertView.findViewById(R.id.movement_history_group_text_workout_date);
+            holder.nameView = (TextView) convertView.findViewById(R.id.workout_history_group_text_workout_name);
+            holder.dateView = (TextView) convertView.findViewById(R.id.workout_history_group_text_workout_date);
             convertView.setTag(holder);
         } else {
             holder = (GroupViewHolder) convertView.getTag();

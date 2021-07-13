@@ -1,4 +1,4 @@
-package wonderful.workouts.dialogs;
+package wonderful.workouts.callbacks;
 
 import android.content.DialogInterface;
 

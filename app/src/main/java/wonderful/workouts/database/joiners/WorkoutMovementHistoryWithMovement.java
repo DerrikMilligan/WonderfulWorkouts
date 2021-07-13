@@ -3,20 +3,17 @@ package wonderful.workouts.database.joiners;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import java.util.List;
-
 import wonderful.workouts.database.entities.Movement;
-import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 
-public class WorkoutHistoryWithWorkoutMovementHistories {
+public class WorkoutMovementHistoryWithMovement {
     @Embedded
-    public WorkoutHistory workoutHistory;
+    public WorkoutMovementHistory workoutMovementHistory;
 
     @Relation(
-        parentColumn = "workoutHistoryId",
+        parentColumn = "movementId",
         entityColumn = "movementId",
         entity = Movement.class
     )
-    public List<MovementWithWorkoutMovementHistory> movementHistory;
+    public Movement movement;
 }
