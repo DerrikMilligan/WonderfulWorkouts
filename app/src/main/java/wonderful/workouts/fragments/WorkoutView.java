@@ -31,6 +31,9 @@ import wonderful.workouts.presenters.UserPresenter;
 import wonderful.workouts.presenters.WorkoutPresenter;
 
 public class WorkoutView extends Fragment {
+    private ListView pastWorkoutListView;
+    private ListView movementsListView;
+
     private FragmentWorkoutBinding binding;
     private ListView pastWorkoutListView;
     private ListView movementsListView;
@@ -47,6 +50,8 @@ public class WorkoutView extends Fragment {
         //ArrayList<WorkoutHistory> workoutHistories = getWorkoutHistory();
 
         pastWorkoutListView = (ListView) root.findViewById(R.id.workout_view_past_entries);
+
+
         getWorkoutHistory();
 
 //        if (workoutHistoryListView == null) {
@@ -58,6 +63,8 @@ public class WorkoutView extends Fragment {
         //ArrayList<Movement> movements = getMovements();
 
         movementsListView = (ListView) root.findViewById(R.id.workout_history_view_movements_list);
+        getMovements();
+
 
         // Set the ListView's adapter to our custom adapter!
         //movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
@@ -95,6 +102,7 @@ public class WorkoutView extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 
     private ArrayList<WorkoutHistory> getWorkoutHistory() {
         new Thread(() -> {
@@ -172,6 +180,7 @@ public class WorkoutView extends Fragment {
 //
 //
 //        ArrayList<WorkoutHistory> workoutHistories = new ArrayList<>();
+
 //
 //        WorkoutHistory wh = new WorkoutHistory();
 //        wh.startTime = LocalDateTime.now();
@@ -186,6 +195,7 @@ public class WorkoutView extends Fragment {
 //        workoutHistories.add(wh2);
 //
 //        return workoutHistories;
+
     }
 
     private ArrayList<Movement> getMovements() {
