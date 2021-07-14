@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".fragments.HistoryView">
+
+    <TextView
+        android:id="@+id/movementsHistLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/movements_label"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/movementHistList"
+        app:layout_constraintStart_toStartOf="@+id/equipmentLabel"
+        app:layout_constraintTop_toBottomOf="@+id/equipmentLabel" />
+
+    <Spinner
+        android:id="@+id/equipmentDropDown"
+        android:layout_width="200dp"
+        android:layout_height="27dp"
+        app:layout_constraintBottom_toBottomOf="@+id/equipmentLabel"
+        app:layout_constraintStart_toEndOf="@+id/equipmentLabel"
+        app:layout_constraintStart_toStartOf="@+id/categoryDropDown"
+        app:layout_constraintTop_toTopOf="@+id/equipmentLabel" />
+
+    <TextView
+        android:id="@+id/equipmentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/equipment_label"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/movementsHistLabel"
+        app:layout_constraintStart_toStartOf="@+id/categoryLabel"
+        app:layout_constraintTop_toBottomOf="@+id/categoryLabel" />
+
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/category_label"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/equipmentLabel"
+        app:layout_constraintStart_toStartOf="@+id/workoutsHistLabel"
+        app:layout_constraintTop_toBottomOf="@+id/workoutHistList" />
+
+    <TextView
+        android:id="@+id/workoutsHistLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/past_workouts_label"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/workoutHistList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/categoryDropDown"
+        android:layout_width="200dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/categoryLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/categoryLabel"
+        app:layout_constraintTop_toTopOf="@+id/categoryLabel"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ListView
+        android:id="@+id/workoutHistList"
+        android:layout_width="379dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/categoryLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/workoutsHistLabel" />
+
+    <ListView
+        android:id="@+id/movementHistList"
+        android:layout_width="379dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="107dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movementsHistLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

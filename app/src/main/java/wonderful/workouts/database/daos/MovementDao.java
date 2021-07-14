@@ -8,6 +8,8 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import java.util.List;
+
 import wonderful.workouts.database.entities.Movement;
 
 @Dao
@@ -21,11 +23,58 @@ public interface MovementDao {
     @Delete
     void delete(Movement movement);
 
+    @Query("SELECT * FROM movements WHERE movementId = :movementId")
+    Movement lookupMovement(int movementId);
+
     @Query("SELECT * FROM movements WHERE name = :movementName")
     Movement lookupMovement(String movementName);
 
+    @Query(
+        "SELECT m.* " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.userId = :userId"
+    )
+    List<Movement> getUserMovements(int userId);
+
+    @Query(
+        "SELECT m.* " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.workoutId = :workoutId"
+    )
+    List<Movement> getWorkoutMovements(int workoutId);
+
+    @Query(
+        "SELECT DISTINCT m.category " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.userId = :userId " +
+            "ORDER BY category ASC"
+    )
+    List<String> getCategoryList(int userId);
+
+    @Query("SELECT * FROM movements WHERE category = :movementCategory")
+    List<Movement> getCategoryMovements(String movementCategory);
+
+    @Query(
+        "SELECT DISTINCT m.equipment " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.userId = :userId " +
+            "ORDER By equipment ASC"
+    )
+    List<String> getEquipmentList(int userId);
+
+    @Query("SELECT * FROM movements WHERE equipment = :movementEquipment")
+    List<Movement> getEquipmentMovements(String movementEquipment);
+
     @Transaction
-    public default Movement lookupOrCreateMovement(String movementName, String movementType, String movementCategory, String movementEquipment) {
+    default Movement lookupOrCreateMovement(String movementName, String movementType, String movementCategory, String movementEquipment) {
         Movement lookup = lookupMovement(movementName);
         if (lookup != null) {
             return lookup;

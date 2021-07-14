@@ -10,3 +10,4 @@ local.properties
 # The built file
 out/
 
+./.project/

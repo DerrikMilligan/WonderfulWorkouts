@@ -34,19 +34,20 @@
     <string name="enter_movement">Enter movement</string>
     <string-array name="categories">
         <item>All</item>
-        <item>Legs</item>
-        <item>Chest</item>
+        <item>Abs</item>
         <item>Back</item>
-        <item>Shoulders</item>
-        <item>Arms</item>
+        <item>Biceps</item>
+        <item>Chest</item>
+        <item>Legs</item>
+        <item>Triceps</item>
     </string-array>
     <string-array name="equipment">
         <item>All</item>
-        <item>None</item>
-        <item>Single Dumbbell</item>
-        <item>Dumbbells</item>
         <item>Barbell</item>
-        <item>Band</item>
+        <item>Body weight</item>
+        <item>Dumbbells</item>
+        <item>Machine</item>
+        <item>Pull-up bar</item>
     </string-array>
     <string name="title_profile">Profile</string>
     <string name="title_history">History</string>

@@ -99,26 +99,6 @@ public class UserPresenter {
      */
     public User getUser(int userId) { return userDao.getUser(userId); }
 
-
-    /**
-     * getUserWorkouts
-     *
-     * Returns a list of workouts for a given user
-     *
-     * @param user The user we're getting the workout for
-     *
-     * @return List<Workout>
-     */
-    public List<Workout> getUserWorkouts(User user) {
-        UserWithWorkouts userWorkouts = userDao.getUserWorkouts(user.userId);
-
-        if (userWorkouts != null) {
-            return userWorkouts.workouts;
-        }
-
-        return null;
-    }
-
     /**
      * usernameExists
      *

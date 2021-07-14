@@ -11,6 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import wonderful.workouts.database.entities.User;
+import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.joiners.UserWithMeasurements;
 import wonderful.workouts.database.joiners.UserWithWorkouts;
 
@@ -33,10 +34,6 @@ public interface UserDao {
 
     @Query("SELECT * FROM users WHERE userId = :userId LIMIT 1;")
     User getUser(int userId);
-
-    @Transaction
-    @Query("SELECT * FROM users WHERE userId = :userId")
-    UserWithWorkouts getUserWorkouts(int userId);
 
     @Transaction
     @Query("SELECT * FROM users WHERE userId = :userId")

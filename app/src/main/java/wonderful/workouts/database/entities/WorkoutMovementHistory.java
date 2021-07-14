@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "workout_movement_history")
 public class WorkoutMovementHistory {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int workoutMovementHistoryId;
     public int workoutHistoryId;
     public int movementId;
