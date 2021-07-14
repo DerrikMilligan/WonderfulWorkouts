@@ -2,27 +2,33 @@ package wonderful.workouts.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.List;
+import androidx.fragment.app.FragmentManager;
 
 import wonderful.workouts.R;
-import wonderful.workouts.database.entities.Workout;
+import wonderful.workouts.callbacks.ActiveWorkoutAdapterCallback;
+import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
 import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
+import wonderful.workouts.dialogs.AddSetDialog;
 
-public class PastWorkoutAdapter extends BaseExpandableListAdapter {
-    private final WorkoutWithHistory _workouts;
+public class ActiveWorkoutAdapter extends BaseExpandableListAdapter {
+    private final WorkoutWithHistory _workout;
     private final LayoutInflater layoutInflater;
+    private final ActiveWorkoutAdapterCallback _callback;
 
-    public PastWorkoutAdapter(Context context, WorkoutWithHistory workouts) {
-        _workouts = workouts;
+    public ActiveWorkoutAdapter(Context context, WorkoutWithHistory workout, ActiveWorkoutAdapterCallback callback) {
+        _workout = workout;
+        _callback = callback;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -31,7 +37,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int movementCount = 0;
 
         // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
+        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
             for (MovementWithWorkoutMovementHistory ignored : histories.movementHistory) {
                 movementCount++;
             }
@@ -46,21 +52,21 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
-
-            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
-                for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                    if (movementCount == groupPosition) {
-                        for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
-                            setCount++;
-                        }
-
-                        return setCount;
+        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
+            for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
+                if (movementCount == groupPosition) {
+                    for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
+                        setCount++;
                     }
 
-                    movementCount++;
+                    return setCount;
                 }
-            }
 
+                movementCount++;
+            }
+        }
+
+        Log.i("ActiveWorkoutAdapter", String.format("Set Count: %d", setCount));
 
         return setCount;
     }
@@ -70,17 +76,15 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int movementCount = 0;
 
         // Count all the sets from the workouts
-
-            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
-                for (MovementWithWorkoutMovementHistory movement : histories.movementHistory) {
-                    if (movementCount == groupPosition) {
-                        return movement;
-                    }
-
-                    movementCount++;
+        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
+            for (MovementWithWorkoutMovementHistory movement : histories.movementHistory) {
+                if (movementCount == groupPosition) {
+                    return movement;
                 }
-            }
 
+                movementCount++;
+            }
+        }
 
         return null;
     }
@@ -91,24 +95,22 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
+        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
+            for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
+                if (movementCount == groupPosition) {
+                    for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
 
-            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
-                for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                    if (movementCount == groupPosition) {
-                        for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
-
-                            if (setCount == childPosition) {
-                                return set;
-                            }
-
-                            setCount++;
+                        if (setCount == childPosition) {
+                            return set;
                         }
+
+                        setCount++;
                     }
-
-                    movementCount++;
                 }
-            }
 
+                movementCount++;
+            }
+        }
 
         return null;
     }
@@ -137,10 +139,10 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.expandable_movement_history_group, null);
+            convertView = layoutInflater.inflate(R.layout.expandable_active_workout_group, null);
             holder = new GroupViewHolder();
-            holder.nameView = (TextView) convertView.findViewById(R.id.workout_history_group_text_workout_name);
-            holder.dateView = (TextView) convertView.findViewById(R.id.workout_history_group_text_workout_date);
+            holder.nameView = (TextView) convertView.findViewById(R.id.active_workout_group_text_workout_name);
+            holder.addSetButton = (ImageButton) convertView.findViewById(R.id.btn_add_set);
             convertView.setTag(holder);
         } else {
             holder = (GroupViewHolder) convertView.getTag();
@@ -148,8 +150,17 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
 
         MovementWithWorkoutMovementHistory workout = getGroup(groupPosition);
 
+        // This makes the button clickable while leaving the list expandable and took too many hours to figure out.
+        holder.addSetButton.setFocusable(false);
+
+        Log.i("ActiveWorkoutAdapter", String.format("Adding set to movement: %s, type: %s", workout.movement.name, workout.movement.type));
+
+        // When we click the button display a dialog to add a set for that movement
+        holder.addSetButton.setOnClickListener((view) -> _callback.callback(workout));
+
         holder.nameView.setText(workout.movement.name);
-        // holder.dateView.setText(LocalDateTime.now().toString());
+
+        Log.i("ActiveWorkoutAdapter", String.format("Movement Name: %s", workout.movement.name));
 
         return convertView;
     }
@@ -169,18 +180,35 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
             holder = (ChildViewHolder) convertView.getTag();
         }
 
+        MovementWithWorkoutMovementHistory workout = getGroup(groupPosition);
         WorkoutMovementHistory history = getChild(groupPosition, childPosition);
 
         holder.setNumberView.setText(String.format("Set %d", (childPosition + 1)));
-        holder.weightView.setText(String.format("%d", Math.round(history.weight)));
-        holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+
+        Log.i("ActiveWorkoutAdapter", String.format("Set duration: %.2f, weight: %.2f, reps: %.2f", history.duration, history.weight, history.reps));
+
+        // Adjust the dialog based upon the type
+        switch (workout.movement.type) {
+            case Movement.Reps:
+                holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+                break;
+
+            case Movement.RepsAndWeight:
+                holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+                holder.weightView.setText(String.format("%d", Math.round(history.weight)));
+                break;
+
+            case Movement.Timed:
+                holder.repAndTimeView.setText(String.format("%.2f", history.duration));
+                break;
+        }
 
         return convertView;
     }
 
     static class GroupViewHolder {
         TextView nameView;
-        TextView dateView;
+        ImageButton addSetButton;
     }
 
     static class ChildViewHolder {

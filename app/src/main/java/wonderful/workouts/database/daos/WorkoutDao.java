@@ -9,7 +9,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.database.joiners.WorkoutWithHistories;
@@ -66,3 +65,4 @@ public interface WorkoutDao {
         return newWorkout;
     }
 }
+

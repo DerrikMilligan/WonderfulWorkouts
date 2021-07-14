@@ -1,11 +1,14 @@
 package wonderful.workouts.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -14,18 +17,25 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 import wonderful.workouts.R;
 import wonderful.workouts.adapters.MovementAdapter;
 import wonderful.workouts.adapters.WorkoutHistoryAdapter;
 import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentWorkoutBinding;
+import wonderful.workouts.presenters.WorkoutPresenter;
 
 public class WorkoutView extends Fragment {
+    private ListView pastWorkoutListView;
+    private ListView movementsListView;
+    private EditText workoutNameEditText;
+    private Button startWorkoutButton;
+
     private FragmentWorkoutBinding binding;
+    private View root;
 
     public View onCreateView(
             @NonNull LayoutInflater inflater,
@@ -33,51 +43,62 @@ public class WorkoutView extends Fragment {
             Bundle savedInstanceState
     ) {
         binding = FragmentWorkoutBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
-        //Get dummy data for now
-        ArrayList<WorkoutHistory> workoutHistories = getWorkoutHistory();
+        pastWorkoutListView = root.findViewById(R.id.workout_view_past_entries);
+        movementsListView   = root.findViewById(R.id.workout_view_movements_list);
+        workoutNameEditText = root.findViewById(R.id.workout_view_workout_name);
+        startWorkoutButton  = root.findViewById(R.id.workout_view_start_workout);
 
-        ListView workoutHistoryListView = (ListView) root.findViewById(R.id.workout_view_past_entries);
+        loadWorkoutName();
+        getWorkoutHistory();
+        getMovements();
 
-        if (workoutHistoryListView == null) {
-            Log.i("WorkoutView", "History list view was null");
-        }
+        startWorkoutButton.setOnClickListener((view) -> {
+            new Thread(() -> {
+                WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+                Workout workout = workoutPresenter.getCurrentWorkout();
 
-        workoutHistoryListView.setAdapter(new WorkoutHistoryAdapter(this.getContext(), workoutHistories));
+                WorkoutHistory workoutHistory = workoutPresenter.startWorkout(workout);
+                workoutPresenter.setActiveWorkout(workoutHistory);
 
-        ArrayList<Movement> movements = getMovements();
+                requireActivity().runOnUiThread(() -> {
+                    Navigation.findNavController(view).navigate(R.id.navigation_workout_active);
+                });
+            }).start();
+        });
 
-        ListView movementListView = (ListView) root.findViewById(R.id.workout_history_view_movements_list);
+        // Update the name when a key is pressed in the text view.
+        workoutNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
 
-        // Set the ListView's adapter to our custom adapter!
-        movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    new Thread(() -> {
+                        WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+                        Workout workout = workoutPresenter.getCurrentWorkout();
+
+                        String newWorkoutName = s.toString();
+
+                        Log.i("WorkoutView", String.format("Updating workout name: %s", newWorkoutName));
+
+                        // Update the name!
+                        workoutPresenter.updateWorkoutName(workout, newWorkoutName);
+                    }).start();
+                }
+            }
+        });
 
         //Add an event to the Floating Action Button
-        FloatingActionButton btnTesting = root.findViewById(R.id.workout_new_movement);
+        FloatingActionButton btnTesting = root.findViewById(R.id.workout_view_fab);
         btnTesting.setOnClickListener(view -> {
             Log.i("Workout View", "Test button pressed!");
 
             Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
         });
 
-        Button startWorkoutBtn = root.findViewById(R.id.workout_start_workout_button);
-        startWorkoutBtn.setOnClickListener(view ->{
-            Log.i("WorkoutView", String.format("Starting a workout"));
-            Navigation.findNavController(view).navigate(R.id.navigation_workout_active);
-        });
-
-        // Button btnLogin = root.findViewById(R.id.btn_login);
-        // btnLogin.setOnClickListener(view -> {
-        //     // Get the inputs so they can be validated/login
-        //     EditText email = root.findViewById(R.id.input_login_username);
-        //     EditText password = root.findViewById(R.id.input_login_password);
-        //
-        //     Log.i("LoginView", String.format("Login time! Username: %s Password: %s", email.getText(), password.getText()));
-        //
-        //     // Finally navigate to home!
-        //     Navigation.findNavController(view).navigate(R.id.navigation_home);
-        // });
         return root;
     }
 
@@ -87,44 +108,79 @@ public class WorkoutView extends Fragment {
         binding = null;
     }
 
-    private ArrayList<WorkoutHistory> getWorkoutHistory() {
-        ArrayList<WorkoutHistory> workoutHistories = new ArrayList<>();
+    private void loadWorkoutName() {
+        // Load the name initially into the text view
+        new Thread(() -> {
+            WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+            Workout workout = workoutPresenter.getCurrentWorkout();
 
-        WorkoutHistory wh = new WorkoutHistory();
-        wh.startTime = LocalDateTime.now();
-        workoutHistories.add(wh);
-
-        WorkoutHistory wh1 = new WorkoutHistory();
-        wh1.startTime = LocalDateTime.now().plusDays(5);
-        workoutHistories.add(wh1);
-
-        WorkoutHistory wh2 = new WorkoutHistory();
-        wh2.startTime = LocalDateTime.now().plusDays(10);
-        workoutHistories.add(wh2);
-
-        return workoutHistories;
+            workoutNameEditText.setText(workout.name);
+        }).start();
     }
 
-    private ArrayList<Movement> getMovements() {
-        ArrayList<Movement> movements = new ArrayList<>();
+    private void getWorkoutHistory() {
+        new Thread(() -> {
+            // Get the presenter.
+            WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
 
-        Movement m = new Movement();
-        m.movementId = 1;
-        m.name = "Leg Press";
-        movements.add(m);
+            List<WorkoutHistory> workoutHistories = workoutPresenter.getWorkoutHistories(workoutPresenter.getCurrentWorkout());
+            //List<Workout> workouts = workoutPresenter.getWorkoutsForUser(userPresenter.getCurrentUser());
 
-        Movement m1 = new Movement();
-        m1.movementId = 2;
-        m1.name = "Squats";
-        movements.add(m1);
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                // Set the ListView's adapter to our custom adapter!
+                pastWorkoutListView.setAdapter(new WorkoutHistoryAdapter(this.getContext(), workoutHistories));
 
-        Movement m2 = new Movement();
-        m2.movementId = 3;
-        m2.name = "Calve Raises";
-        movements.add(m2);
+                // Add an onClick listener just for an example!
+                pastWorkoutListView.setOnItemClickListener((parent, view, position, id) -> {
+                    WorkoutHistory clickedWorkout = (WorkoutHistory) pastWorkoutListView.getItemAtPosition(position);
 
+                    // Store the workout in the state
+                    workoutPresenter.setActiveWorkout(clickedWorkout);
 
+                    // Navigate to the workout page to display the workout
+                    Navigation.findNavController(root).navigate(R.id.navigation_workout_history);
 
-        return movements;
+                    Log.i("HomeView", String.format("We clicked workoutHistoryId: %d", clickedWorkout.workoutHistoryId));
+                });
+            });
+        }).start();
+    }
+
+    private void getMovements() {
+        new Thread(() -> {
+            // Get the presenter.
+            WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+
+            List<Movement> movements = workoutPresenter.getWorkoutMovements(workoutPresenter.getCurrentWorkout());
+
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                // Set the ListView's adapter to our custom adapter!
+                movementsListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+
+                // Add an onClick listener just for an example!
+                //movementsListView.setOnItemClickListener((parent, view, position, id) -> {
+                    //Workout clickedWorkout = (Workout) movementsListView.getItemAtPosition(position);
+
+                    // Store the workout in the state
+                    //workoutPresenter.setCurrentWorkout(clickedWorkout);
+
+                    // new Thread(() -> {
+                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
+                    //     workoutPresenter.setActiveWorkout(activeWorkout);
+                    //     requireActivity().runOnUiThread(() -> {
+                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
+                    //     });
+                    // }).start();
+
+                    // Navigate to the workout page to display the workout
+                    //Navigation.findNavController(root).navigate(R.id.navigation_workout);
+
+                    //Log.i("HomeView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
+                //});
+            });
+        }).start();
+
     }
 }

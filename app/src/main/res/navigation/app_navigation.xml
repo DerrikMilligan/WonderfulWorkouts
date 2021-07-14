@@ -59,7 +59,7 @@
 
     <fragment
         android:id="@+id/navigation_workout_active"
-        android:name="wonderful.workouts.fragments.WorkoutView"
+        android:name="wonderful.workouts.fragments.WorkoutActiveView"
         android:label="Active Workout"
         tools:layout="@layout/fragment_workout_active" />
 

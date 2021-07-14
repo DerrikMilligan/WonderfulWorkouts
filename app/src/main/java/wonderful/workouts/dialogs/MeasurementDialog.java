@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import org.jetbrains.annotations.NotNull;
 
 import wonderful.workouts.R;
+import wonderful.workouts.callbacks.MeasurementCallback;
 
 public class MeasurementDialog extends AppCompatDialogFragment {
     String _title;
@@ -27,8 +28,8 @@ public class MeasurementDialog extends AppCompatDialogFragment {
     @NonNull
     @NotNull
     public Dialog onCreateDialog(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new_measurement, null);
 
         TextView weightInput = view.findViewById(R.id.measurement_dialog_edit_weight);
