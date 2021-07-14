@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -31,6 +32,7 @@ public class WorkoutView extends Fragment {
     private ListView pastWorkoutListView;
     private ListView movementsListView;
     private EditText workoutNameEditText;
+    private Button startWorkoutButton;
 
     private FragmentWorkoutBinding binding;
     private View root;
@@ -46,10 +48,25 @@ public class WorkoutView extends Fragment {
         pastWorkoutListView = root.findViewById(R.id.workout_view_past_entries);
         movementsListView   = root.findViewById(R.id.workout_view_movements_list);
         workoutNameEditText = root.findViewById(R.id.workout_view_workout_name);
+        startWorkoutButton  = root.findViewById(R.id.workout_view_start_workout);
 
         loadWorkoutName();
         getWorkoutHistory();
         getMovements();
+
+        startWorkoutButton.setOnClickListener((view) -> {
+            new Thread(() -> {
+                WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+                Workout workout = workoutPresenter.getCurrentWorkout();
+
+                WorkoutHistory workoutHistory = workoutPresenter.startWorkout(workout);
+                workoutPresenter.setActiveWorkout(workoutHistory);
+
+                requireActivity().runOnUiThread(() -> {
+                    Navigation.findNavController(view).navigate(R.id.navigation_workout_active);
+                });
+            }).start();
+        });
 
         // Update the name when a key is pressed in the text view.
         workoutNameEditText.addTextChangedListener(new TextWatcher() {

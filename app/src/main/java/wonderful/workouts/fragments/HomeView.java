@@ -41,12 +41,24 @@ public class HomeView extends Fragment {
         updateWorkoutView();
 
         // Add an event to the Floating Action Button
-        FloatingActionButton btnTesting = root.findViewById(R.id.home_view_fab);
-        btnTesting.setOnClickListener(view -> {
-            Log.i("HomeView", "Test button pressed!");
+        FloatingActionButton newWorkoutFab = root.findViewById(R.id.home_view_fab);
+        newWorkoutFab.setOnClickListener(view -> {
+            new Thread(() -> {
+                UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+                WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+
+                Workout newWorkout = workoutPresenter.addWorkout(userPresenter.getCurrentUser(), "New Workout");
+
+                workoutPresenter.setCurrentWorkout(newWorkout);
+
+                // Navigate to the workout view with a new workout
+                requireActivity().runOnUiThread(() -> {
+                    Navigation.findNavController(view).navigate(R.id.navigation_workout);
+                });
+            }).start();
 
             // Navigate to home!
-            Navigation.findNavController(view).navigate(R.id.navigation_workout_active);
+            // Navigation.findNavController(view).navigate(R.id.navigation_workout_active);
             // Navigation.findNavController(view).navigate(R.id.navigation_workout_history);
             // Navigation.findNavController(view).navigate(R.id.navigation_movements);
             // Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
