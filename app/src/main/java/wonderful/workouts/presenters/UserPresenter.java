@@ -263,11 +263,11 @@ public class UserPresenter {
      */
     public void createDefaultWorkouts(User user) {
         // Chest/Tricep day
-        Movement bench            = movementDao.lookupOrCreateMovement("Benchpress",        Movement.RepsAndWeight);
-        Movement pushups          = movementDao.lookupOrCreateMovement("Pushups",           Movement.Reps);
-        Movement flys             = movementDao.lookupOrCreateMovement("Flys",              Movement.RepsAndWeight);
-        Movement tricepExtensions = movementDao.lookupOrCreateMovement("Tricep Extensions", Movement.RepsAndWeight);
-        Movement dips             = movementDao.lookupOrCreateMovement("Dips",              Movement.RepsAndWeight);
+        Movement bench            = movementDao.lookupOrCreateMovement("Benchpress",        Movement.RepsAndWeight, "Chest", "Barbell");
+        Movement pushups          = movementDao.lookupOrCreateMovement("Pushups",           Movement.Reps,          "Chest", "Body weight");
+        Movement flys             = movementDao.lookupOrCreateMovement("Flys",              Movement.RepsAndWeight, "Chest", "Dumbbells");
+        Movement tricepExtensions = movementDao.lookupOrCreateMovement("Tricep Extensions", Movement.RepsAndWeight, "Triceps", "Dumbbells");
+        Movement dips             = movementDao.lookupOrCreateMovement("Dips",              Movement.RepsAndWeight, "Triceps", "Body Weight");
 
         // create workout and add movements
         Workout chestAndTriceps = workoutDao.lookupOrCreateWorkout(user.userId, "Chest & Triceps");
@@ -278,12 +278,12 @@ public class UserPresenter {
         workoutMovementCrossRefDao.addMovementToWorkout(chestAndTriceps, dips);
 
         // Back/Bicep day
-        Movement deadLift     = movementDao.lookupOrCreateMovement("Deadlift",      Movement.RepsAndWeight);
-        Movement latPulldowns = movementDao.lookupOrCreateMovement("Lat Pulldowns", Movement.RepsAndWeight);
-        Movement rows         = movementDao.lookupOrCreateMovement("Rows",          Movement.RepsAndWeight);
-        Movement pullups      = movementDao.lookupOrCreateMovement("Pullups",       Movement.Reps);
-        Movement bicepCurls   = movementDao.lookupOrCreateMovement("Bicep Curls",   Movement.RepsAndWeight);
-        Movement curlBar      = movementDao.lookupOrCreateMovement("Curl Bar",      Movement.RepsAndWeight);
+        Movement deadLift     = movementDao.lookupOrCreateMovement("Deadlift",      Movement.RepsAndWeight, "Back", "Barbell");
+        Movement latPulldowns = movementDao.lookupOrCreateMovement("Lat Pulldowns", Movement.RepsAndWeight, "Back", "Machine");
+        Movement rows         = movementDao.lookupOrCreateMovement("Rows",          Movement.RepsAndWeight, "Back", "Machine");
+        Movement pullups      = movementDao.lookupOrCreateMovement("Pullups",       Movement.Reps,          "Back", "Pull-up bar");
+        Movement bicepCurls   = movementDao.lookupOrCreateMovement("Bicep Curls",   Movement.RepsAndWeight, "Biceps", "Dumbbells");
+        Movement curlBar      = movementDao.lookupOrCreateMovement("Curl Bar",      Movement.RepsAndWeight, "Biceps", "Barbell");
 
         // create workout and add movements
         Workout backAndBiceps = workoutDao.lookupOrCreateWorkout(user.userId, "Back & Biceps");
@@ -295,11 +295,11 @@ public class UserPresenter {
         workoutMovementCrossRefDao.addMovementToWorkout(backAndBiceps, curlBar);
 
         // Leg Day
-        Movement squat          = movementDao.lookupOrCreateMovement("Squats",          Movement.RepsAndWeight);
-        Movement legPress       = movementDao.lookupOrCreateMovement("Leg Press",       Movement.RepsAndWeight);
-        Movement calfRaises     = movementDao.lookupOrCreateMovement("Calf Raises",     Movement.RepsAndWeight);
-        Movement hamstringCurls = movementDao.lookupOrCreateMovement("Hamstring Curls", Movement.RepsAndWeight);
-        Movement legCurls       = movementDao.lookupOrCreateMovement("Leg Curls",       Movement.RepsAndWeight);
+        Movement squat          = movementDao.lookupOrCreateMovement("Squats",          Movement.RepsAndWeight, "Legs", "Barbell");
+        Movement legPress       = movementDao.lookupOrCreateMovement("Leg Press",       Movement.RepsAndWeight, "Legs", "Machine");
+        Movement calfRaises     = movementDao.lookupOrCreateMovement("Calf Raises",     Movement.RepsAndWeight, "Legs", "Machine");
+        Movement hamstringCurls = movementDao.lookupOrCreateMovement("Hamstring Curls", Movement.RepsAndWeight, "Legs", "Machine");
+        Movement legCurls       = movementDao.lookupOrCreateMovement("Leg Curls",       Movement.RepsAndWeight, "Legs", "Machine");
 
         // create workout and add movements
         Workout legs = workoutDao.lookupOrCreateWorkout(user.userId, "Leg Day");
@@ -310,11 +310,11 @@ public class UserPresenter {
         workoutMovementCrossRefDao.addMovementToWorkout(legs, legCurls);
 
         // Abs
-        Movement crunches      = movementDao.lookupOrCreateMovement("Crunches",       Movement.Reps);
-        Movement situps        = movementDao.lookupOrCreateMovement("Situps",         Movement.Reps);
-        Movement russianTwists = movementDao.lookupOrCreateMovement("Russian Twists", Movement.Reps);
-        Movement planks        = movementDao.lookupOrCreateMovement("Planks",         Movement.Timed);
-        Movement legLifts      = movementDao.lookupOrCreateMovement("Leg Lifts",      Movement.Reps);
+        Movement crunches      = movementDao.lookupOrCreateMovement("Crunches",       Movement.Reps,  "Abs", "Body weight");
+        Movement situps        = movementDao.lookupOrCreateMovement("Situps",         Movement.Reps,  "Abs", "Body weight");
+        Movement russianTwists = movementDao.lookupOrCreateMovement("Russian Twists", Movement.Reps,  "Abs", "Body weight");
+        Movement planks        = movementDao.lookupOrCreateMovement("Planks",         Movement.Timed, "Abs", "Body weight");
+        Movement legLifts      = movementDao.lookupOrCreateMovement("Leg Lifts",      Movement.Reps,  "Abs", "Body weight");
 
         // create workout and add movements
         Workout abs = workoutDao.lookupOrCreateWorkout(user.userId, "Ab Day");

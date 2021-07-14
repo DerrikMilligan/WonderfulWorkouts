@@ -47,8 +47,34 @@ public interface MovementDao {
     )
     List<Movement> getWorkoutMovements(int workoutId);
 
+    @Query(
+        "SELECT DISTINCT m.category " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.userId = :userId " +
+            "ORDER BY category ASC"
+    )
+    List<String> getCategoryList(int userId);
+
+    @Query("SELECT * FROM movements WHERE category = :movementCategory")
+    List<Movement> getCategoryMovements(String movementCategory);
+
+    @Query(
+        "SELECT DISTINCT m.equipment " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.userId = :userId " +
+            "ORDER By equipment ASC"
+    )
+    List<String> getEquipmentList(int userId);
+
+    @Query("SELECT * FROM movements WHERE equipment = :movementEquipment")
+    List<Movement> getEquipmentMovements(String movementEquipment);
+
     @Transaction
-    default Movement lookupOrCreateMovement(String movementName, String movementType) {
+    default Movement lookupOrCreateMovement(String movementName, String movementType, String movementCategory, String movementEquipment) {
         Movement lookup = lookupMovement(movementName);
         if (lookup != null) {
             return lookup;
@@ -57,6 +83,8 @@ public interface MovementDao {
         Movement newMovement = new Movement();
         newMovement.name = movementName;
         newMovement.type = movementType;
+        newMovement.category = movementCategory;
+        newMovement.equipment = movementEquipment;
         newMovement.movementId = (int) insert(newMovement);
 
         return newMovement;

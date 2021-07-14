@@ -20,4 +20,6 @@ public class Movement {
     public String name;
     public String url;
     public String type;
+    public String category;
+    public String equipment;
 }

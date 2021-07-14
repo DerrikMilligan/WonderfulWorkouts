@@ -9,8 +9,6 @@ import wonderful.workouts.database.daos.MovementDao;
 import wonderful.workouts.database.daos.WorkoutDao;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.User;
-import wonderful.workouts.database.entities.Workout;
-import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class MovementPresenter {
     private final MovementDao movementDao;
@@ -67,7 +65,7 @@ public class MovementPresenter {
     public Movement getCurrentMovement() { return currentMovement; }
 
     /**
-     * getCurrentMovement
+     * getUserMovement
      *
      * Gets all the movements for a user and their workouts
      *
@@ -75,6 +73,18 @@ public class MovementPresenter {
      */
     public List<Movement> getUserMovements(User user) {
         return movementDao.getUserMovements(user.userId);
+    }
+
+    public List<String> getCategoryList(User user) {
+        return movementDao.getCategoryList(user.userId);
+    }
+
+    public List<String> getEquipmentList(User user) {
+        return movementDao.getEquipmentList(user.userId);
+    }
+
+    public List<Movement> getCategoryMovements(String category) {
+        return movementDao.getCategoryMovements(category);
     }
 
 }

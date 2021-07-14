@@ -22,7 +22,7 @@ import wonderful.workouts.databinding.FragmentHomeBinding;
 import wonderful.workouts.presenters.UserPresenter;
 import wonderful.workouts.presenters.WorkoutPresenter;
 
-public class HomeView extends Fragment {
+public class  HomeView extends Fragment {
     private ListView workoutListView;
 
     private View root;

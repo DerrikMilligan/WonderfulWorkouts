@@ -385,4 +385,10 @@ public class WorkoutPresenter {
         return history;
     }
 
+    public List<WorkoutHistory> getUserWorkoutHistory(User user) {
+        List<WorkoutHistory> uwh = workoutHistoryDao.getUserWorkoutHistory(user.userId);
+
+        return uwh;
+    }
+
 }
