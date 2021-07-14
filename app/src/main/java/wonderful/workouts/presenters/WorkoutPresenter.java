@@ -369,7 +369,7 @@ public class WorkoutPresenter {
      *
      * @return WorkoutWithHistory
      */
-    public WorkoutWithHistory getAllPastWorkoutHistories(Workout workout) {
+    public WorkoutWithHistory getAllPastWorkoutHistoriesWithMovements(Workout workout) {
         WorkoutWithHistory history = new WorkoutWithHistory();
         history.workout = workout;
 

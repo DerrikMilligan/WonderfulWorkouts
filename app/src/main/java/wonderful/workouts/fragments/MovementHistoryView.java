@@ -69,32 +69,30 @@ public class MovementHistoryView extends Fragment {
     }
 
     public void updateMovementHistoryDisplay() {
+        movementHistoryListView = root.findViewById(R.id.movement_history_expandable_list_view);
+        movementNameView = root.findViewById(R.id.MovementName);
 
-        public void updateActiveWorkoutDisplay() {
-            movementHistoryListView = root.findViewById(R.id.movement_history_expandable_list_view);
-            movementNameView = root.findViewById(R.id.MovementName);
-
-            new Thread(() -> {
-                MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
-                WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
-
-                Movement movement = movementPresenter.getCurrentMovement();
-
-                WorkoutHistoryWithMovements history = movementPresenter.getMovementHistory(movement);
-
-                requireActivity().runOnUiThread(() -> {
-                    movementNameView.setText(movement.name);
-
-//                    Adapter = new ActiveWorkoutAdapter(
-//                            this.getContext(),
-//                            history,
-//                            this::activeWorkoutAdapterCallback
-//                    );
-
-                    // Set the ListView's adapter to our custom adapter!
-                    movementHistoryListView.setAdapter(this.getContext(), history);
-                });
-            }).start();
+//             new Thread(() -> {
+//                 MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+//                 WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+//
+//                 Movement movement = movementPresenter.getCurrentMovement();
+//
+//                 WorkoutHistoryWithMovements history = movementPresenter.getMovementHistory(movement);
+//
+//                 requireActivity().runOnUiThread(() -> {
+//                     movementNameView.setText(movement.name);
+//
+// //                    Adapter = new ActiveWorkoutAdapter(
+// //                            this.getContext(),
+// //                            history,
+// //                            this::activeWorkoutAdapterCallback
+// //                    );
+//
+//                     // Set the ListView's adapter to our custom adapter!
+//                     movementHistoryListView.setAdapter(this.getContext(), history);
+//                 });
+//             }).start();
         }
 //        WorkoutWithHistory dummyData = getDummyData();
 //        ArrayList<WorkoutWithHistory> workoutHistories = new ArrayList<>();
@@ -127,7 +125,7 @@ public class MovementHistoryView extends Fragment {
 //            //     //}
 //            // }
 //        }).start();
-    }
+//     }
 
 //    private WorkoutWithHistory getDummyData() {
 //        WorkoutWithHistory movementHistories = new WorkoutWithHistory();

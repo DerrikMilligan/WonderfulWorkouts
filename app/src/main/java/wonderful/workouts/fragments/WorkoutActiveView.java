@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import java.time.Duration;
@@ -103,7 +102,7 @@ public class WorkoutActiveView extends Fragment {
 
             Workout workout = workoutPresenter.getWorkout(workoutPresenter.getActiveWorkout().workoutId);
 
-            WorkoutWithHistory history = workoutPresenter.getAllPastWorkoutHistories(workout);
+            WorkoutWithHistory history = workoutPresenter.getAllPastWorkoutHistoriesWithMovements(workout);
 
             requireActivity().runOnUiThread(() -> {
                 workoutNameView.setText(workout.name);

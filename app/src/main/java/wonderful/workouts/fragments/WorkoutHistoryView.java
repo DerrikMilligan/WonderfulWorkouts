@@ -76,32 +76,32 @@ public class WorkoutHistoryView extends Fragment {
     @SuppressLint("DefaultLocale")
     public void updatePastWorkoutDisplay() {
 
-        pastWorkoutListView = root.findViewById(R.id.past_workout_expandable_list_view);
-        workoutNameView = root.findViewById(R.id.text_view_past_workout_name);
-
-        new Thread(() -> {
-            WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
-
-            Workout workout = workoutPresenter.getWorkout(workoutPresenter.getActiveWorkout().workoutId);
-
-            List<WorkoutHistory> history = workoutPresenter.getWorkoutHistories(workout);
-
-            List<WorkoutHistory> allHistory = workoutPresenter.getWorkoutHistory(history);
-
-            requireActivity().runOnUiThread(() -> {
-                workoutNameView.setText(workout.name);
-
-//                pastWorkoutAdapter = new ActiveWorkoutAdapter(
-//                        this.getContext(),
-//                        history,
-//                        this::activeWorkoutAdapterCallback
-//                );
-                pastWorkoutListView.setAdapter(new PastWorkoutAdapter(this.getContext(), allHistory));
-
-                // Set the ListView's adapter to our custom adapter!
-                //pastWorkoutListView.setAdapter(pastWorkoutAdapter);
-            });
-        }).start();
+//         pastWorkoutListView = root.findViewById(R.id.past_workout_expandable_list_view);
+//         workoutNameView = root.findViewById(R.id.text_view_past_workout_name);
+//
+//         new Thread(() -> {
+//             WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+//
+//             Workout workout = workoutPresenter.getWorkout(workoutPresenter.getActiveWorkout().workoutId);
+//
+//             List<WorkoutHistory> history = workoutPresenter.getWorkoutHistories(workout);
+//
+//             List<WorkoutHistory> allHistory = workoutPresenter.getWorkoutHistory(history);
+//
+//             requireActivity().runOnUiThread(() -> {
+//                 workoutNameView.setText(workout.name);
+//
+// //                pastWorkoutAdapter = new ActiveWorkoutAdapter(
+// //                        this.getContext(),
+// //                        history,
+// //                        this::activeWorkoutAdapterCallback
+// //                );
+//                 pastWorkoutListView.setAdapter(new PastWorkoutAdapter(this.getContext(), allHistory));
+//
+//                 // Set the ListView's adapter to our custom adapter!
+//                 //pastWorkoutListView.setAdapter(pastWorkoutAdapter);
+//             });
+//         }).start();
     }
 //    public void activeWorkoutAdapterCallback(MovementWithWorkoutMovementHistory movementWithHistory) {
 //        // Display the dialog window for the set

@@ -18,7 +18,6 @@ import java.util.List;
 import wonderful.workouts.R;
 import wonderful.workouts.adapters.WorkoutAdapter;
 import wonderful.workouts.database.entities.Workout;
-import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentHomeBinding;
 import wonderful.workouts.presenters.UserPresenter;
 import wonderful.workouts.presenters.WorkoutPresenter;
@@ -37,12 +36,12 @@ public class HomeView extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
-        workoutListView = (ListView) root.findViewById(R.id.workout_view_movements_list);
+        workoutListView = (ListView) root.findViewById(R.id.home_view_workout_list);
 
         updateWorkoutView();
 
         // Add an event to the Floating Action Button
-        FloatingActionButton btnTesting = root.findViewById(R.id.fab_home_new_workout);
+        FloatingActionButton btnTesting = root.findViewById(R.id.home_view_fab);
         btnTesting.setOnClickListener(view -> {
             Log.i("HomeView", "Test button pressed!");
 
