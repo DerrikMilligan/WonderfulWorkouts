@@ -11,16 +11,17 @@ import android.widget.TextView;
 import java.util.List;
 
 import wonderful.workouts.R;
+import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
 import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class PastWorkoutAdapter extends BaseExpandableListAdapter {
-    private final List<WorkoutWithHistory> _workouts;
+    private final WorkoutWithHistory _workouts;
     private final LayoutInflater layoutInflater;
 
-    public PastWorkoutAdapter(Context context, List<WorkoutWithHistory> workouts) {
+    public PastWorkoutAdapter(Context context, WorkoutWithHistory workouts) {
         _workouts = workouts;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -30,11 +31,9 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int movementCount = 0;
 
         // Count all the sets from the workouts
-        for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
-                for (MovementWithWorkoutMovementHistory ignored : histories.movementHistory) {
-                    movementCount++;
-                }
+        for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
+            for (MovementWithWorkoutMovementHistory ignored : histories.movementHistory) {
+                movementCount++;
             }
         }
 
@@ -47,8 +46,8 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
-        for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
+
+            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
                 for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
                     if (movementCount == groupPosition) {
                         for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
@@ -61,7 +60,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
                     movementCount++;
                 }
             }
-        }
+
 
         return setCount;
     }
@@ -71,8 +70,8 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int movementCount = 0;
 
         // Count all the sets from the workouts
-        for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
+
+            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
                 for (MovementWithWorkoutMovementHistory movement : histories.movementHistory) {
                     if (movementCount == groupPosition) {
                         return movement;
@@ -81,7 +80,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
                     movementCount++;
                 }
             }
-        }
+
 
         return null;
     }
@@ -92,8 +91,8 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
-        for(WorkoutWithHistory workout : _workouts) {
-            for (WorkoutHistoryWithMovements histories : workout.pastWorkouts) {
+
+            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
                 for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
                     if (movementCount == groupPosition) {
                         for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
@@ -109,7 +108,7 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
                     movementCount++;
                 }
             }
-        }
+
 
         return null;
     }
