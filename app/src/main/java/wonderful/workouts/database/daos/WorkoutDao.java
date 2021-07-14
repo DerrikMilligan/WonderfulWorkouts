@@ -10,7 +10,6 @@ import androidx.room.Update;
 import java.util.List;
 
 import wonderful.workouts.database.entities.Workout;
-import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.database.joiners.WorkoutWithHistories;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 import wonderful.workouts.database.joiners.WorkoutWithMovements;

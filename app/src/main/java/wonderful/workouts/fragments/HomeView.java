@@ -58,7 +58,6 @@ public class  HomeView extends Fragment {
             }).start();
 
             // Navigate to home!
-
             // Navigation.findNavController(view).navigate(R.id.navigation_workout_active);
             // Navigation.findNavController(view).navigate(R.id.navigation_workout_history);
             // Navigation.findNavController(view).navigate(R.id.navigation_movements);
