@@ -56,47 +56,7 @@ public class HistoryView extends Fragment {
         updateWorkoutView();
         updateCategoryList();
         updateEquipmentList();
-        updateMovementView();
 
-
-
-        // ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.categories, android.R.layout.simple_spinner_item);
-        // categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // categoryDropDown.setAdapter(categoryAdapter);
-        // // Set category spinner on item selected listener
-        // categoryDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        //     // Returns category on click
-        //     @Override
-        //     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //         String selectedItemText = (String) parent.getItemAtPosition(position);
-        //         Log.i("HistoryView", "Selected category: " + selectedItemText);
-        //     }
-        //     // Returns all when nothing selected
-        //     @Override
-        //     public void onNothingSelected(AdapterView<?> parent) {
-        //         Log.i("HistoryView", "Showing all categories");
-        //     }
-        // });
-
-
-        // ArrayAdapter<CharSequence> equipmentAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.equipment, android.R.layout.simple_spinner_item);
-        // equipmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // equipmentDropDown.setAdapter(equipmentAdapter);
-        // // Set equipment spinner on item selected listener
-        // equipmentDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        //     // Returns equipment on click
-        //     @Override
-        //     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //         String selectedItemText = (String) parent.getItemAtPosition(position);
-        //         Log.i("HistoryView", "Selected equipment: " + selectedItemText);
-        //     }
-        //     // Returns all when nothing selected
-        //     @Override
-        //     public void onNothingSelected(AdapterView<?> parent) {
-        //         Log.i("HistoryView", "Showing all equipment");
-        //
-        //     }
-        // });
 
         return root;
     }
@@ -171,6 +131,7 @@ public class HistoryView extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String selectedItemText = (String) parent.getItemAtPosition(position);
+                        updateByCategory(selectedItemText);
                         Log.i("HistoryView", "Selected category: " + selectedItemText);
                     }
                     // Returns all when nothing selected
@@ -203,26 +164,26 @@ public class HistoryView extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String selectedItemText = (String) parent.getItemAtPosition(position);
+                        updateByEquipment(selectedItemText);
                         Log.i("MovementsView", "Selected equipment: " + selectedItemText);
                     }
 
                     // Returns all when nothing selected
                     @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
+                    public void onNothingSelected(AdapterView<?> parent) {}
                 });
             });
         }).start();
     }
 
 
-    public void updateMovementView() {
+    public void updateByCategory(String category) {
         new Thread(() -> {
             // Get the presenter.
             UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
             MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
 
-            List<Movement> movements = movementPresenter.getUserMovements(userPresenter.getCurrentUser());
+            List<Movement> movements = movementPresenter.getCategoryMovements(userPresenter.getCurrentUser(), category);
 
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
@@ -254,5 +215,41 @@ public class HistoryView extends Fragment {
         }).start();
     }
 
+    public void updateByEquipment(String equipment) {
+        new Thread(() -> {
+            // Get the presenter.
+            UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+            MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
 
+            List<Movement> movements = movementPresenter.getEquipmentMovements(userPresenter.getCurrentUser(), equipment);
+
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                // Set the ListView's adapter to our custom adapter!
+                movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+
+
+                // Add an onClick listener just for an example!
+                movementListView.setOnItemClickListener((parent, view, position, id) -> {
+                    Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
+
+                    // Store the workout in the state
+                    movementPresenter.setCurrentMovement(clickedMovement);
+
+                    // new Thread(() -> {
+                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
+                    //     workoutPresenter.setActiveWorkout(activeWorkout);
+                    //     requireActivity().runOnUiThread(() -> {
+                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
+                    //     });
+                    // }).start();
+
+                    // Navigate to the workout page to display the workout
+                    Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
+
+                    Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
+                });
+            });
+        }).start();
+    }
 }

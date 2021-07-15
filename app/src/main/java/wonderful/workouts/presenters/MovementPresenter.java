@@ -9,6 +9,7 @@ import wonderful.workouts.database.daos.MovementDao;
 import wonderful.workouts.database.daos.WorkoutDao;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.User;
+import wonderful.workouts.database.entities.Workout;
 
 public class MovementPresenter {
     private final MovementDao movementDao;
@@ -83,8 +84,16 @@ public class MovementPresenter {
         return movementDao.getEquipmentList(user.userId);
     }
 
-    public List<Movement> getCategoryMovements(String category) {
-        return movementDao.getCategoryMovements(category);
+    public List<Movement> getCategoryMovements(User user, String category) {
+        return movementDao.getCategoryMovements(user.userId, category);
+    }
+
+    public List<Movement> getEquipmentMovements(User user, String equipment) {
+        return movementDao.getEquipmentMovements(user.userId, equipment);
+    }
+
+    public Movement lookupOrCreateMovement(String movementName, String type, String category, String equipment) {
+        return movementDao.lookupOrCreateMovement(movementName, type, category, equipment);
     }
 
 }

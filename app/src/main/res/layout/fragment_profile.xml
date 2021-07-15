@@ -258,12 +258,13 @@
 
     <TextView
         android:id="@+id/weightDate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addWeightBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addWeightBtn"
@@ -271,70 +272,77 @@
 
     <TextView
         android:id="@+id/bicepsDate"
-        android:layout_width="0dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addBicepsBtn"
         app:layout_constraintEnd_toEndOf="@+id/weightDate"
         app:layout_constraintTop_toTopOf="@+id/addBicepsBtn" />
 
     <TextView
         android:id="@+id/chestDate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addChestBtn"
         app:layout_constraintEnd_toEndOf="@+id/bicepsDate"
         app:layout_constraintTop_toTopOf="@+id/addChestBtn" />
 
     <TextView
         android:id="@+id/thighsDate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addThighsBtn"
         app:layout_constraintEnd_toEndOf="@+id/chestDate"
         app:layout_constraintTop_toTopOf="@+id/addThighsBtn" />
 
     <TextView
         android:id="@+id/waistDate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addWaistBtn"
         app:layout_constraintEnd_toEndOf="@+id/thighsDate"
         app:layout_constraintTop_toTopOf="@+id/addWaistBtn" />
 
     <TextView
         android:id="@+id/hipsDate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addHipsBtn"
         app:layout_constraintEnd_toEndOf="@+id/waistDate"
         app:layout_constraintTop_toTopOf="@+id/addHipsBtn" />
 
     <TextView
         android:id="@+id/neckDate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addNeckBtn"
         app:layout_constraintEnd_toEndOf="@+id/hipsDate"
         app:layout_constraintTop_toTopOf="@+id/addNeckBtn" />
 
     <TextView
         android:id="@+id/calvesDate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="6/01/2021"
         android:textSize="20sp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/addCalvesBtn"
         app:layout_constraintEnd_toEndOf="@+id/neckDate"
         app:layout_constraintTop_toTopOf="@+id/addCalvesBtn" />
