@@ -18,26 +18,17 @@ import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class PastWorkoutAdapter extends BaseExpandableListAdapter {
-    private final WorkoutWithHistory _workouts;
+    private final WorkoutHistoryWithMovements _workouts;
     private final LayoutInflater layoutInflater;
 
-    public PastWorkoutAdapter(Context context, WorkoutWithHistory workouts) {
+    public PastWorkoutAdapter(Context context, WorkoutHistoryWithMovements workouts) {
         _workouts = workouts;
         layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getGroupCount() {
-        int movementCount = 0;
-
-        // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
-            for (MovementWithWorkoutMovementHistory ignored : histories.movementHistory) {
-                movementCount++;
-            }
-        }
-
-        return movementCount;
+        return _workouts.movementHistory.size();
     }
 
     @Override
@@ -46,21 +37,17 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
-
-            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
-                for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                    if (movementCount == groupPosition) {
-                        for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
-                            setCount++;
-                        }
-
-                        return setCount;
-                    }
-
-                    movementCount++;
+        for (MovementWithWorkoutMovementHistory movements : _workouts.movementHistory) {
+            if (movementCount == groupPosition) {
+                for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
+                    setCount++;
                 }
+
+                return setCount;
             }
 
+            movementCount++;
+        }
 
         return setCount;
     }
@@ -70,16 +57,13 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int movementCount = 0;
 
         // Count all the sets from the workouts
-
-            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
-                for (MovementWithWorkoutMovementHistory movement : histories.movementHistory) {
-                    if (movementCount == groupPosition) {
-                        return movement;
-                    }
-
-                    movementCount++;
-                }
+        for (MovementWithWorkoutMovementHistory movement : _workouts.movementHistory) {
+            if (movementCount == groupPosition) {
+                return movement;
             }
+
+            movementCount++;
+        }
 
 
         return null;
@@ -91,23 +75,20 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
+        for (MovementWithWorkoutMovementHistory movements : _workouts.movementHistory) {
+            if (movementCount == groupPosition) {
+                for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
 
-            for (WorkoutHistoryWithMovements histories : _workouts.pastWorkouts) {
-                for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                    if (movementCount == groupPosition) {
-                        for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
-
-                            if (setCount == childPosition) {
-                                return set;
-                            }
-
-                            setCount++;
-                        }
+                    if (setCount == childPosition) {
+                        return set;
                     }
 
-                    movementCount++;
+                    setCount++;
                 }
             }
+
+            movementCount++;
+        }
 
 
         return null;
@@ -149,7 +130,6 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         MovementWithWorkoutMovementHistory workout = getGroup(groupPosition);
 
         holder.nameView.setText(workout.movement.name);
-        // holder.dateView.setText(LocalDateTime.now().toString());
 
         return convertView;
     }
@@ -172,8 +152,17 @@ public class PastWorkoutAdapter extends BaseExpandableListAdapter {
         WorkoutMovementHistory history = getChild(groupPosition, childPosition);
 
         holder.setNumberView.setText(String.format("Set %d", (childPosition + 1)));
-        holder.weightView.setText(String.format("%d", Math.round(history.weight)));
-        holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+
+        if (history.duration > 0) {
+            holder.weightView.setText("");
+            holder.repAndTimeView.setText(String.format("%.2f", history.duration));
+        } else if (history.weight > 0) {
+            holder.weightView.setText(String.format("%d", Math.round(history.weight)));
+            holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+        } else {
+            holder.weightView.setText("");
+            holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+        }
 
         return convertView;
     }

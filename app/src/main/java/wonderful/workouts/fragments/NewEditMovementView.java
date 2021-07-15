@@ -32,9 +32,9 @@ public class NewEditMovementView extends Fragment {
     EditText nameInput;
     AutoCompleteTextView categoryDropDown;
     AutoCompleteTextView equipmentDropDown;
+    RadioGroup typeGroup;
     public String[] equipmentList = new String[] {"None", "Single Dumbbell", "Dumbbells", "Barbell", "Band"};
     public String type;
-    // public String selectedId;
 
     public View onCreateView(
         @NonNull LayoutInflater inflater,
@@ -48,22 +48,23 @@ public class NewEditMovementView extends Fragment {
         nameInput = root.findViewById(R.id.nameInput);
         categoryDropDown = root.findViewById(R.id.categoryList);
         equipmentDropDown = root.findViewById(R.id.equipmentList);
+        typeGroup = root.findViewById(R.id.typeGroup);
 
         updateCategoryList();
         updateEquipmentList();
+        loadSelectedWorkout();
 
-        RadioGroup typeGroup = root.findViewById(R.id.typeGroup);
         final String[] selectedId = new String[1];
         typeGroup.setOnCheckedChangeListener((typeGroup1, checkedId) -> {
             switch (checkedId) {
                 case R.id.timedRadio:
-                    selectedId[0] = "Timed";
+                    selectedId[0] = Movement.Timed;
                     break;
                 case R.id.repsRadio:
-                    selectedId[0] = "Reps";
+                    selectedId[0] = Movement.Reps;
                     break;
                 case R.id.weightRepsRadio:
-                    selectedId[0] = "RepsAndWeight";
+                    selectedId[0] = Movement.RepsAndWeight;
                     break;
             }
         });
@@ -71,18 +72,22 @@ public class NewEditMovementView extends Fragment {
         Button addMovementBtn = root.findViewById(R.id.addMovementBtn);
         addMovementBtn.setOnClickListener(view -> {
             new Thread(() -> {
-                UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
                 MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+                Movement movement = movementPresenter.getCurrentMovement();
 
-                Log.i("NewEditMovementView", String.format("Create movement - Name: %s , Category: %s, Equipment: %s, Type: %s", nameInput.getText(), categoryDropDown.getText(), equipmentDropDown.getText(), selectedId[0]));
-                String movementName = nameInput.getText().toString();
-                String movementType = selectedId[0];
-                String movementCategory = categoryDropDown.getText().toString();
-                String movementEquipment = equipmentDropDown.getText().toString();
-                movementPresenter.lookupOrCreateMovement(movementName, movementType, movementCategory, movementEquipment);
+                movement.name      = nameInput.getText().toString();
+                movement.type      = selectedId[0];
+                movement.category  = categoryDropDown.getText().toString();
+                movement.equipment = equipmentDropDown.getText().toString();
+
+                Log.i("NewEditMovementView", String.format("Updating movement Name: %s, type: %s, category: %s, equipment:%s", movement.name, movement.type, movement.category, movement.equipment));
+
+                movementPresenter.updateMovement(movement);
+
                 requireActivity().runOnUiThread(() -> {
                     Navigation.findNavController(root).popBackStack();
                 });
+
             }).start();
         });
 
@@ -104,7 +109,7 @@ public class NewEditMovementView extends Fragment {
 
             // Get list of categories for user
             List<String> categoryList = movementPresenter.getCategoryList(userPresenter.getCurrentUser());
-            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, categoryList);
+            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, categoryList);
 
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
@@ -126,6 +131,34 @@ public class NewEditMovementView extends Fragment {
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
                 equipmentDropDown.setAdapter(equipmentAdapter);
+            });
+        }).start();
+    }
+
+    public void loadSelectedWorkout() {
+        new Thread(() -> {
+            // Get the presenter.
+            MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+            Movement movement = movementPresenter.getCurrentMovement();
+
+            // Load all the current movement information into the UI
+            requireActivity().runOnUiThread(() -> {
+                nameInput.setText(movement.name);
+                categoryDropDown.setText(movement.category);
+                equipmentDropDown.setText(movement.equipment);
+
+                switch (movement.type) {
+                    case Movement.Reps:
+                        typeGroup.check(R.id.repsRadio);
+                        break;
+
+                    case Movement.RepsAndWeight:
+                        typeGroup.check(R.id.weightRepsRadio);
+                        break;
+                    case Movement.Timed:
+                        typeGroup.check(R.id.timedRadio);
+                        break;
+                }
             });
         }).start();
     }

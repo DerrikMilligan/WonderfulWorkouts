@@ -1,19 +1,33 @@
 package wonderful.workouts.presenters;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import wonderful.workouts.database.AppDatabase;
 import wonderful.workouts.database.daos.MovementDao;
 import wonderful.workouts.database.daos.WorkoutDao;
+import wonderful.workouts.database.daos.WorkoutHistoryDao;
+import wonderful.workouts.database.daos.WorkoutMovementHistoryDao;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.User;
 import wonderful.workouts.database.entities.Workout;
+import wonderful.workouts.database.entities.WorkoutHistory;
+import wonderful.workouts.database.entities.WorkoutMovementHistory;
+import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
+import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
+import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class MovementPresenter {
     private final MovementDao movementDao;
     private final WorkoutDao workoutDao;
+    private final WorkoutHistoryDao workoutHistoryDao;
+    private final WorkoutMovementHistoryDao movementHistoryDao;
 
     // Implement the singleton pattern
     private static MovementPresenter INSTANCE = null;
@@ -24,6 +38,8 @@ public class MovementPresenter {
     private MovementPresenter(AppDatabase db) {
         movementDao = db.getMovementDao();
         workoutDao = db.getWorkoutDao();
+        workoutHistoryDao = db.getWorkoutHistoryDao();
+        movementHistoryDao = db.getWorkoutMovementHistoryDao();
     }
 
     // Here's the way we get our singleton instance for use
@@ -90,6 +106,17 @@ public class MovementPresenter {
     }
 
     /**
+     * updateMovement
+     *
+     * Updates a movement
+     *
+     * @param movement
+     */
+    public void updateMovement(Movement movement) {
+        movementDao.update(movement);
+    }
+
+    /**
      * getEquipmentList
      *
      * Gets all equipment for a given user
@@ -123,8 +150,46 @@ public class MovementPresenter {
      *
      * @return List<Movement>
      */
-    public List<Movement> getCategoryMovements(String category) {
-        return movementDao.getCategoryMovements(category);
+    public List<Movement> getCategoryMovements(int userId, String category) {
+        return movementDao.getCategoryMovements(userId, category);
+    }
+
+    public Map<WorkoutHistory, List<WorkoutMovementHistory>> getMovementHistory(Movement movement) {
+        Map<WorkoutHistory, List<WorkoutMovementHistory>> histories = new HashMap<>();
+
+        List<WorkoutMovementHistory> movements = movementHistoryDao.lookupMovementHistoriesWithMovementId(movement.movementId);
+
+        for (WorkoutMovementHistory wmh : movements) {
+            WorkoutHistory workoutHistory = workoutHistoryDao.lookupWorkoutHistory(wmh.workoutHistoryId);
+
+            // Lookup the array
+            List<WorkoutMovementHistory> sets = null;
+
+            for (Map.Entry<WorkoutHistory, List<WorkoutMovementHistory>> entry : histories.entrySet()) {
+                if (entry.getKey().workoutHistoryId == workoutHistory.workoutHistoryId) {
+                    sets = entry.getValue();
+                    break;
+                }
+            }
+
+            // If we don't have an array list ready create one and add the key to the hash map
+            if (sets == null) {
+                Log.i("MovementPresenter", String.format("Adding key for workoutHistoryId: %d", workoutHistory.workoutHistoryId));
+                histories.put(workoutHistory, new ArrayList<>());
+                for (Map.Entry<WorkoutHistory, List<WorkoutMovementHistory>> entry : histories.entrySet()) {
+                    if (entry.getKey().workoutHistoryId == workoutHistory.workoutHistoryId) {
+                        sets = entry.getValue();
+                        break;
+                    }
+                }
+            }
+
+            // Add the set to it
+            Log.i("MovementPresenter", "Adding movement to list");
+            sets.add(wmh);
+        }
+
+        return histories;
     }
 
     /**

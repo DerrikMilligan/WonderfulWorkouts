@@ -1,6 +1,7 @@
 package wonderful.workouts.presenters;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,11 +11,13 @@ import wonderful.workouts.database.AppDatabase;
 import wonderful.workouts.database.daos.MovementDao;
 import wonderful.workouts.database.daos.WorkoutDao;
 import wonderful.workouts.database.daos.WorkoutHistoryDao;
+import wonderful.workouts.database.daos.WorkoutMovementCrossRefDao;
 import wonderful.workouts.database.daos.WorkoutMovementHistoryDao;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.User;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
+import wonderful.workouts.database.entities.WorkoutMovementCrossRef;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
 import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
@@ -27,6 +30,7 @@ public class WorkoutPresenter {
     private MovementDao movementDao = null;
     private WorkoutHistoryDao workoutHistoryDao = null;
     private WorkoutMovementHistoryDao workoutMovementHistoryDao = null;
+    private WorkoutMovementCrossRefDao workoutMovementCrossRefDao;
 
     // Implement the singleton pattern
     private static WorkoutPresenter INSTANCE = null;
@@ -47,6 +51,7 @@ public class WorkoutPresenter {
         movementDao = db.getMovementDao();
         workoutHistoryDao = db.getWorkoutHistoryDao();
         workoutMovementHistoryDao = db.getWorkoutMovementHistoryDao();
+        workoutMovementCrossRefDao = db.getWorkoutMovementCrossRefDao();
     }
 
     // Here's the way we get our singleton instance for use
@@ -117,7 +122,10 @@ public class WorkoutPresenter {
      *
      * @param workout The workout we're storing
      */
-    public void setCurrentWorkout(Workout workout) { currentWorkout = workout; }
+    public void setCurrentWorkout(Workout workout) {
+        Log.i("WorkoutPresenter", String.format("Setting current workout to name: %s, workoutId: %d", workout.name, workout.workoutId));
+        currentWorkout = workout;
+    }
 
     /**
      * getCurrentWorkout
@@ -245,6 +253,10 @@ public class WorkoutPresenter {
         return workoutHistory;
     }
 
+    public WorkoutMovementCrossRef addMovementToWorkout(Workout workout, Movement movement) {
+        return workoutMovementCrossRefDao.addMovementToWorkout(workout, movement);
+    }
+
     /**
      * addRepSetToActiveWorkout
      *
@@ -324,11 +336,7 @@ public class WorkoutPresenter {
      * @return List<WorkoutHistory>
      */
     public List<WorkoutHistory> getWorkoutHistories(Workout workout) {
-        WorkoutWithHistories wwh = workoutDao.getWorkoutHistories(workout.workoutId);
-
-        if (wwh == null) { return null; }
-
-        return wwh.pastWorkouts;
+        return workoutHistoryDao.lookupWorkoutHistories(workout.workoutId);
     }
 
     /**
@@ -352,7 +360,7 @@ public class WorkoutPresenter {
             MovementWithWorkoutMovementHistory movementWithHistory = new MovementWithWorkoutMovementHistory();
 
             movementWithHistory.movement = m;
-            movementWithHistory.workoutMovementHistories = workoutMovementHistoryDao.lookupMovementHistoriesWithMovementId(m.movementId);
+            movementWithHistory.workoutMovementHistories = workoutMovementHistoryDao.lookupMovementHistories(workoutHistory.workoutHistoryId, m.movementId);
 
             history.movementHistory.add(movementWithHistory);
         }

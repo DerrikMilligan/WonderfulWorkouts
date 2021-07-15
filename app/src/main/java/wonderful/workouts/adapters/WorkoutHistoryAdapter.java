@@ -9,7 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Workout;
@@ -54,7 +56,14 @@ public class WorkoutHistoryAdapter extends BaseAdapter {
 
         WorkoutHistory workoutHistory = _workoutHistory.get(position);
         LocalDateTime workoutDate = workoutHistory.startTime;
-        holder.dateView.setText(String.format("%d:%02d:%02d", workoutDate.getHour(), workoutDate.getMinute(), workoutDate.getSecond()));
+        holder.dateView.setText(String.format(
+            "    %s %d, %d - %02d:%02d",
+            workoutDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()),
+            workoutDate.getDayOfMonth(),
+            workoutDate.getYear(),
+            workoutDate.getHour(),
+            workoutDate.getMinute()
+        ));
 
         return convertView;
     }

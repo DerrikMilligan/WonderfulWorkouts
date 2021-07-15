@@ -22,11 +22,11 @@ import wonderful.workouts.database.joiners.WorkoutWithHistory;
 import wonderful.workouts.dialogs.AddSetDialog;
 
 public class ActiveWorkoutAdapter extends BaseExpandableListAdapter {
-    private final WorkoutWithHistory _workout;
+    private final WorkoutHistoryWithMovements _workout;
     private final LayoutInflater layoutInflater;
     private final ActiveWorkoutAdapterCallback _callback;
 
-    public ActiveWorkoutAdapter(Context context, WorkoutWithHistory workout, ActiveWorkoutAdapterCallback callback) {
+    public ActiveWorkoutAdapter(Context context, WorkoutHistoryWithMovements workout, ActiveWorkoutAdapterCallback callback) {
         _workout = workout;
         _callback = callback;
         layoutInflater = LayoutInflater.from(context);
@@ -37,10 +37,8 @@ public class ActiveWorkoutAdapter extends BaseExpandableListAdapter {
         int movementCount = 0;
 
         // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
-            for (MovementWithWorkoutMovementHistory ignored : histories.movementHistory) {
-                movementCount++;
-            }
+        for (MovementWithWorkoutMovementHistory ignored : _workout.movementHistory) {
+            movementCount++;
         }
 
         return movementCount;
@@ -52,21 +50,17 @@ public class ActiveWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
-            for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                if (movementCount == groupPosition) {
-                    for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
-                        setCount++;
-                    }
-
-                    return setCount;
+        for (MovementWithWorkoutMovementHistory movements : _workout.movementHistory) {
+            if (movementCount == groupPosition) {
+                for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
+                    setCount++;
                 }
 
-                movementCount++;
+                return setCount;
             }
-        }
 
-        Log.i("ActiveWorkoutAdapter", String.format("Set Count: %d", setCount));
+            movementCount++;
+        }
 
         return setCount;
     }
@@ -76,14 +70,12 @@ public class ActiveWorkoutAdapter extends BaseExpandableListAdapter {
         int movementCount = 0;
 
         // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
-            for (MovementWithWorkoutMovementHistory movement : histories.movementHistory) {
-                if (movementCount == groupPosition) {
-                    return movement;
-                }
-
-                movementCount++;
+        for (MovementWithWorkoutMovementHistory movement : _workout.movementHistory) {
+            if (movementCount == groupPosition) {
+                return movement;
             }
+
+            movementCount++;
         }
 
         return null;
@@ -95,21 +87,19 @@ public class ActiveWorkoutAdapter extends BaseExpandableListAdapter {
         int setCount = 0;
 
         // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : _workout.pastWorkouts) {
-            for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                if (movementCount == groupPosition) {
-                    for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
+        for (MovementWithWorkoutMovementHistory movements : _workout.movementHistory) {
+            if (movementCount == groupPosition) {
+                for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
 
-                        if (setCount == childPosition) {
-                            return set;
-                        }
-
-                        setCount++;
+                    if (setCount == childPosition) {
+                        return set;
                     }
-                }
 
-                movementCount++;
+                    setCount++;
+                }
             }
+
+            movementCount++;
         }
 
         return null;

@@ -22,6 +22,9 @@ public interface WorkoutMovementHistoryDao {
     @Delete
     void delete(WorkoutMovementHistory movementHistory);
 
+    @Query("SELECT * from workout_movement_history WHERE movementId = :movementId AND workoutHistoryId = :workoutHistoryId")
+    List<WorkoutMovementHistory> lookupMovementHistories(int workoutHistoryId, int movementId);
+
     @Query("SELECT * from workout_movement_history WHERE movementId = :movementId")
     List<WorkoutMovementHistory> lookupMovementHistoriesWithMovementId(int movementId);
 

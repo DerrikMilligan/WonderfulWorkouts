@@ -38,10 +38,6 @@ public interface WorkoutDao {
 
     @Transaction
     @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
-    WorkoutWithHistories getWorkoutHistories(int workoutId);
-
-    @Transaction
-    @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
     Workout lookupWorkout(int workoutId);
 
     // Get's a workout whose name matches a string for a given user

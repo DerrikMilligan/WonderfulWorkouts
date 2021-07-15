@@ -8,20 +8,21 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import wonderful.workouts.R;
+import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
-import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
-import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
-import wonderful.workouts.database.joiners.WorkoutWithHistory;
 
 public class MovementHistoryAdapter extends BaseExpandableListAdapter {
-    private final List<WorkoutWithHistory> _workouts;
+    private final Map<WorkoutHistory, List<WorkoutMovementHistory>> _workouts;
     private final LayoutInflater layoutInflater;
 
-    public MovementHistoryAdapter(Context context, List<WorkoutWithHistory> workouts) {
+    public MovementHistoryAdapter(Context context, Map<WorkoutHistory, List<WorkoutMovementHistory>> workouts) {
         _workouts = workouts;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -33,48 +34,31 @@ public class MovementHistoryAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        int setCount = 0;
-
         // Get the group we're expanding
-        WorkoutWithHistory currentHistory = _workouts.get(groupPosition);
+        WorkoutHistory currentHistory = getGroup(groupPosition);
 
-        // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : currentHistory.pastWorkouts) {
-            for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                for (WorkoutMovementHistory ignored : movements.workoutMovementHistories) {
-                    setCount++;
-                }
+        if (currentHistory == null)
+            return 0;
+
+        for (Map.Entry<WorkoutHistory, List<WorkoutMovementHistory>> entry : _workouts.entrySet()) {
+            if (entry.getKey().workoutHistoryId == currentHistory.workoutHistoryId) {
+                return entry.getValue().size();
             }
         }
 
-        return setCount;
+        return 0;
     }
 
     @Override
-    public WorkoutWithHistory getGroup(int groupPosition) {
-        return _workouts.get(groupPosition);
+    public WorkoutHistory getGroup(int groupPosition) {
+        return (WorkoutHistory) _workouts.keySet().toArray()[groupPosition];
     }
 
     @Override
     public WorkoutMovementHistory getChild(int groupPosition, int childPosition) {
-        int setIndex = 0;
+        WorkoutHistory workoutHistory = getGroup(groupPosition);
 
-        WorkoutWithHistory currentHistory = _workouts.get(groupPosition);
-
-        // Count all the sets from the workouts
-        for (WorkoutHistoryWithMovements histories : currentHistory.pastWorkouts) {
-            for (MovementWithWorkoutMovementHistory movements : histories.movementHistory) {
-                for (WorkoutMovementHistory set : movements.workoutMovementHistories) {
-                    if (setIndex == childPosition) {
-                        return set;
-                    }
-
-                    setIndex++;
-                }
-            }
-        }
-
-        return null;
+        return _workouts.get(workoutHistory).get(childPosition);
     }
 
     @Override
@@ -97,6 +81,7 @@ public class MovementHistoryAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder holder;
@@ -110,10 +95,17 @@ public class MovementHistoryAdapter extends BaseExpandableListAdapter {
             holder = (GroupViewHolder) convertView.getTag();
         }
 
-        WorkoutWithHistory workout = _workouts.get(groupPosition);
+        WorkoutHistory workoutHistory = getGroup(groupPosition);
 
-        holder.nameView.setText(workout.workout.name);
-        holder.dateView.setText(LocalDateTime.now().toString());
+        // holder.nameView.setText(workout.workout.name);
+        holder.dateView.setText(String.format(
+            "%s %d, %d - %d:%d",
+            workoutHistory.startTime.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()),
+            workoutHistory.startTime.getDayOfMonth(),
+            workoutHistory.startTime.getYear(),
+            workoutHistory.startTime.getHour(),
+            workoutHistory.startTime.getMinute()
+        ));
 
         return convertView;
     }
@@ -134,10 +126,18 @@ public class MovementHistoryAdapter extends BaseExpandableListAdapter {
         }
 
         WorkoutMovementHistory history = getChild(groupPosition, childPosition);
-
         holder.setNumberView.setText(String.format("Set %d", (childPosition + 1)));
-        holder.weightView.setText(String.format("%d", Math.round(history.weight)));
-        holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+
+        if (history.duration > 0) {
+            holder.weightView.setText("");
+            holder.repAndTimeView.setText(String.format("%.2f", history.duration));
+        } else if (history.weight > 0) {
+            holder.weightView.setText(String.format("%d", Math.round(history.weight)));
+            holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+        } else {
+            holder.weightView.setText("");
+            holder.repAndTimeView.setText(String.format("%d", Math.round(history.reps)));
+        }
 
         return convertView;
     }

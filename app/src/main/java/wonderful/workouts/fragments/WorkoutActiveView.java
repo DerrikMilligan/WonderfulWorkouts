@@ -24,6 +24,7 @@ import wonderful.workouts.adapters.ActiveWorkoutAdapter;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutMovementHistory;
 import wonderful.workouts.database.joiners.MovementWithWorkoutMovementHistory;
+import wonderful.workouts.database.joiners.WorkoutHistoryWithMovements;
 import wonderful.workouts.database.joiners.WorkoutWithHistory;
 import wonderful.workouts.databinding.FragmentWorkoutActiveBinding;
 import wonderful.workouts.dialogs.AddSetDialog;
@@ -102,7 +103,8 @@ public class WorkoutActiveView extends Fragment {
 
             Workout workout = workoutPresenter.getWorkout(workoutPresenter.getActiveWorkout().workoutId);
 
-            WorkoutWithHistory history = workoutPresenter.getAllPastWorkoutHistoriesWithMovements(workout);
+            // WorkoutWithHistory history = workoutPresenter.getAllPastWorkoutHistoriesWithMovements(workout);
+            WorkoutHistoryWithMovements history = workoutPresenter.getWorkoutHistory(workoutPresenter.getActiveWorkout());
 
             requireActivity().runOnUiThread(() -> {
                 workoutNameView.setText(workout.name);

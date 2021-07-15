@@ -20,6 +20,7 @@ import wonderful.workouts.R;
 import wonderful.workouts.adapters.MovementAdapter;
 import wonderful.workouts.adapters.WorkoutHistoryAdapter;
 import wonderful.workouts.database.entities.Movement;
+import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentHistoryBinding;
 import wonderful.workouts.presenters.MovementPresenter;
@@ -86,16 +87,10 @@ public class HistoryView extends Fragment {
                 workoutListView.setOnItemClickListener((parent, view, position, id) -> {
                     WorkoutHistory clickedWorkout = (WorkoutHistory) workoutListView.getItemAtPosition(position);
 
-                    // Store the workout in the state
-                    //workoutPresenter.setCurrentWorkout(clickedWorkout);
-
-                    // new Thread(() -> {
-                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
-                    //     workoutPresenter.setActiveWorkout(activeWorkout);
-                    //     requireActivity().runOnUiThread(() -> {
-                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
-                    //     });
-                    // }).start();
+                    new Thread(() -> {
+                        // Store the workout in the state
+                        workoutPresenter.setActiveWorkout(clickedWorkout);
+                    }).start();
 
                     // Navigate to the workout page to display the workout
                     Navigation.findNavController(view).navigate(R.id.navigation_workout_history);
@@ -198,14 +193,6 @@ public class HistoryView extends Fragment {
                     // Store the workout in the state
                     movementPresenter.setCurrentMovement(clickedMovement);
 
-                    // new Thread(() -> {
-                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
-                    //     workoutPresenter.setActiveWorkout(activeWorkout);
-                    //     requireActivity().runOnUiThread(() -> {
-                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
-                    //     });
-                    // }).start();
-
                     // Navigate to the workout page to display the workout
                     Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
 
@@ -228,21 +215,12 @@ public class HistoryView extends Fragment {
                 // Set the ListView's adapter to our custom adapter!
                 movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
 
-
                 // Add an onClick listener just for an example!
                 movementListView.setOnItemClickListener((parent, view, position, id) -> {
                     Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
 
                     // Store the workout in the state
                     movementPresenter.setCurrentMovement(clickedMovement);
-
-                    // new Thread(() -> {
-                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
-                    //     workoutPresenter.setActiveWorkout(activeWorkout);
-                    //     requireActivity().runOnUiThread(() -> {
-                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
-                    //     });
-                    // }).start();
 
                     // Navigate to the workout page to display the workout
                     Navigation.findNavController(view).navigate(R.id.navigation_movement_history);

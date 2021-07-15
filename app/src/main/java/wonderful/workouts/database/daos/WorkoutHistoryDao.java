@@ -24,7 +24,7 @@ public interface WorkoutHistoryDao {
     @Query("SELECT * FROM workout_history WHERE workoutHistoryId = :workoutHistoryId")
     WorkoutHistory lookupWorkoutHistory(int workoutHistoryId);
 
-    @Query("SELECT * FROM workout_history WHERE workoutHistoryId = :workoutId")
+    @Query("SELECT * FROM workout_history WHERE workoutId = :workoutId")
     List<WorkoutHistory> lookupWorkoutHistories(int workoutId);
 
     @Query("SELECT wh.* FROM workout_history AS wh LEFT JOIN workouts AS w on wh.workoutId = w.workoutId WHERE w.userId = :userId")

@@ -44,14 +44,14 @@ public class MovementAdapter  extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.list_view_movement, null);
             holder = new MovementAdapter.ViewHolder();
-            holder.idView = (TextView) convertView.findViewById(R.id.list_view_movement_id);
+            // holder.idView = (TextView) convertView.findViewById(R.id.list_view_movement_id);
             holder.nameView = (TextView) convertView.findViewById(R.id.list_view_movement_name);
             convertView.setTag(holder);
         } else {
             holder = (MovementAdapter.ViewHolder) convertView.getTag();
         }
 
-        holder.idView.setText(_movements.get(position).movementId + ": ");
+        // holder.idView.setText(_movements.get(position).movementId + ": ");
         holder.nameView.setText(_movements.get(position).name);
         return convertView;
     }

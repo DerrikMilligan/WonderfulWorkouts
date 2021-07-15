@@ -26,6 +26,7 @@ import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.database.entities.Workout;
 import wonderful.workouts.database.entities.WorkoutHistory;
 import wonderful.workouts.databinding.FragmentWorkoutBinding;
+import wonderful.workouts.presenters.MovementPresenter;
 import wonderful.workouts.presenters.WorkoutPresenter;
 
 public class WorkoutView extends Fragment {
@@ -91,12 +92,24 @@ public class WorkoutView extends Fragment {
             }
         });
 
-        //Add an event to the Floating Action Button
         FloatingActionButton btnTesting = root.findViewById(R.id.workout_view_fab);
+        // Add a movement to the workout
         btnTesting.setOnClickListener(view -> {
-            Log.i("Workout View", "Test button pressed!");
+            new Thread(() -> {
+                WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+                MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
 
-            Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
+                // Create a new dummy movement
+                Movement movement = movementPresenter.createNewMovement("", Movement.Reps, "None", "None");
+                movementPresenter.setCurrentMovement(movement);
+
+                // Add it to the workout
+                workoutPresenter.addMovementToWorkout(workoutPresenter.getCurrentWorkout(), movement);
+
+                requireActivity().runOnUiThread(() -> {
+                    Navigation.findNavController(root).navigate(R.id.navigation_new_edit_movement_page);
+                });
+            }).start();
         });
 
         return root;

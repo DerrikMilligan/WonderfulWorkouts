@@ -44,7 +44,7 @@ public class WorkoutAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.list_view_workout, null);
             holder = new ViewHolder();
-            holder.idView = (TextView) convertView.findViewById(R.id.list_view_workout_id);
+            // holder.idView = (TextView) convertView.findViewById(R.id.list_view_workout_id);
             holder.nameView = (TextView) convertView.findViewById(R.id.list_view_workout_name);
             convertView.setTag(holder);
         } else {
@@ -53,7 +53,7 @@ public class WorkoutAdapter extends BaseAdapter {
 
         Workout workout = _workouts.get(position);
 
-        holder.idView.setText(workout.workoutId + ": ");
+        // holder.idView.setText(workout.workoutId + ": ");
         holder.nameView.setText(workout.name);
         return convertView;
     }

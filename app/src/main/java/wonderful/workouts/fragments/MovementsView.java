@@ -24,6 +24,7 @@ import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.databinding.FragmentMovementsBinding;
 import wonderful.workouts.presenters.MovementPresenter;
 import wonderful.workouts.presenters.UserPresenter;
+import wonderful.workouts.presenters.WorkoutPresenter;
 
 public class MovementsView extends Fragment {
     private FragmentMovementsBinding binding;
@@ -53,8 +54,17 @@ public class MovementsView extends Fragment {
 
         FloatingActionButton addMovementButton = root.findViewById(R.id.addMovementButton);
         addMovementButton.setOnClickListener(view -> {
-            Log.i("MovementView", "Adding movement!");
-            Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
+            new Thread(() -> {
+                MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+
+                // Create a new dummy movement
+                Movement movement = movementPresenter.createNewMovement("", Movement.Reps, "None", "None");
+                movementPresenter.setCurrentMovement(movement);
+
+                requireActivity().runOnUiThread(() -> {
+                    Navigation.findNavController(root).navigate(R.id.navigation_new_edit_movement_page);
+                });
+            }).start();
         });
 
         return root;
@@ -73,19 +83,8 @@ public class MovementsView extends Fragment {
             UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
             MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
 
-            // Get list of categories for user
-            List<String> userCategories = movementPresenter.getCategoryList(userPresenter.getCurrentUser());
-            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, userCategories);
-            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            // Get list of equipment for user
-            List<String> userEquipment = movementPresenter.getEquipmentList(userPresenter.getCurrentUser());
-            ArrayAdapter<String> equipmentAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, userEquipment);
-            equipmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
             // Get movements for user
             List<Movement> userMovements = movementPresenter.getUserMovements(userPresenter.getCurrentUser());
-
 
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
@@ -123,7 +122,6 @@ public class MovementsView extends Fragment {
 
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
-
                 categoryDropDown.setAdapter(categoryAdapter);
 
                 categoryDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -155,7 +153,6 @@ public class MovementsView extends Fragment {
 
             // Now that we have the workouts build it on the UI thread to update the UI
             requireActivity().runOnUiThread(() -> {
-
                 equipmentDropDown.setAdapter(equipmentAdapter);
 
                 equipmentDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -197,16 +194,8 @@ public class MovementsView extends Fragment {
                     // Store the workout in the state
                     movementPresenter.setCurrentMovement(clickedMovement);
 
-                    // new Thread(() -> {
-                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
-                    //     workoutPresenter.setActiveWorkout(activeWorkout);
-                    //     requireActivity().runOnUiThread(() -> {
-                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
-                    //     });
-                    // }).start();
-
                     // Navigate to the workout page to display the workout
-                    Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
+                    Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
 
                     Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
                 });
@@ -227,7 +216,6 @@ public class MovementsView extends Fragment {
                 // Set the ListView's adapter to our custom adapter!
                 movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
 
-
                 // Add an onClick listener just for an example!
                 movementListView.setOnItemClickListener((parent, view, position, id) -> {
                     Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
@@ -235,16 +223,8 @@ public class MovementsView extends Fragment {
                     // Store the workout in the state
                     movementPresenter.setCurrentMovement(clickedMovement);
 
-                    // new Thread(() -> {
-                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
-                    //     workoutPresenter.setActiveWorkout(activeWorkout);
-                    //     requireActivity().runOnUiThread(() -> {
-                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
-                    //     });
-                    // }).start();
-
                     // Navigate to the workout page to display the workout
-                    Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
+                    Navigation.findNavController(view).navigate(R.id.navigation_new_edit_movement_page);
 
                     Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
                 });
