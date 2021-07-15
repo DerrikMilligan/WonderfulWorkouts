@@ -75,16 +75,67 @@ public class MovementPresenter {
         return movementDao.getUserMovements(user.userId);
     }
 
+    /**
+     * getCategoryList
+     *
+     * Gets all categories for a given user
+     *
+     * @param user
+     *
+     * @return List<String>
+     */
     public List<String> getCategoryList(User user) {
         return movementDao.getCategoryList(user.userId);
     }
 
+    /**
+     * getEquipmentList
+     *
+     * Gets all equipment for a given user
+     *
+     * @param user
+     *
+     * @return List<String>
+     */
     public List<String> getEquipmentList(User user) {
         return movementDao.getEquipmentList(user.userId);
     }
 
+    /**
+     * getCategoryMovements
+     *
+     * Gets all movements for a given category
+     *
+     * @param category
+     *
+     * @return List<Movement>
+     */
     public List<Movement> getCategoryMovements(String category) {
         return movementDao.getCategoryMovements(category);
     }
 
+    /**
+     * createNewMovement
+     *
+     * Creates a movement with the given information
+     *
+     * @param name
+     * @param type
+     * @param category
+     * @param equipment
+     *
+     * @return Movement
+     */
+    public Movement createNewMovement(String name, String type, String category, String equipment) {
+        Movement m = new Movement();
+
+        m.name      = name;
+        m.type      = type;
+        m.category  = category;
+        m.equipment = equipment;
+
+        m.movementId = (int) movementDao.insert(m);
+
+        return m;
+    }
 }
