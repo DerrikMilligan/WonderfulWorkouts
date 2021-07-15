@@ -76,110 +76,34 @@ public class WorkoutHistoryView extends Fragment {
     @SuppressLint("DefaultLocale")
     public void updatePastWorkoutDisplay() {
 
-//         pastWorkoutListView = root.findViewById(R.id.past_workout_expandable_list_view);
-//         workoutNameView = root.findViewById(R.id.text_view_past_workout_name);
-//
-//         new Thread(() -> {
-//             WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
-//
-//             Workout workout = workoutPresenter.getWorkout(workoutPresenter.getActiveWorkout().workoutId);
-//
-//             List<WorkoutHistory> history = workoutPresenter.getWorkoutHistories(workout);
-//
-//             List<WorkoutHistory> allHistory = workoutPresenter.getWorkoutHistory(history);
-//
-//             requireActivity().runOnUiThread(() -> {
-//                 workoutNameView.setText(workout.name);
-//
-// //                pastWorkoutAdapter = new ActiveWorkoutAdapter(
-// //                        this.getContext(),
-// //                        history,
-// //                        this::activeWorkoutAdapterCallback
-// //                );
-//                 pastWorkoutListView.setAdapter(new PastWorkoutAdapter(this.getContext(), allHistory));
+         pastWorkoutListView = root.findViewById(R.id.past_workout_expandable_list_view);
+         workoutNameView = root.findViewById(R.id.text_view_past_workout_name);
+
+         new Thread(() -> {
+             WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
+
+             Workout workout = workoutPresenter.getWorkout(workoutPresenter.getActiveWorkout().workoutId);
+
+             WorkoutWithHistory history = workoutPresenter.getAllPastWorkoutHistoriesWithMovements(workout);
+
+
+
+             requireActivity().runOnUiThread(() -> {
+                 workoutNameView.setText(workout.name);
+
+ //                pastWorkoutAdapter = new ActiveWorkoutAdapter(
+ //                        this.getContext(),
+ //                        history,
+ //                        this::activeWorkoutAdapterCallback
+ //                );
+                 pastWorkoutListView.setAdapter(new PastWorkoutAdapter(this.getContext(), history));
 //
 //                 // Set the ListView's adapter to our custom adapter!
 //                 //pastWorkoutListView.setAdapter(pastWorkoutAdapter);
-//             });
-//         }).start();
+             });
+         }).start();
     }
-//    public void activeWorkoutAdapterCallback(MovementWithWorkoutMovementHistory movementWithHistory) {
-//        // Display the dialog window for the set
-//        new AddSetDialog(
-//                movementWithHistory.movement.name,
-//                movementWithHistory.movement.type,
-//                (weight, reps, duration) -> {
-//                    Log.i("ActiveWorkoutAdapter", String.format("Adding set to movement: %s reps: %.2f weight: %.2f duration: %.2f", movementWithHistory.movement.name, reps, weight, duration));
 //
-//                    // Create the set and update the UI once inputs are given
-//                    new Thread(() -> {
-//                        WorkoutPresenter workoutPresenter = WorkoutPresenter.getInstance(requireContext());
-//
-//                        // Store the set in the database
-//                        WorkoutMovementHistory newSet = workoutPresenter.addSetToActiveWorkout(
-//                                workoutPresenter.getActiveWorkout().workoutHistoryId,
-//                                movementWithHistory.movement.movementId,
-//                                reps,
-//                                weight,
-//                                duration
-//                        );
-//
-//                        // Update the history being used to render our list with the new set
-//                        movementWithHistory.workoutMovementHistories.add(newSet);
-//
-//                        // This will re-render the list and maintain all open tabs and scrolling state
-//                        requireActivity().runOnUiThread(() -> pastWorkoutAdapter.notifyDataSetChanged());
-//                    }).start();
-//                }
-//        ).show(getChildFragmentManager(), "active_workout_dialog");
-//    }
-
-
-//        WorkoutWithHistory dummyData = getDummyData();
-//        ArrayList<WorkoutWithHistory> workoutHistories = new ArrayList<>();
-//
-//        workoutHistories.add(dummyData);
-//
-//        // Set the ListView's adapter to our custom adapter!
-//        pastWorkoutListView.setAdapter(new PastWorkoutAdapter(this.getContext(), workoutHistories));
-//
-//        TextView tvWorkoutName     = root.findViewById(R.id.text_view_past_workout_name);
-//        TextView tvWorkoutDuration = root.findViewById(R.id.text_view_past_workout_duration);
-//
-//        Duration duration = Duration.between(
-//            dummyData.pastWorkouts.get(0).workoutHistory.startTime,
-//            dummyData.pastWorkouts.get(0).workoutHistory.endTime
-//        );
-//
-//        long workoutSeconds = duration.getSeconds();
-//
-//        tvWorkoutName.setText(dummyData.workout.name);
-//        tvWorkoutDuration.setText(String.format("%d:%02d:%02d", workoutSeconds / 3600, (workoutSeconds % 3600) / 60, (workoutSeconds % 60)));
-//
-//        new Thread(() -> {
-//            // Dummy data for now!
-//
-//            // Add an onClick listener just for and example!
-//            // movementHistoryListView.setOnItemClickListener((parent, view, position, id) -> {
-//            //     Workout clickedWorkout = (Workout) movementHistoryListView.getItemAtPosition(position);
-//            //     Log.i("HomeView", String.format("We clicked workout id: %d name: %s", clickedWorkout.workoutId, clickedWorkout.name));
-//            // });
-//
-//            //
-//            // for (WorkoutMovementHistory mh : movementHistories) {
-//            //     Log.i("MovementHistory", String.format("Set: %.2f %.2f", mh.weight, mh.reps));
-//            //
-//            //     // switch (measurement.type) {
-//            //     //     case "bicep":
-//            //     //         Log.i("Profile", String.format("Updating biceps to: %.2f", measurement.value));
-//            //     //         biceps.setText(String.valueOf(measurement.value) + "\"");
-//            //     //         break;
-//            //     //     default:
-//            //     //        break;
-//            //     //}
-//            // }
-//        }).start();
-//    }
 //
 //    private WorkoutWithHistory getDummyData() {
 //        WorkoutWithHistory movementHistories = new WorkoutWithHistory();
@@ -268,3 +192,4 @@ public class WorkoutHistoryView extends Fragment {
 //        return movementHistories;
 //    }
 }
+

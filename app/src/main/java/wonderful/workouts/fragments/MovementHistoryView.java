@@ -69,6 +69,7 @@ public class MovementHistoryView extends Fragment {
     }
 
     public void updateMovementHistoryDisplay() {
+
         movementHistoryListView = root.findViewById(R.id.movement_history_expandable_list_view);
         movementNameView = root.findViewById(R.id.MovementName);
 
@@ -93,6 +94,7 @@ public class MovementHistoryView extends Fragment {
 //                     movementHistoryListView.setAdapter(this.getContext(), history);
 //                 });
 //             }).start();
+
         }
 //        WorkoutWithHistory dummyData = getDummyData();
 //        ArrayList<WorkoutWithHistory> workoutHistories = new ArrayList<>();
@@ -125,7 +127,9 @@ public class MovementHistoryView extends Fragment {
 //            //     //}
 //            // }
 //        }).start();
+
 //     }
+
 
 //    private WorkoutWithHistory getDummyData() {
 //        WorkoutWithHistory movementHistories = new WorkoutWithHistory();
