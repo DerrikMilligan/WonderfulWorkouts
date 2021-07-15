@@ -131,6 +131,7 @@ public class MovementsView extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String selectedItemText = (String) parent.getItemAtPosition(position);
+                        updateByCategory(selectedItemText);
                         Log.i("MovementsView", "Selected category: " + selectedItemText);
                     }
                     // Returns all when nothing selected
@@ -162,6 +163,7 @@ public class MovementsView extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String selectedItemText = (String) parent.getItemAtPosition(position);
+                        updateByEquipment(selectedItemText);
                         Log.i("MovementsView", "Selected equipment: " + selectedItemText);
                     }
 
@@ -169,6 +171,82 @@ public class MovementsView extends Fragment {
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
+                });
+            });
+        }).start();
+    }
+
+    public void updateByCategory(String category) {
+        new Thread(() -> {
+            // Get the presenter.
+            UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+            MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+
+            List<Movement> movements = movementPresenter.getCategoryMovements(userPresenter.getCurrentUser(), category);
+
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                // Set the ListView's adapter to our custom adapter!
+                movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+
+
+                // Add an onClick listener just for an example!
+                movementListView.setOnItemClickListener((parent, view, position, id) -> {
+                    Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
+
+                    // Store the workout in the state
+                    movementPresenter.setCurrentMovement(clickedMovement);
+
+                    // new Thread(() -> {
+                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
+                    //     workoutPresenter.setActiveWorkout(activeWorkout);
+                    //     requireActivity().runOnUiThread(() -> {
+                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
+                    //     });
+                    // }).start();
+
+                    // Navigate to the workout page to display the workout
+                    Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
+
+                    Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
+                });
+            });
+        }).start();
+    }
+
+    public void updateByEquipment(String equipment) {
+        new Thread(() -> {
+            // Get the presenter.
+            UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+            MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+
+            List<Movement> movements = movementPresenter.getEquipmentMovements(userPresenter.getCurrentUser(), equipment);
+
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                // Set the ListView's adapter to our custom adapter!
+                movementListView.setAdapter(new MovementAdapter(this.getContext(), movements));
+
+
+                // Add an onClick listener just for an example!
+                movementListView.setOnItemClickListener((parent, view, position, id) -> {
+                    Movement clickedMovement = (Movement) movementListView.getItemAtPosition(position);
+
+                    // Store the workout in the state
+                    movementPresenter.setCurrentMovement(clickedMovement);
+
+                    // new Thread(() -> {
+                    //     WorkoutHistory activeWorkout = workoutPresenter.startWorkout(clickedWorkout);
+                    //     workoutPresenter.setActiveWorkout(activeWorkout);
+                    //     requireActivity().runOnUiThread(() -> {
+                    //         Navigation.findNavController(root).navigate(R.id.navigation_workout_active);
+                    //     });
+                    // }).start();
+
+                    // Navigate to the workout page to display the workout
+                    Navigation.findNavController(view).navigate(R.id.navigation_movement_history);
+
+                    Log.i("HistoryView", String.format("We clicked workout id: %d name: %s", clickedMovement.movementId, clickedMovement.name));
                 });
             });
         }).start();

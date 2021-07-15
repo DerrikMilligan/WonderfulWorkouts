@@ -18,15 +18,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import wonderful.workouts.R;
 import wonderful.workouts.database.entities.Movement;
 import wonderful.workouts.databinding.FragmentNewEditMovementBinding;
+import wonderful.workouts.presenters.MovementPresenter;
+import wonderful.workouts.presenters.UserPresenter;
 
 public class NewEditMovementView extends Fragment {
     private wonderful.workouts.databinding.FragmentNewEditMovementBinding binding;
 
-    public String[] categoryList = new String[] {"Legs", "Shoulders", "Chest", "Arms", "Cardio", "Back", "Abs"};
+    EditText nameInput;
+    AutoCompleteTextView categoryDropDown;
+    AutoCompleteTextView equipmentDropDown;
     public String[] equipmentList = new String[] {"None", "Single Dumbbell", "Dumbbells", "Barbell", "Band"};
     public String type;
     // public String selectedId;
@@ -40,37 +45,45 @@ public class NewEditMovementView extends Fragment {
         binding = wonderful.workouts.databinding.FragmentNewEditMovementBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        AutoCompleteTextView category = root.findViewById(R.id.categoryList);
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, categoryList);
-        category.setAdapter(categoryAdapter);
+        nameInput = root.findViewById(R.id.nameInput);
+        categoryDropDown = root.findViewById(R.id.categoryList);
+        equipmentDropDown = root.findViewById(R.id.equipmentList);
 
-        AutoCompleteTextView equipment = root.findViewById(R.id.equipmentList);
-        ArrayAdapter<String> equipmentAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, equipmentList);
-        equipment.setAdapter(equipmentAdapter);
+        updateCategoryList();
+        updateEquipmentList();
 
         RadioGroup typeGroup = root.findViewById(R.id.typeGroup);
         final String[] selectedId = new String[1];
         typeGroup.setOnCheckedChangeListener((typeGroup1, checkedId) -> {
             switch (checkedId) {
                 case R.id.timedRadio:
-                    selectedId[0] = "timed";
+                    selectedId[0] = "Timed";
                     break;
                 case R.id.repsRadio:
-                    selectedId[0] = "reps";
+                    selectedId[0] = "Reps";
                     break;
                 case R.id.weightRepsRadio:
-                    selectedId[0] = "weight/reps";
+                    selectedId[0] = "RepsAndWeight";
                     break;
             }
         });
 
         Button addMovementBtn = root.findViewById(R.id.addMovementBtn);
         addMovementBtn.setOnClickListener(view -> {
-            EditText nameInput = root.findViewById(R.id.nameInput);
-            int count = typeGroup.getChildCount();
-            Log.i("NewEditMovementView", String.format("Create movement - Name: %s , Category: %s, Equipment: %s, Type: %s", nameInput.getText(), category.getText(), equipment.getText(), selectedId[0]));
+            new Thread(() -> {
+                UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+                MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
 
-            Navigation.findNavController(root).popBackStack();
+                Log.i("NewEditMovementView", String.format("Create movement - Name: %s , Category: %s, Equipment: %s, Type: %s", nameInput.getText(), categoryDropDown.getText(), equipmentDropDown.getText(), selectedId[0]));
+                String movementName = nameInput.getText().toString();
+                String movementType = selectedId[0];
+                String movementCategory = categoryDropDown.getText().toString();
+                String movementEquipment = equipmentDropDown.getText().toString();
+                movementPresenter.lookupOrCreateMovement(movementName, movementType, movementCategory, movementEquipment);
+                requireActivity().runOnUiThread(() -> {
+                    Navigation.findNavController(root).popBackStack();
+                });
+            }).start();
         });
 
         return root;
@@ -81,6 +94,40 @@ public class NewEditMovementView extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void updateCategoryList() {
+        new Thread(() -> {
+            // Get the presenter.
+            UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+            MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+
+            // Get list of categories for user
+            List<String> categoryList = movementPresenter.getCategoryList(userPresenter.getCurrentUser());
+            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, categoryList);
+
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                categoryDropDown.setAdapter(categoryAdapter);
+            });
+        }).start();
+    }
+
+    public void updateEquipmentList() {
+        new Thread(() -> {
+            // Get the presenter.
+            UserPresenter userPresenter = UserPresenter.getInstance(requireContext());
+            MovementPresenter movementPresenter = MovementPresenter.getInstance(requireContext());
+
+            // Get list of equipment for user
+            List<String> equipmentList = movementPresenter.getEquipmentList(userPresenter.getCurrentUser());
+            ArrayAdapter<String> equipmentAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, equipmentList);
+
+            // Now that we have the workouts build it on the UI thread to update the UI
+            requireActivity().runOnUiThread(() -> {
+                equipmentDropDown.setAdapter(equipmentAdapter);
+            });
+        }).start();
     }
 
 }

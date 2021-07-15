@@ -57,8 +57,15 @@ public interface MovementDao {
     )
     List<String> getCategoryList(int userId);
 
-    @Query("SELECT * FROM movements WHERE category = :movementCategory")
-    List<Movement> getCategoryMovements(String movementCategory);
+    @Query(
+        "SELECT DISTINCT m.* " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.userId = :userId AND m.category = :movementCategory " +
+            "ORDER BY category ASC"
+    )
+    List<Movement> getCategoryMovements(int userId, String movementCategory);
 
     @Query(
         "SELECT DISTINCT m.equipment " +
@@ -70,8 +77,15 @@ public interface MovementDao {
     )
     List<String> getEquipmentList(int userId);
 
-    @Query("SELECT * FROM movements WHERE equipment = :movementEquipment")
-    List<Movement> getEquipmentMovements(String movementEquipment);
+    @Query(
+        "SELECT DISTINCT m.* " +
+            "FROM movements AS m " +
+            "LEFT JOIN workout_movements AS wm ON wm.movementId = m.movementId " +
+            "LEFT JOIN workouts AS w ON w.workoutId = wm.workoutId " +
+            "WHERE w.userId = :userId AND m.equipment = :movementEquipment " +
+            "ORDER By equipment ASC"
+    )
+    List<Movement> getEquipmentMovements(int userId, String movementEquipment);
 
     @Transaction
     default Movement lookupOrCreateMovement(String movementName, String movementType, String movementCategory, String movementEquipment) {
